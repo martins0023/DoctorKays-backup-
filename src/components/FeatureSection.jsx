@@ -10,7 +10,7 @@ const FeatureSection = () => {
           Feature
         </span>
         <motion.h2 variants={slideInFromLeft} className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-20 tracking-wide">
-          Wnat to know{" "}
+          Want to know{" "}
           <span className="bg-gradient-to-r from-purple-500 to-purple-800 text-transparent bg-clip-text">
             what we're up to?
           </span>
