@@ -1,0 +1,134 @@
+import React, { useState, useEffect } from 'react';
+import Button from './Button';
+
+const Form = ({ onSubmit }) => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
+    services: [],
+  });
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const { firstName, lastName, email, phone, message, services } = formData;
+    setIsFormValid(firstName && lastName && email && phone && message && services.length > 0);
+  }, [formData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData({
+      ...formData,
+      services: checked
+        ? [...formData.services, name]
+        : formData.services.filter((service) => service !== name)
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isFormValid) {
+      onSubmit(formData);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mt-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="mb-4">
+        <label className="font-semibold text-[16px] ">First Name</label>
+        <input
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+          value={formData.firstName}
+          onChange={handleChange}
+          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="font-semibold text-[16px] ">Last Name</label>
+        <input
+          type="text"
+          name="lastName"
+          placeholder="Last Name"
+          value={formData.lastName}
+          onChange={handleChange}
+          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="font-semibold text-[16px] ">Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="you@company.com"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="font-semibold text-[16px] ">Phone Number</label>
+        <input
+          type="tel"
+          name="phone"
+          placeholder="US +1(555) 000-0000"
+          value={formData.phone}
+          onChange={handleChange}
+          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          required
+        />
+      </div>
+      <div className="mb-4 md:col-span-2">
+        <label className="font-semibold text-[16px] ">Message</label>
+        <textarea
+          name="message"
+          placeholder="Leave us a message..."
+          value={formData.message}
+          onChange={handleChange}
+          className="w-full p-3 mt-2 h-[160px] border-gray-300 border focus:outline-none focus:border-primary"
+          required
+        />
+      </div>
+      <div className="mb-4 md:col-span-2">
+        <label className="font-semibold text-[16px] ">Services</label>
+        <div className="flex flex-wrap mt-2">
+          {['Appointment booking', 'Recommendations', 'Comments', 'Volunteer', 'Consultation', 'Other'].map((service) => (
+            <label key={service} className="flex items-center mr-6 mb-4">
+              <input
+                type="checkbox"
+                name={service}
+                checked={formData.services.includes(service)}
+                onChange={handleCheckboxChange}
+                className="mr-2"
+              />
+              {service}
+            </label>
+          ))}
+        </div>
+      </div>
+      <div className="md:col-span-2 flex">
+        <Button
+          text="Send message"
+          className={`bg-gradient-to-l from-purple-600 to-purple-950 font-semibold w-full text-[16px] text-white rounded-md h-[51px] p-3 ${!isFormValid && 'opacity-50 cursor-not-allowed'}`}
+          disabled={!isFormValid}
+        />
+      </div>
+    </form>
+  );
+};
+
+export default Form;
