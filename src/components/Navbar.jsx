@@ -4,7 +4,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { navItems } from "../constants";
 import { motion } from "framer-motion";
-import { containerVariants, pulse } from "../constants/animations";
+import {
+  fadeIn,
+  pulse,
+  slideInFromTop,
+  staggerContainer,
+} from "../constants/animations";
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -20,7 +25,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-purple-700/80">
+    <motion.nav
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+      className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-purple-700/80"
+    >
       <div className="container px-4 mx-auto relative lg:text-sm">
         <div className="flex justify-between items-center">
           <div
@@ -46,10 +56,14 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          <motion.div variants={pulse} initial="hidden"
-          animate="visible" className="hidden lg:flex justify-center space-x-12 items-center">
+          <motion.div
+            variants={pulse}
+            initial="hidden"
+            animate="visible"
+            className="hidden lg:flex justify-center space-x-12 items-center"
+          >
             <a
-              href="/contact"
+              href="/consultation"
               className="bg-gradient-to-r from-purple-500 to-purple-950 py-2 px-3 rounded-full"
             >
               Book a Consultation
@@ -62,7 +76,13 @@ const Navbar = () => {
           </div>
         </div>
         {mobileDrawerOpen && (
-          <div className="fixed right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center items-center lg:hidden">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={slideInFromTop}
+            className="fixed right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center items-center lg:hidden"
+          >
             <ul>
               {navItems.map((item, index) => (
                 <li key={index} className="py-4">
@@ -87,10 +107,10 @@ const Navbar = () => {
                 Book a Consultation
               </a>
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

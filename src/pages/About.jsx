@@ -8,6 +8,15 @@ import { mission } from "../constants";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import Footer from "../components/Footer";
+import { motion } from "framer-motion";
+import {
+  bounce,
+  bouncex,
+  pulse,
+  slideInFromLeft,
+  slideInFromRight,
+  staggerContainer,
+} from "../constants/animations";
 
 const About = () => {
   const { ref, inView } = useInView({
@@ -17,17 +26,28 @@ const About = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto md:pt-20 px-6">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+        className="max-w-7xl mx-auto md:pt-20 px-6"
+      >
         <div className="flex flex-wrap justify-center">
           <div className="pt-12 w-full lg:w-1/2">
             <div className="flex mb-12">
               <div className="md:pt-5">
-                <span className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
+                <motion.span
+                  variants={slideInFromLeft}
+                  className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase"
+                >
                   About Doctor Kays
-                </span>
-                <p className=" font-semibold text-[30px] font-montserrat">
+                </motion.span>
+                <motion.p
+                  variants={slideInFromRight}
+                  className=" font-semibold text-[30px] font-montserrat"
+                >
                   Meet Doctor Kays
-                </p>
+                </motion.p>
                 <p className="text-md tracking-wider gap-auto text-neutral-400">
                   Doctor Olayiwola is not your run-of-the-mill medical doctor.
                   He is a tech lover, family advocate and firm believer in
@@ -66,7 +86,12 @@ const About = () => {
             </div>
           </div>
           <div className="p-2 w-full lg:w-1/2 h-fit">
-            <img src={doctor1} alt="doctor" className="rounded-xl" />
+            <motion.img
+              variants={slideInFromRight}
+              src={doctor1}
+              alt="doctor"
+              className="rounded-xl"
+            />
           </div>
         </div>
 
@@ -90,9 +115,12 @@ const About = () => {
             <div className="pt-12 w-full lg:w-1/2">
               {mission.map((item, index) => (
                 <div key={index} className="flex mb-12">
-                  <div className="flex mx-6 h-10 w-10 p-2 bg-neutral-900 text-purple-700 justify-center items-center rounded-full">
+                  <motion.div
+                    variants={bouncex}
+                    className="flex mx-6 h-10 w-10 p-2 bg-neutral-900 text-purple-700 justify-center items-center rounded-full"
+                  >
                     {item.icon}
-                  </div>
+                  </motion.div>
                   <div>
                     <h5 className="mt-1 mb-2 text-xl">{item.text}</h5>
                     <p className="text-md text-neutral-500">
@@ -153,7 +181,7 @@ const About = () => {
         <Testimonials />
         <Stayintouch />
         <Footer />
-      </div>
+      </motion.div>
       <footer className="bg-primary text-white p-4 text-center">
         <div>© 2025 Drkays</div>
       </footer>

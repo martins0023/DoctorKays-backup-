@@ -69,6 +69,14 @@ export const bounce = {
   },
 };
 
+export const bouncex = {
+  hidden: { x: 0 },
+  visible: {
+    x: [0, -10, 0],
+    transition: { duration: 0.6, repeat: Infinity, repeatDelay: 0.3 },
+  },
+};
+
 export const pulse = {
   hidden: { scale: 1 },
   visible: {

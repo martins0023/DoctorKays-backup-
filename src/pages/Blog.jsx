@@ -5,17 +5,17 @@ import Stayintouch from "../components/Stayintouch";
 import Testimonials from "../components/Testimonials";
 import BlogPosts from "../components/BlogPosts";
 import { motion } from "framer-motion";
-import { slideInFromLeft } from "../constants/animations";
+import { slideInFromLeft, staggerContainer } from "../constants/animations";
 
 const Blog = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto md:pt-20 px-6">
+      <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-7xl mx-auto md:pt-20 px-6">
         <div className="text-center mt-10">
-          <span className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
+          <motion.span variants={slideInFromLeft} className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
             Blog
-          </span>
+          </motion.span>
           {/* <motion.h2
             variants={slideInFromLeft}
             className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-10 tracking-wide"
@@ -30,7 +30,7 @@ const Blog = () => {
         <Testimonials />
         <Stayintouch />
         <Footer />
-      </div>
+      </motion.div>
       <footer className="bg-primary text-white p-4 text-center">
         <div>© 2025 Drkays</div>
       </footer>

@@ -1,7 +1,9 @@
 import React from "react";
 import { clinicSeries, posts } from "../constants";
 import { useNavigate } from "react-router-dom";
-import { ArrowBigRight, ArrowRightCircle } from "lucide-react";
+import { ArrowRightCircle } from "lucide-react";
+import  { motion } from "framer-motion";
+import { pulse, staggerContainer } from "../constants/animations";
 
 const ClinicSeries = () => {
   const truncateText = (text, maxWords) => {
@@ -11,12 +13,8 @@ const ClinicSeries = () => {
   };
 
   const navigate = useNavigate();
-
-  const handleNavigate = (blog) => {
-    navigate(`/blog/${blog.id}`, { state: blog });
-  };
   return (
-    <div className="mt-20">
+    <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="mt-20">
       <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mt-6 tracking-wide">
         Our Clinic{" "}
         <span className="bg-gradient-to-r from-purple-500 to-purple-800 text-transparent bg-clip-text">
@@ -47,9 +45,9 @@ const ClinicSeries = () => {
                   <span className="text-white"> read more</span>{" "}
                 </p>
                 <div className="flex justify-between items-center">
-                  <div className="flex items-center">
+                  <motion.div variants={pulse} className="flex items-center">
                     <ArrowRightCircle />
-                  </div>
+                  </motion.div>
                   <span className="text-sm text-gray-400">{post.readTime}</span>
                 </div>
               </div>
@@ -57,7 +55,7 @@ const ClinicSeries = () => {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

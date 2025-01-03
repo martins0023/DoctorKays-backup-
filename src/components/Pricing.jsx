@@ -1,12 +1,24 @@
 import { CheckCircle2 } from "lucide-react";
 import { pricingOptions } from "../constants";
+import { motion } from "framer-motion";
+import { staggerContainer, textVariants } from "../constants/animations";
 
 const Pricing = () => {
   return (
-    <div className="mt-20">
-      <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center my-8 tracking-wide">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+      className="mt-20"
+    >
+      <motion.h2
+        initial="hidden"
+        animate="visible"
+        variants={textVariants}
+        className="text-3xl sm:text-5xl lg:text-6xl text-center my-8 tracking-wide"
+      >
         Appointment Booking
-      </h2>
+      </motion.h2>
       <p></p>
       <div className="flex flex-wrap">
         {pricingOptions.map((option, index) => (
@@ -33,7 +45,7 @@ const Pricing = () => {
                 ))}
               </ul>
               <a
-                href="#"
+                href={option.link}
                 className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-gradient-to-r from-purple-600 to-purple-950 border border-primary rounded-lg transition duration-200"
               >
                 Subscribe
@@ -42,7 +54,7 @@ const Pricing = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { checkaboutlists } from "../constants";
 import { doctor1 } from "../assets";
 import { motion } from "framer-motion";
-import { slideInFromLeft, slideInFromTop, staggerContainer } from "../constants/animations";
+import { bouncex, slideInFromLeft, slideInFromTop, staggerContainer } from "../constants/animations";
 
 const BriefAbout = () => {
   return (
@@ -23,9 +23,9 @@ const BriefAbout = () => {
         <div className="pt-12 w-full lg:w-1/2">
           {checkaboutlists.map((item, index) => (
             <div key={index} className="flex mb-12">
-              <div className="text-purple-400 mx-6 bg-neutral-900 h-10 w-10 p-2 justify-center items-center rounded-full">
+              <motion.div variants={bouncex} className="text-purple-400 mx-6 bg-neutral-900 h-10 w-10 p-2 justify-center items-center rounded-full">
                 {item.icon}
-              </div>
+              </motion.div>
               <div>
                 <h5 className="mt-1 mb-2 text-xl">{item.title}</h5>
                 <p className="text-md text-neutral-500">{item.description}</p>

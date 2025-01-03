@@ -285,6 +285,7 @@ export const pricingOptions = [
       "Weekly Health Content",
       "Private Mode",
     ],
+    link: "",
   },
   {
     title: "One Time",
@@ -292,9 +293,10 @@ export const pricingOptions = [
     features: [
       "Private Call and Chat",
       "Personalized Treatment",
-      "Choose Your Available Tate and Time",
+      "Choose Your Available Date and Time",
       "Regular Checkup",
     ],
+    link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
     title: "Enterprise",
