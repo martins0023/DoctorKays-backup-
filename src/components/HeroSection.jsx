@@ -26,7 +26,7 @@ const HeroSection = () => {
           />, I AM DOCTOR KAYS
           </p>
         </div>
-        <motion.h1 variants={slideInFromLeft} className="mt-4 leading-relaxed text-4xl font-bold sm:text-5xl lg:text-6xl bg-gradient-to-r from-white to-primary text-transparent bg-clip-text tracking-wide">
+        <motion.h1 variants={slideInFromLeft} className="mt-4 h-fit text-4xl font-bold sm:text-5xl lg:text-6xl bg-gradient-to-br from-white to-indigo-800 text-transparent bg-clip-text tracking-normal">
           Turning medicine from a head-scratcher, into<br /> your friendly
           companion
         </motion.h1>
