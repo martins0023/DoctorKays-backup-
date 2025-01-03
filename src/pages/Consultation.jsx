@@ -23,8 +23,8 @@ const Consultation = () => {
             <span className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
               consultation
             </span>
-            <Pricing />
           </div>
+          <Pricing />
           <div className="mt-20">
             <ContactPage />
           </div>
