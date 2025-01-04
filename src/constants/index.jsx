@@ -277,36 +277,44 @@ export const checkaboutlists = [
 ];
 export const pricingOptions = [
   {
-    title: "Free",
-    price: "$0",
+    title: "Family Package",
+    price: "$20",
     features: [
       "Join the Community",
       "Newsletter Subscription",
-      "Weekly Health Content",
-      "Private Mode",
-    ],
-    link: "",
-  },
-  {
-    title: "One Time",
-    price: "$20",
-    features: [
-      "Private Call and Chat",
-      "Personalized Treatment",
-      "Choose Your Available Date and Time",
-      "Regular Checkup",
+      "Weekly Health Nugget",
+      "Consultation Chat and Calls",
+      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
+      "Limited to 2 family members",
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
-    title: "Enterprise",
-    price: "$200",
+    title: "Gold Package",
+    price: "$50",
     features: [
-      "Entitled to Daily Treatment for a Week",
-      "Prescribed Treatmets",
-      "Chat and Call at Your Conviniency",
-      "Request for More Personalized Treatment",
+      "Join the Community",
+      "Newsletter Subscription",
+      "Weekly Health Nugget",
+      "Consultation Chat, Audio and Video Calls",
+      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
+      "Unlimited Consultation",
     ],
+    link: "https://calendly.com/martinsmiracle45/one_time_appointment",
+  },
+  {
+    title: "Premium Family Package",
+    price: "$100",
+    features: [
+      "Join the Community",
+      "Newsletter Subscription",
+      "Weekly Health Nugget",
+      "Consultation Chat, Audio and Video Calls",
+      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
+      "Unlimited Consultation",
+      "Unlimited Family Members"
+    ],
+    link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
 ];
 
