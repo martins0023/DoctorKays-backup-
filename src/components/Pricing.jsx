@@ -28,6 +28,7 @@ const Pricing = () => {
                 {option.title}
                 {option.title === "Family Package" && (
                   <span className="bg-gradient-to-r from-purple-500 to-red-400 text-transparent bg-clip-text text-xl mb-4 ml-2">
+                    <br />
                     (Standard)
                   </span>
                 )}
