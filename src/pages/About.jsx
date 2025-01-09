@@ -133,13 +133,13 @@ const About = () => {
           </div>
 
           {/* satisfied clients */}
-          <div className="md:flex justify-center gap-10 mb-10">
+          <div className="md:flex items-center justify-items-center justify-center gap-10 mb-10">
             <div className="justify-center justify-items-center mt-10">
               <div ref={ref}>
                 {inView && (
                   <CountUp
                     className="text-3xl sm:text-5xl lg:text-6xl text-center my-10 lg:my-20"
-                    end={30}
+                    end={2}
                     duration={9}
                     suffix="+"
                   />
@@ -153,7 +153,7 @@ const About = () => {
                 {inView && (
                   <CountUp
                     className="text-3xl sm:text-5xl lg:text-6xl text-center my-10 lg:my-20"
-                    end={100}
+                    end={500}
                     duration={9}
                     suffix="+"
                   />
@@ -167,7 +167,7 @@ const About = () => {
                 {inView && (
                   <CountUp
                     className="text-3xl sm:text-5xl lg:text-6xl text-center my-10 lg:my-20"
-                    end={20}
+                    end={10}
                     duration={9}
                     suffix="+"
                   />

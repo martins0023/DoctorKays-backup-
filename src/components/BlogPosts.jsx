@@ -1,43 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { clinic1, clinic3, doc1 } from "../assets";
 import { useNavigate } from "react-router-dom";
+import { client, urlFor } from "../../lib/client";
 
 const BlogPosts = () => {
-  const posts = [
-    {
-      id: 1,
-      category: "postrate cancer",
-      title: "Dealing with Postrate Cancer",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-      author: "Doctor Kays",
-      readTime: "5min read",
-      date: "1st of January, 2024",
-      imageUrl: clinic1, // Replace with actual image paths
-    },
-    {
-      id: 2,
-      category: "Diarrhea",
-      title: "How to deal with Diarrhea",
-      description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-      author: "Doctor Kays",
-      readTime: "5min read",
-      date: "2nd of January, 2024",
-      imageUrl: clinic3, // Replace with actual image paths
-    },
-    {
-      id: 3,
-      category: "Liver Cancer",
-      title: "Surviving Liver Cancer",
-      description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-      author: "Doctor Kays",
-      readTime: "5min read",
-      date: "3rd of January, 2024",
-      imageUrl: doc1, // Replace with actual image paths
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const query = `
+          *[_type == "blog"]{
+            _id,
+            title,
+            slug,
+            category,
+            section,
+            author,
+            date,
+            "imageUrl": image[0].asset->url,
+            "descriptionText": coalesce(description[2].children[0].text, "") // Get the first block of text safely
+          }
+        `;
+        const data = await client.fetch(query);
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching posts:', err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const truncateText = (text, maxWords) => {
     const words = text.split(" ");
@@ -47,8 +45,8 @@ const BlogPosts = () => {
 
   const navigate = useNavigate();
 
-  const handleNavigate = (blog) => {
-    navigate(`/blog/${blog.id}`, { state: blog });
+  const handleNavigate = (post) => {
+    navigate(`/blog/${post.slug.current}`);
   };
 
   return (
@@ -69,7 +67,7 @@ const BlogPosts = () => {
             className="bg-gradient-to-l from-gray-800 to-gray-950 p-4 rounded-lg cursor-pointer"
           >
             <img
-              src={post.imageUrl}
+              src={post.imageUrl} // Use the first image
               alt={post.title}
               className="w-full h-40 object-cover rounded-lg mb-4"
             />
@@ -79,19 +77,19 @@ const BlogPosts = () => {
               </p>
             </div>
             <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-            <p className="text-sm text-gray-400 mb-4">{truncateText(post.description, 20)}<span className="text-white">{" "}read more</span> </p>
+            <p className="text-sm text-gray-400 mb-4">{truncateText(post.descriptionText, 20)}<span className="text-white">{" "}read more</span> </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center">
-                <span className="text-sm text-gray-400">{post.author}</span>
+                <span className="text-sm text-gray-400">by {post.author}</span>
               </div>
-              <span className="text-sm text-gray-400">{post.readTime}</span>
+              <span className="text-sm text-gray-400">{post.date}</span>
             </div>
           </div>
         ))}
       </div>
 
       {/* more and tags */}
-      <div className="flex justify-between items-center mb-6 mt-20">
+      {/* <div className="flex justify-between items-center mb-6 mt-20">
         <h2 className="text-3xl font-bold">For women</h2>
       </div>
       <p className="mb-8">
@@ -125,10 +123,10 @@ const BlogPosts = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* others */}
-      <div className="flex justify-between items-center mb-6 mt-20">
+      {/* <div className="flex justify-between items-center mb-6 mt-20">
         <h2 className="text-3xl font-bold">Sex Education</h2>
       </div>
       <p className="mb-8">
@@ -162,9 +160,9 @@ const BlogPosts = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
-      <div className="flex justify-between items-center mb-6 mt-20">
+      {/* <div className="flex justify-between items-center mb-6 mt-20">
         <h2 className="text-3xl font-bold">Pregnant Women</h2>
       </div>
       <p className="mb-8">
@@ -198,7 +196,7 @@ const BlogPosts = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

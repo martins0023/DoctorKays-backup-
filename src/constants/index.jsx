@@ -58,7 +58,7 @@ export const clinicSeries = [
   },
 ];
 
-export const posts = [
+export const Blogposts = [
   {
     id: 1,
     category: "postrate cancer",
@@ -162,7 +162,7 @@ export const features = [
     icon: <ActivityIcon />,
     text: "Health Nuggets",
     description:
-      "Get your weekly dose of health tips with our Health Nuggets series. Simple, actionableadvice to help you lead a healthier lifestyle.",
+      "Get your weekly dose of health tips with our Health Nuggets series. Simple, actionable advice to help you lead a healthier lifestyle.",
   },
   {
     icon: <NotebookPen />,
@@ -202,27 +202,45 @@ export const mission = [
 export const faqsCard = [
   {
     id: 1,
-    question: "Pellentesque tristique elit orci 1 ?",
+    question: "Who is Doctor Kays?",
     answer:
-      "Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "Doctor Kays, whose full name is Doctor Olayiwola Babatunde Emmanuel, is a medical professional with a strong commitment to preventive health care and community wellness. He shares his knowledge to empower people to make informed health choices that translate into healthier, fulfilling lives.",
   },
   {
     id: 2,
-    question: "Pellentesque tristique elit orci 2 ?",
+    question: "What is the mission of Doctor Kays?",
     answer:
-      "Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "Doctor Kays is on a quest to make health care more approachable and understandable for everybody. He turns complex medical explanations into interesting stories with a pinch of humor. Doctor Kays ensures that health education is not only informative but also enjoyable.",
   },
   {
     id: 3,
-    question: "Pellentesque tristique elit orci 3 ?",
+    question: "What services are offered?",
     answer:
-      "Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "Doctor Kays provides a wide range of services aimed at increasing health awareness. These include Health Nuggets, which are weekly small tips for wellness; Clinic Series, which is an in-depth exploration of certain health topics; Medicine on the Street, which is an interactive street segment to answer real-life health questions; and personal consultations that offer individualized health advice and counseling.",
   },
   {
     id: 4,
-    question: "Pellentesque tristique elit orci 4 ?",
+    question: "How is the content presented?",
     answer:
-      "Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis nisi id orci finibus egestas Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "Content is provided on YouTube, blogs, podcasts, and social media through creative storytelling, humor, and interactivity. It simplifies complex health topics into ones that are relatable, engaging, and easy to understand. The visuals, creative narration, and interactive formats ensure that audiences can apply the information in their daily lives while being entertained. Through diverse platforms, Doctor Kays effectively reaches a wide audience, creating a very interactive community for health awareness and wellness.",
+  },
+  {
+    id: 5,
+    question: "How do I make an appointment?",
+    answer:
+      "To book an appointment with Doctor Kays, consider visiting the booking section on the website. Full guidelines are provided therein to help you make the appointment regarding your needs and what you would want covered.",
+  },
+  {
+    id: 6,
+    question: "What topics are covered?",
+    answer:
+      "Doctor Kays covers general health, disease prevention, lifestyle changes, and wellness, among many other health-related topics. His content covers areas related to day-to-day living health and other particular medical topics.",
+  },
+  {
+    id: 7,
+    question: "How is Doctor Kays unique?",
+    answer:
+      "What sets Doctor Kays apart is his ability to combine professional medical expertise with humor and storytelling. Such an approach makes learning about health more engaging and helps them remember and apply key health concepts in their daily lives.",
   },
 ];
 
@@ -230,7 +248,7 @@ export const checklistItems = [
   {
     title: "Licensed Professional Doctor",
     description:
-      "At Doctor's Kay's, your health is in expert hands. Our licensed professional doctor provide top-quality medical care tailored to your needs.",
+      "At Doctor Kays, your health is in expert hands. Our licensed professional doctor provide top-quality medical care tailored to your needs.",
   },
   {
     title: "We Operate Across the Globe",
@@ -240,7 +258,7 @@ export const checklistItems = [
   {
     title: "CAC Registered",
     description:
-      "Doctor Kay's is proud to be a CAC registered entity, ensuring our operations meet the highest legal and professional standards.",
+      "Doctor Kays is proud to be a CAC registered entity, ensuring our operations meet the highest legal and professional standards.",
   },
   {
     title: "Clients are Satisfied with our service",
@@ -272,26 +290,27 @@ export const checkaboutlists = [
     icon: <NotebookPen />,
     title: "Appointment Booking",
     description:
-      "Book an appointment with Doctor kay's concerning any mediacal related issues you are facing.",
+      "Book an appointment with Doctor kays concerning any medical related issues you are facing.",
   },
 ];
 export const pricingOptions = [
   {
-    title: "Family Package",
-    price: "$20",
+    title: "Silver Package",
+    price: "$5",
+    type: "week",
     features: [
       "Join the Community",
       "Newsletter Subscription",
       "Weekly Health Nugget",
-      "Consultation Chat and Calls",
+      "Consultation Chat, and Calls",
       "Free Referral suggestions to trusted pharmicies and diagnostic centers",
-      "Limited to 2 family members",
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
     title: "Gold Package",
-    price: "$50",
+    price: "$15",
+    type: "month",
     features: [
       "Join the Community",
       "Newsletter Subscription",
@@ -303,8 +322,23 @@ export const pricingOptions = [
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
+    title: "Family Package",
+    price: "$20",
+    type: "week",
+    features: [
+      "Join the Community",
+      "Newsletter Subscription",
+      "Weekly Health Nugget",
+      "Consultation Chat and Calls",
+      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
+      "Limited to 2 family members",
+    ],
+    link: "https://calendly.com/martinsmiracle45/one_time_appointment",
+  },
+  {
     title: "Premium Family Package",
-    price: "$100",
+    price: "$70",
+    type: "month",
     features: [
       "Join the Community",
       "Newsletter Subscription",
@@ -336,6 +370,6 @@ export const communityLinks = [
   { href: "/about", text: "About us" },
   { href: "/contact", text: "Contact Us" },
   { href: "#", text: "Become a Sponsor/Collaborate" },
-  { href: "#", text: "Upcoming Projects" },
+  { href: "/projects", text: "Upcoming Projects" },
   { href: "/volunteer", text: "Become a volunteer" },
 ];

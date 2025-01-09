@@ -6,7 +6,10 @@ const Footer = () => {
       <div className="mb-10">
         <img src={logo} alt="doctorkays" className="w-20 h-20" />
         <p className="text-white font-semibold text-[16px]">Doctorkays</p>
-        <p className="mt-1 text-[16px] text-neutral-300 font-montserrat">Donec dui massa, varius a consequat at, ultrices a neque. Ut augue erat, dignissim ultricies bibendum sed, pharetra ut neque.</p>
+        <p className="mt-1 text-[16px] text-neutral-300 font-montserrat">
+          Doctor Kays, a dedicated medical professional passionate about
+          enhancing community health through education and preventive care.
+        </p>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
@@ -54,6 +57,15 @@ const Footer = () => {
             ))}
           </ul>
         </div>
+      </div>
+      <div className="mt-8 text-center text-sm text-gray-500">
+        <a href="#terms" className="hover:underline">
+          Terms Policy
+        </a>
+        <span className="mx-2">•</span>
+        <a href="#story" className="hover:underline">
+          Customer Story
+        </a>
       </div>
     </footer>
   );

@@ -11,11 +11,11 @@ const BlogNotFound = () => {
       <div className="max-w-7xl mx-auto md:pt-20 px-6">
         <div className="flex flex-col items-center justify-center mt-10 h-screen p-4">
           <h1 className="text-4xl font-bold text-center text-gray-300">
-            404 - Page Not Found
+            404 - Blog Page Not Found
           </h1>
           <p className="text-gray-400 text-[18px] text-center mt-4">
-            Oops! The page you are looking for does not exist, It's from our
-            end. We're working on it.
+            Oops! The blog page you are looking for does not exist, It's from our
+            end. Our construction engineers are on site just because of you.
           </p>
           <img
             src={notfound1}

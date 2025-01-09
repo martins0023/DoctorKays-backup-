@@ -1,5 +1,5 @@
 import React from "react";
-import { clinicSeries, posts } from "../constants";
+import { clinicSeries } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightCircle } from "lucide-react";
 import  { motion } from "framer-motion";

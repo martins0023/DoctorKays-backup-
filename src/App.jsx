@@ -7,6 +7,7 @@ import BlogDetail from "./pages/BlogDetail";
 import NotFound from "./components/NotFound";
 import Contact from "./pages/Contact";
 import Consultation from "./pages/Consultation";
+import Projects from "./pages/Projects";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/projects" element={<Projects />} />
         <Route path="/consultation" element={<Consultation />} />
         {/* 
         <Route path="/dr-ai" element={<DrAi />} />

@@ -85,7 +85,7 @@ const Form = ({ onSubmit }) => {
         <input
           type="tel"
           name="phone"
-          placeholder="US +1(555) 000-0000"
+          placeholder="NGN +(234) 00-000-0000"
           value={formData.phone}
           onChange={handleChange}
           className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"

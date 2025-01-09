@@ -26,7 +26,7 @@ const Mos = () => {
                 JOIN US ON MEDICINE ON THE STREETS OF NIGERIA
               </h5>
               <p className="text-md text-neutral-500">
-                Over 100million people in Nigeria, join us on the streets of
+                Over 200million people in Nigeria, join us on the streets of
                 Nigeria and see how we interview people on health issues and
                 matters arising
               </p>
