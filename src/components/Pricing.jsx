@@ -35,13 +35,15 @@ const Pricing = () => {
               </p>
               <p className="mb-8">
                 <span className="text-5xl mt-6 mr-2">{option.price}</span>
-                <span className="text-neutral-400 tracking-tight">/ {option.type}</span>
+                <span className="text-neutral-400 tracking-tight">
+                  / {option.type}
+                </span>
               </p>
               <ul>
                 {option.features.map((feature, index) => (
                   <li key={index} className="mt-8 flex items-center">
                     <div>
-                    <CheckCircle2 className="" />
+                      <CheckCircle2 className="" />
                     </div>
                     <span className="ml-2 leading-loose">{feature}</span>
                   </li>
@@ -49,7 +51,7 @@ const Pricing = () => {
               </ul>
               <a
                 href={option.link}
-                className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-gradient-to-r from-purple-600 to-purple-950 border border-primary rounded-lg transition duration-200"
+                className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-gradient-to-r from-purple-600 to-red-400 border border-primary rounded-lg transition duration-200"
               >
                 Subscribe
               </a>
