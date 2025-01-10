@@ -1,5 +1,5 @@
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { navItems } from "../constants";
@@ -13,8 +13,23 @@ import {
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // Initial state for dark mode
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Dark mode toggle handler
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  // Effect to apply dark/light mode classes to the body
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -56,6 +71,18 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+
+          {/* Dark Mode Toggle for Desktop */}
+          <div className="hidden lg:flex items-center space-x-4">
+            <button onClick={toggleDarkMode}>
+              {isDarkMode ? (
+                <Moon size={24} className="text-gray-300 hover:text-primary" />
+              ) : (
+                <Sun size={24} className="text-gray-300 hover:text-primary" />
+              )}
+            </button>
+          </div>
+
           <motion.div
             variants={pulse}
             initial="hidden"
@@ -99,6 +126,19 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
+            {/* Dark Mode Toggle for Mobile */}
+            <div className="flex space-x-4 mt-6 mb-5">
+              <button onClick={toggleDarkMode}>
+                {isDarkMode ? (
+                  <Moon
+                    size={24}
+                    className="text-gray-300 hover:text-primary"
+                  />
+                ) : (
+                  <Sun size={24} className="text-gray-300 hover:text-primary" />
+                )}
+              </button>
+            </div>
             <div className="flex space-x-6 mt-2">
               <a
                 href="/consultation"

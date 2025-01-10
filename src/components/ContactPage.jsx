@@ -36,17 +36,17 @@ const ContactPage = () => {
             <h2 className="text-xl font-bold mb-4">Chat with us</h2>
             <ul className="mb-6">
               <li className="mb-2">
-                <a href="https://wa.link/vedmgv" className="text-primary hover:underline">
+                <a href="https://wa.link/vedmgv" className="text-gray-400 hover:underline">
                   Start a live chat
                 </a>
               </li>
               <li className="mb-2">
-                <a href="mailto:drkaysofficial@gmail.com" className="text-primary hover:underline">
+                <a href="mailto:drkaysofficial@gmail.com" className="text-gray-400 hover:underline">
                   Shoot us an email
                 </a>
               </li>
               <li className="mb-2">
-                <a href="https://x.com/doctor_kays" className="text-primary hover:underline">
+                <a href="https://x.com/doctor_kays" className="text-gray-400 hover:underline">
                   Message us on X
                 </a>
               </li>
@@ -55,12 +55,12 @@ const ContactPage = () => {
             <p className="mb-6">Call our team Mon-Fri from 8am (WAT) to 5pm.</p>
             <a
               href="tel:+2348137812917"
-              className="block mb-4 text-primary hover:underline"
+              className="block mb-4 text-gray-400 hover:underline"
             >
               +234 813 781 2917
             </a>
             <h2 className="text-xl font-bold mb-4">Visit us</h2>
-            <a href="#" className="block text-primary hover:underline">
+            <a href="#" className="block text-gray-400 hover:underline">
               Challenge, Ibadan, Nigeria
             </a>
           </div>
