@@ -17,6 +17,7 @@ import {
   slideInFromRight,
   staggerContainer,
 } from "../constants/animations";
+import Milestones from "../components/Milestones";
 
 const About = () => {
   const { ref, inView } = useInView({
@@ -177,7 +178,7 @@ const About = () => {
             </div>
           </div>
         </div>
-
+        <Milestones />
         <Testimonials />
         <Stayintouch />
         <Footer />

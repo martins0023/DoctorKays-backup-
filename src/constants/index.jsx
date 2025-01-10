@@ -175,15 +175,15 @@ export const features = [
 export const mission = [
   {
     icon: <TableIcon />,
-    text: "Implement Comprehensive Content Strategy",
+    text: "Mission Statement",
     description:
-      "Provide valuable and engaging content for visitors through various media content such as videos, blogs, graphics, comis, podcasts...",
+      "To turn medicine from a head- scratcher into your friendly companion...",
   },
   {
     icon: <Notebook />,
-    text: "Facilitate Easy Appointment",
+    text: "Core Value",
     description:
-      "Enable users to book appointments with Doctor Kays easily and efficienly.",
+      "Excellence, Professionalism, Integrity, Compassion, and Trust.",
   },
   {
     icon: <Waypoints />,
