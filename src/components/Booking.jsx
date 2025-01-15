@@ -1,8 +1,9 @@
 import { CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { staggerContainer, textVariants } from "../constants/animations";
+import { slideInFromRight, staggerContainer, textVariants } from "../constants/animations";
 import { checklistItems } from "../constants";
 import { calendarmockup } from "../assets";
+import Button from "./Button";
 
 const Booking = () => {
   return (
