@@ -2,8 +2,9 @@ import React from "react";
 import { clinicSeries } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightCircle } from "lucide-react";
-import  { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { pulse, staggerContainer } from "../constants/animations";
+import Button from "./Button";
 
 const ClinicSeries = () => {
   const truncateText = (text, maxWords) => {
@@ -13,8 +14,16 @@ const ClinicSeries = () => {
   };
 
   const navigate = useNavigate();
+  const handleGallery = () => {
+    navigate("/gallery");
+  };
   return (
-    <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="mt-20">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+      className="mt-20"
+    >
       <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mt-6 tracking-wide">
         Our Clinic{" "}
         <span className="bg-gradient-to-r from-purple-500 to-purple-800 text-transparent bg-clip-text">
@@ -54,6 +63,14 @@ const ClinicSeries = () => {
             </a>
           ))}
         </div>
+      </div>
+      <div className="justify-center flex">
+        <Button
+          onClick={handleGallery}
+          text="view all"
+          variants={pulse}
+          className="text-[16px] p-4 cursor-pointer hover:bg-primarydark rounded-full w-fit"
+        />
       </div>
     </motion.div>
   );

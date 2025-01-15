@@ -11,6 +11,7 @@ const Workflow = () => {
           Trust Us?
         </span>
       </h2>
+
       <div className="flex flex-wrap justify-center">
         <div className="p-2 w-full lg:w-1/2 h-fit">
           <img src={mos} alt="Medicine on the street" className="mt-5" />

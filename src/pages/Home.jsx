@@ -10,6 +10,7 @@ import Stayintouch from '../components/Stayintouch'
 import Footer from '../components/Footer'
 import Mos from '../components/Mos'
 import ClinicSeries from '../components/ClinicSeries'
+import Booking from '../components/Booking'
 
 const Home = () => {
   return (
@@ -22,7 +23,7 @@ const Home = () => {
         <Workflow />
         <Mos />
         <ClinicSeries />
-        <Pricing />
+        <Booking />
         <Testimonials />
         <Stayintouch />
         <Footer />

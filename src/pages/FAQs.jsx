@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
@@ -10,8 +10,15 @@ import {
   staggerContainer,
   textVariants,
 } from "../constants/animations";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const FAQs = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const handleToggle = (index) => {
+    setOpenIndex(openIndex === index ? null : index); // Toggle between open and closed
+  };
+
   return (
     <div>
       <Navbar />
@@ -38,7 +45,7 @@ const FAQs = () => {
               </span>
             </motion.h2>
           </div>
-          <div className="flex flex-wrap mt-10 lg:mt-20">
+          <div className="flex flex-col mt-10 lg:mt-20">
             {faqsCard.map((card, index) => (
               <div key={index} className="flex flex-col mt-5 mb-5">
                 <div className="bg-gradient-to-r from-purple-800 to-purple-950 flex items-center justify-center justify-items-center w-[56px] h-[36px] rounded-md">
@@ -48,23 +55,34 @@ const FAQs = () => {
                 </div>
 
                 <div className="flex flex-col mt-3">
-                  <motion.p
-                    initial="hidden"
-                    animate="visible"
-                    variants={textVariants}
-                    className=" text-2xl"
+                  <div
+                    className="flex justify-between items-center cursor-pointer"
+                    onClick={() => handleToggle(index)}
                   >
-                    {card.question}
-                  </motion.p>
-                  <motion.p
-                    initial="hidden"
-                    animate="visible"
-                    variants={slideInFromLeft}
-                    className="text-neutral-300 tracking-wide text-[16px]"
-                  >
-                    {card.answer}
-                  </motion.p>
-
+                    <motion.p
+                      initial="hidden"
+                      animate="visible"
+                      variants={textVariants}
+                      className="text-2xl"
+                    >
+                      {card.question}
+                    </motion.p>
+                    {openIndex === index ? (
+                      <ChevronUp className="text-neutral-300 w-6 h-6" />
+                    ) : (
+                      <ChevronDown className="text-neutral-300 w-6 h-6" />
+                    )}
+                  </div>
+                  {openIndex === index && (
+                    <motion.p
+                      initial="hidden"
+                      animate="visible"
+                      variants={slideInFromLeft}
+                      className="text-neutral-300 tracking-wide text-[16px] mt-3"
+                    >
+                      {card.answer}
+                    </motion.p>
+                  )}
                   <hr className="border-neutral-800 w-full h-[1px] mt-3" />
                 </div>
               </div>

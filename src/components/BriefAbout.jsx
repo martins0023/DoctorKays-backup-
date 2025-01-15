@@ -2,7 +2,14 @@ import React from "react";
 import { checkaboutlists } from "../constants";
 import { doctor1 } from "../assets";
 import { motion } from "framer-motion";
-import { bouncex, fadeIn, pulse, slideInFromLeft, slideInFromTop, staggerContainer } from "../constants/animations";
+import {
+  bouncex,
+  fadeIn,
+  pulse,
+  slideInFromLeft,
+  slideInFromTop,
+  staggerContainer,
+} from "../constants/animations";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +17,7 @@ const BriefAbout = () => {
   const navigate = useNavigate();
   const handleAbout = () => {
     navigate("/about");
-  }
+  };
   return (
     <motion.div
       initial="hidden"

@@ -20,8 +20,12 @@ import success from "./success.png";
 import clinicseries2 from "./clinicseries2.jpeg";
 import clinicseries1 from "./clinicseries1.jpeg";
 import clinicseries3 from "./clinicseries3.jpg";
+import clinicseries4 from "./clinicseries4.jpg";
+import calendarmockup from"./calendar-mockup.png";
 
 export {
+    calendarmockup,
+    clinicseries4,
     clinicseries3,
     clinicseries2,
     clinicseries1,

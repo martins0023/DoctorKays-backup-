@@ -8,6 +8,8 @@ import NotFound from "./components/NotFound";
 import Contact from "./pages/Contact";
 import Consultation from "./pages/Consultation";
 import Projects from "./pages/Projects";
+import Shop from "./pages/Shop";
+import Gallery from "./pages/Gallery";
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/consultation" element={<Consultation />} />
+        {/* <Route path="/shop" element={<Shop />} /> */}
+        <Route path="/gallery" element={<Gallery />} />
         {/* 
         <Route path="/dr-ai" element={<DrAi />} />
         <Route path="/services" element={<Services />} />

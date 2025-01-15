@@ -8,7 +8,7 @@ import user4 from "../assets/profile-pictures/user4.jpg";
 import user5 from "../assets/profile-pictures/user5.jpg";
 import user6 from "../assets/profile-pictures/user6.jpg";
 import SatisfiedClients from "../components/SatisfiedClients";
-import { clinic1, clinic3, clinicseries1, clinicseries2, clinicseries3, doc1 } from "../assets";
+import { clinic1, clinic3, clinicseries1, clinicseries2, clinicseries3, clinicseries4, doc1 } from "../assets";
 
 export const navItems = [
   { label: "Home", href: "/" },
@@ -22,12 +22,51 @@ export const navItems = [
 export const clinicSeries = [
   {
     id: 1,
-    category: "HIV STATUS",
-    title: "Get Tested and Know Your HIV Status",
+    category: "HPV",
+    title: "Foul Smells During Sex",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+      "Do you know there's an enemy known as HPV that causes cancer of the throat, cervix, anus and penis? People don't really know about this. You need to watch this video.",
     author: "Doctor Kays",
     readTime: "2min watch",
+    date: "1st of January, 2024",
+    videoId: "p2eG7OM_0_Y",
+    imageUrl: clinicseries3, // Replace with actual image paths
+  },
+  {
+    id: 2,
+    category: "Human Papilloma Virus",
+    title: "How is HPV Transmitted",
+    description:
+    "Last week, we talked about the mysterious enemy called Human Papolloma Virus. A virus that causes cancer of the cervix, penis, throat and anus.",
+    author: "Doctor Kays",
+    readTime: "3min watch",
+    date: "2nd of January, 2024",
+    videoId: "p2eG7OM_0_Y",
+    imageUrl: clinicseries4, // Replace with actual image paths
+  },
+  {
+    id: 3,
+    category: "HPV",
+    title: "The Mysterious Enemy - HPV",
+    description:
+    "It will be impossible for me to talk about cervical cancer without raising awareness about the mysterious enemy - Human Papilloma Virus",
+    author: "Doctor Kays",
+    readTime: "1min watch",
+    date: "3rd of January, 2024",
+    videoId: "p2eG7OM_0_Y",
+    imageUrl: clinicseries1, // Replace with actual image paths
+  },
+];
+
+export const mosSeries = [
+  {
+    id: 1,
+    category: "Cervical Cancer",
+    title: "Dsiccovering Cervical Cancer",
+    description:
+      "if you notice anyone with cervical cancer, would you allow the person to be treated in Nigeria? Listen to what Nigerians are saying on Medicine on the street with Dr Kays",
+    author: "Doctor Kays",
+    readTime: "1min watch",
     date: "1st of January, 2024",
     videoId: "p2eG7OM_0_Y",
     imageUrl: clinicseries3, // Replace with actual image paths
@@ -37,7 +76,7 @@ export const clinicSeries = [
     category: "HIV",
     title: "How is HIV Transmitted",
     description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+    "Do you know that you can be HIV positive and still build a family? Testing, Regular Clinic visits and Drug compliance are all you NEED!",
     author: "Doctor Kays",
     readTime: "3min watch",
     date: "2nd of January, 2024",
@@ -46,10 +85,10 @@ export const clinicSeries = [
   },
   {
     id: 3,
-    category: "Breast Cancer",
-    title: "Breast Cancer Risk Factor",
+    category: "Cervical Cancer",
+    title: "Nigeria Healthcare and Cervical Cancer",
     description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+    "Do you believe in the Nigeria Healthcare system? Listen to what the street has to say on Medicine on the street with Doctor Kays concerning cervical cancer.",
     author: "Doctor Kays",
     readTime: "1min watch",
     date: "3rd of January, 2024",
