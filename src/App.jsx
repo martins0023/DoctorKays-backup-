@@ -10,6 +10,7 @@ import Consultation from "./pages/Consultation";
 import Projects from "./pages/Projects";
 import Shop from "./pages/Shop";
 import Gallery from "./pages/Gallery";
+import AllPosts from "./pages/AllPosts";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/consultation" element={<Consultation />} />
         {/* <Route path="/shop" element={<Shop />} /> */}
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/all-posts" element={<AllPosts />} />
         {/* 
         <Route path="/dr-ai" element={<DrAi />} />
         <Route path="/services" element={<Services />} />

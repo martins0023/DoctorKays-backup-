@@ -12,6 +12,7 @@ import {
 } from "../constants/animations";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 const BriefAbout = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const BriefAbout = () => {
             <div className="justify-center flex mt-1">
               <Button
                 onClick={handleAbout}
+                img={<ArrowRight />}
                 text="Read More"
                 variants={pulse}
                 className="bg-gradient-to-l from-purple-700 to-red-400 rounded-full w-fit"

@@ -21,9 +21,17 @@ import clinicseries2 from "./clinicseries2.jpeg";
 import clinicseries1 from "./clinicseries1.jpeg";
 import clinicseries3 from "./clinicseries3.jpg";
 import clinicseries4 from "./clinicseries4.jpg";
-import calendarmockup from"./calendar-mockup.png";
+import calendarmockup from "./calendar-mockup.png";
+import mockup1  from "./mockup1.png";
+import mockup2 from "./mockup2.png";
+import mockup3 from "./mockup3.png";
+import east from "./east.png";
 
 export {
+    east,
+    mockup1,
+    mockup2,
+    mockup3,
     calendarmockup,
     clinicseries4,
     clinicseries3,

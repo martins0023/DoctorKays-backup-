@@ -69,7 +69,7 @@ const ClinicSeries = () => {
           onClick={handleGallery}
           text="view all"
           variants={pulse}
-          className="text-[16px] p-4 cursor-pointer hover:bg-primarydark rounded-full w-fit"
+          className="text-[16px] border-primary border-[0.5px] p-4 cursor-pointer hover:bg-primarydark rounded-full w-fit"
         />
       </div>
     </motion.div>

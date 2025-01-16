@@ -3,7 +3,7 @@ import { clinic1, clinic3, doc1 } from "../assets";
 import { useNavigate } from "react-router-dom";
 import { client, urlFor } from "../../lib/client";
 
-const BlogPosts = () => {
+const Allposts = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
@@ -33,35 +33,85 @@ const BlogPosts = () => {
         setLoading(false);
       }
     };
-  
+
     fetchPosts();
   }, []);
-  
+
+  const [filter, setFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const categories = [
+    "All",
+    "Health Nuggets",
+    "Medicine on the Street",
+    "Clinic Series",
+  ];
+
+  // Combine all series and filter based on the selected tag and search query
+  const allItems = [];
+  const filteredItems = allItems.filter((post) => {
+    const matchesCategory = filter === "All" || post.category === filter;
+    const matchesSearch = post.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   const truncateText = (text, maxWords) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   };
-  
 
   const navigate = useNavigate();
 
   const handleNavigate = (post) => {
     navigate(`/blog/${post.slug.current}`);
   };
-
   return (
-    <div className="py-10">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold">Latest Article</h2>
-        <a href="/all-posts" className="text-primary font-semibold">View All Posts</a>
+    <div>
+      {/* Search and Filter */}
+      <div className="flex flex-wrap items-center justify-between mt-10 mb-6 gap-4">
+        {/* Search Box */}
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full sm:w-auto flex-1 border border-gray-700 rounded-lg px-4 py-2 bg-gray-900 text-white placeholder-gray-400"
+        />
+
+        {/* Sort Dropdown */}
+        <select
+          className="border border-gray-700 rounded-lg px-4 py-2 bg-gray-900 text-white"
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="All">Sort by: All</option>
+          <option value="Health Nuggets">Health Nuggets</option>
+          <option value="Medicine on the Street">Medicine on the Street</option>
+          <option value="Clinic Series">Clinic Series</option>
+        </select>
       </div>
-      <p className="mb-8 text-neutral-400">
-        Dive into the latest insights, tips, and updates from Doctor Kays. Our blog is your go-to source for exploring a wide range of topics, from expert advice and industry trends to practical guides and inspiring stories. Stay informed, stay inspired, and discover something new with every article.
-      </p>
+
+      {/* Filter Tags */}
+      <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => setFilter(category)}
+            className={`px-4 py-2 rounded-full whitespace-nowrap ${
+              filter === category
+                ? "bg-gradient-to-l from-purple-700 to-purple-400 text-white"
+                : "bg-gray-800 text-gray-400"
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {posts.slice(0, 6).map((post) => (
+        {posts.map((post) => (
           <div
             key={post.id}
             onClick={() => handleNavigate(post)}
@@ -88,10 +138,8 @@ const BlogPosts = () => {
           </div>
         ))}
       </div>
-
-      
     </div>
   );
 };
 
-export default BlogPosts;
+export default Allposts;

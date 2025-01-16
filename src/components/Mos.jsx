@@ -1,6 +1,6 @@
 import React from "react";
-import { mosvid } from "../assets";
-import { ArrowRightCircle } from "lucide-react";
+import { east, mosvid } from "../assets";
+import { ArrowRight, ArrowRightCircle } from "lucide-react";
 import { clinicSeries, mosSeries } from "../constants";
 import Button from "./Button";
 import { motion } from "framer-motion";
@@ -67,9 +67,18 @@ const Mos = () => {
             <source src={mosvid} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+          <div className="justify-center flex pt-4">
+            <Button
+              onClick={handleGallery}
+              img={<ArrowRight />}
+              text="view more"
+              variants={pulse}
+              className="text-[16px] p-4 border-primary border-[0.5px] cursor-pointer hover:bg-primarydark rounded-full w-fit"
+            />
+          </div>
         </div>
       </div>
-      <div className="flex flex-wrap justify-center mb-10 pt-10">
+      {/* <div className="flex flex-wrap justify-center mb-10 pt-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {mosSeries.map((post) => (
             <a href={`https://youtu.be/${post.videoId}`}>
@@ -106,15 +115,7 @@ const Mos = () => {
             </a>
           ))}
         </div>
-      </div>
-      <div className="justify-center flex">
-        <Button
-          onClick={handleGallery}
-          text="view all"
-          variants={pulse}
-          className="text-[16px] p-4 cursor-pointer hover:bg-primarydark rounded-full w-fit"
-        />
-      </div>
+      </div> */}
     </motion.div>
   );
 };

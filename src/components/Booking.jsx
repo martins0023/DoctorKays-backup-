@@ -2,10 +2,15 @@ import { CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { slideInFromRight, staggerContainer, textVariants } from "../constants/animations";
 import { checklistItems } from "../constants";
-import { calendarmockup } from "../assets";
+import { calendarmockup, east, mockup1, mockup2, mockup3 } from "../assets";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
+  const navigate = useNavigate();
+  const handleBooking = () => {
+    navigate("/consultation");
+  };
   return (
     <motion.div
       initial="hidden"
@@ -23,15 +28,17 @@ const Booking = () => {
       </motion.h2>
 
       <div className="flex flex-wrap justify-center">
-        <div className="pt-12 w-full lg:w-1/2">
+        <div className=" w-full lg:w-1/2">
           <div className="flex mb-12">
             <div className="md:pt-5">
-              <p className="text-md tracking-wider gap-auto text-neutral-400">
+              <p className="text-md tracking-wider leading-relaxed gap-auto text-neutral-400">
                 Booking with Doctor Kays is easy and convenient. You can book an
                 appointment through the booking section of their website by
                 selecting any service. You can either have a virtual
                 consultation for convenience or meet him in person if you want
-                it more personal; both options are available. The platform
+                it more personal; both options are available. 
+                
+                The platform
                 offers an easy-to-use interface that ensures a smooth booking
                 process. You can see available time slots and book an
                 appointment immediately after selecting the service you want.
@@ -41,8 +48,9 @@ const Booking = () => {
 
               <div className="flex justify-center">
                 <Button
+                  onClick={handleBooking}
                   text="Book an Appointement"
-                  className="mt-5 hover:bg-white  rounded-tl-full rounded-bl-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
+                  className="mt-5 hover:bg-white  rounded-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
                 />
               </div>
             </div>
@@ -51,7 +59,7 @@ const Booking = () => {
         <div className="p-2 w-full lg:w-1/2 h-fit">
           <motion.img
             variants={slideInFromRight}
-            src={calendarmockup}
+            src={mockup1}
             alt="calendar-mockup"
             className="rounded-xl"
           />
