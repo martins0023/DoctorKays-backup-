@@ -33,9 +33,7 @@ const Stayintouch = () => {
         );
       } catch (error) {
         console.error("Error sending email:", error);
-        setModalMessage(
-          "Oops! Something went wrong. Please try again later."
-        );
+        setModalMessage("Oops! Something went wrong. Please try again later.");
       }
 
       setIsModalOpen(true);

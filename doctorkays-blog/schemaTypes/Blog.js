@@ -17,11 +17,11 @@ export default {
       type: 'string',
       options: {
         list: [
-          {title: 'General', value: 'general'},
-          {title: 'For Women', value: 'for women'},
+          {title: 'General', value: 'General'},
+          {title: 'For Women', value: 'For women'},
           {title: 'For Men', value: 'For Men'},
-          {title: 'Sex Education', value: 'sex education'},
-          {title: 'Pregnant Women', value: 'pregnant women'},
+          {title: 'Sex Education', value: 'Sex education'},
+          {title: 'Pregnant Women', value: 'Pregnant women'},
         ],
       },
     },

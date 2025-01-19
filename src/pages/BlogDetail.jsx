@@ -3,26 +3,50 @@ import Navbar from "../components/Navbar";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
-import { Calendar, PlayCircle, PauseCircle, ThumbsUp, ThumbsDown } from "lucide-react";
+import {
+  Calendar,
+  PlayCircle,
+  PauseCircle,
+  ThumbsUp,
+  ThumbsDown,
+} from "lucide-react";
 import { Blogposts } from "../constants";
 import BlogNotFound from "../components/BlogNotFound";
 import Testimonials from "../components/Testimonials";
 import { client } from "../../lib/client";
-import { PortableText } from '@portabletext/react';
+import { PortableText } from "@portabletext/react";
 
 const portableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="mt-4 text-lg text-gray-300 leading-relaxed">{children}</p>,
-    h1: ({ children }) => <h1 className="text-2xl font-bold mt-6">{children}</h1>,
-    h2: ({ children }) => <h2 className="text-xl font-semibold mt-6">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-lg font-medium mt-4">{children}</h3>,
-    h4: ({ children }) => <h4 className="text-3xl font-medium mt-3">{children}</h4>,
-    h5: ({ children }) => <h5 className="text-2xl font-semibold mt-2">{children}</h5>,
-    h6: ({ children }) => <h6 className="text-2xl font-medium text-gray-400 mt-2">{children}</h6>,
+    normal: ({ children }) => (
+      <p className="mt-4 text-lg text-gray-300 leading-relaxed">{children}</p>
+    ),
+    h1: ({ children }) => (
+      <h1 className="text-2xl font-bold mt-6">{children}</h1>
+    ),
+    h2: ({ children }) => (
+      <h2 className="text-xl font-semibold mt-6">{children}</h2>
+    ),
+    h3: ({ children }) => (
+      <h3 className="text-lg font-medium mt-4">{children}</h3>
+    ),
+    h4: ({ children }) => (
+      <h4 className="text-3xl font-medium mt-3">{children}</h4>
+    ),
+    h5: ({ children }) => (
+      <h5 className="text-2xl font-semibold mt-2">{children}</h5>
+    ),
+    h6: ({ children }) => (
+      <h6 className="text-2xl font-medium text-gray-400 mt-2">{children}</h6>
+    ),
   },
   list: {
-    bullet: ({ children }) => <ul className="list-disc list-inside mt-4 space-y-2">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal list-inside mt-4 space-y-2">{children}</ol>,
+    bullet: ({ children }) => (
+      <ul className="list-disc list-inside mt-4 space-y-2">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal list-inside mt-4 space-y-2">{children}</ol>
+    ),
   },
   listItem: {
     bullet: ({ children }) => <li className="ml-6">{children}</li>,
@@ -49,22 +73,15 @@ const BlogDetail = () => {
   const location = useLocation();
   const blog = location.state; // Access blog data from state
 
-  const truncateText = (text, maxWords) => {
-    const words = text.split(" ");
-    if (words.length <= maxWords) return text;
-    return words.slice(0, maxWords).join(" ") + "...";
-  };
-  
   const navigate = useNavigate();
 
-  
   const [post, setPost] = useState(null);
+  const [recommendedArticles, setRecommendedArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false); // TTS state
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const synth = window.speechSynthesis; // Web Speech API
-  
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -95,7 +112,7 @@ const BlogDetail = () => {
           slug,
           category,
           "imageUrl": image[0].asset->url,
-          description
+          "descriptionText": coalesce(description[2].children[0].text, "") // Get the first block of text safely
         }`;
         const recommendedData = await client.fetch(recommendedQuery, {
           category: data.category,
@@ -103,7 +120,7 @@ const BlogDetail = () => {
         });
         setRecommendedArticles(recommendedData);
       } catch (error) {
-        console.error('Error fetching post:', error);
+        console.error("Error fetching post:", error);
         setLoading(false);
       }
     };
@@ -113,7 +130,8 @@ const BlogDetail = () => {
 
   const updateLikes = async (type) => {
     try {
-      const updatedField = type === "like" ? { likes: likes + 1 } : { dislikes: dislikes + 1 };
+      const updatedField =
+        type === "like" ? { likes: likes + 1 } : { dislikes: dislikes + 1 };
       await client.patch(post._id).setIfMissing(updatedField).commit();
       if (type === "like") setLikes((prev) => prev + 1);
       else setDislikes((prev) => prev + 1);
@@ -133,34 +151,38 @@ const BlogDetail = () => {
       })
       .join("\n\n"); // Join paragraphs with spacing
   };
-  
+
   const handleSpeech = () => {
     if (!synth) {
       alert("Text-to-Speech is not supported in this browser.");
       return;
     }
-  
+
     const plainText = extractPlainText(post.description); // Extract plain text from rich-text content
-  
+
     if (isSpeaking) {
       synth.cancel(); // Stop all queued speech
       setIsSpeaking(false);
     } else {
       // Split text into smaller chunks
-      const CHUNK_SIZE = 100; // Adjust based on performance and limits
-      const textChunks = plainText.match(new RegExp(`.{1,${CHUNK_SIZE}}(\\s|$)`, 'g'));
-  
+      const CHUNK_SIZE = 150; // Adjust based on performance and limits
+      const textChunks = plainText.match(
+        new RegExp(`.{1,${CHUNK_SIZE}}(\\s|$)`, "g")
+      );
+
       if (!textChunks || textChunks.length === 0) {
         alert("No content available to read.");
         return;
       }
-  
+
       // Speak each chunk sequentially
       let currentChunkIndex = 0;
-  
+
       const speakChunk = () => {
         if (currentChunkIndex < textChunks.length) {
-          const utterance = new SpeechSynthesisUtterance(textChunks[currentChunkIndex]);
+          const utterance = new SpeechSynthesisUtterance(
+            textChunks[currentChunkIndex]
+          );
           utterance.lang = "en-US";
           utterance.pitch = 1; // Adjust pitch for a natural tone
           utterance.rate = 1; // Adjust speech rate
@@ -168,24 +190,28 @@ const BlogDetail = () => {
           utterance.voice = synth
             .getVoices()
             .find((voice) => voice.name.includes("Google US English")); // Select preferred voice
-  
+
           utterance.onend = () => {
             currentChunkIndex++;
             speakChunk(); // Trigger the next chunk
           };
-  
+
           synth.speak(utterance);
         } else {
           setIsSpeaking(false); // End speech when all chunks are done
         }
       };
-  
+
       setIsSpeaking(true);
       speakChunk(); // Start speaking
     }
   };
-  
 
+  const truncateText = (text, maxWords) => {
+    const words = text.split(" ");
+    if (words.length <= maxWords) return text;
+    return words.slice(0, maxWords).join(" ") + "...";
+  };
 
   if (loading) return <p>Loading...</p>;
   if (!post) {
@@ -209,9 +235,7 @@ const BlogDetail = () => {
           <div className="mt-4 flex justify-between items-center">
             <div className="flex gap-2 items-center">
               <Calendar />
-              <p className="text-sm font-medium ">
-                {`${post.date} `}
-              </p>
+              <p className="text-sm font-medium ">{`${post.date} `}</p>
             </div>
             <p className="text-sm font-medium ">By {post.author}</p>
           </div>
@@ -231,7 +255,10 @@ const BlogDetail = () => {
             </button>
           </div>
           <p className="mt-6 text-lg text-gray-300 leading-loose">
-            <PortableText value={post.description} components={portableTextComponents} />
+            <PortableText
+              value={post.description}
+              components={portableTextComponents}
+            />
           </p>
           <div className="mt-4 flex items-center gap-4 justify-center">
             <button
@@ -252,42 +279,41 @@ const BlogDetail = () => {
         </div>
 
         {/* Recommended Articles Section */}
-        <div className="mt-12 p-4">
-          <h2 className="text-2xl font-semibold mb-4">Recommended Articles</h2>
-          <div className="flex space-x-4 overflow-x-auto">
-            {Blogposts.map((post) => (
-              <div
-                key={post.id}
-                onClick={() => handleNavigate(post)}
-                className="min-w-[250px] sm:min-w-[300px] md:min-w-[350px] bg-gradient-to-l from-gray-800 to-gray-950 md:p-4 p-3 rounded-lg cursor-pointer"
-              >
-                <img
-                  src={post.imageUrl}
-                  alt={post.title}
-                  className="w-full h-40 object-cover rounded-lg mb-4"
-                />
-                <div className="bg-slate-200 p-1 w-fit rounded-full h-fit mb-1">
-                  <p className="text-sm text-primary font-medium">
-                    #{post.category}
-                  </p>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-                <p className="text-sm text-gray-400 mb-4">
-                  {truncateText(post.description, 15)}
-                  <span className="text-white">{" "}read more</span>
-                </p>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <span className="text-sm text-gray-400">{post.author}</span>
-                  </div>
-                  <span className="text-sm text-gray-400">{post.readTime}</span>
-                </div>
-              </div>
-            ))}
+<div className="mt-12 p-4">
+  <h2 className="text-2xl font-semibold mb-4">Related & Recommended Articles</h2>
+  {recommendedArticles.length > 0 ? (
+    <div className="flex space-x-4 overflow-x-auto">
+      {recommendedArticles.map((article) => (
+        <div
+          key={article._id}
+          onClick={() => navigate(`/blog/${article.slug.current}`, { state: article })}
+          className="min-w-[250px] sm:min-w-[300px] md:min-w-[350px] bg-gradient-to-l from-gray-800 to-gray-950 md:p-4 p-3 rounded-lg cursor-pointer"
+        >
+          <img
+            src={article.imageUrl}
+            alt={article.title}
+            className="w-full h-40 object-cover rounded-lg mb-4"
+          />
+          <div className="bg-slate-200 p-1 w-fit rounded-full h-fit mb-1">
+            <p className="text-sm text-primary font-medium">
+              #{article.category}
+            </p>
           </div>
-          </div>
+          <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
+          <p className="text-sm text-gray-400 mb-4">
+            {truncateText(article.descriptionText, 20)}...
+            <span className="text-white"> read more</span>
+          </p>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div className="text-center text-gray-400 mt-6">
+      <p>No related or recommended articles found for this blog post.</p>
+    </div>
+  )}
+</div>
 
-        
 
         <Testimonials />
         <Stayintouch />
