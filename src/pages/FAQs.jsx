@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
 import { faqsCard } from "../constants";
+import { client, urlFor } from "../../lib/client"; 
 import { motion } from "framer-motion";
+import { PortableText } from "@portabletext/react";
 import {
   slideInFromLeft,
   staggerContainer,
@@ -13,7 +15,33 @@ import {
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 const FAQs = () => {
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
   const [openIndex, setOpenIndex] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const query = `
+          *[_type == "faq"] {
+            _id,
+            question,
+            answer,
+          }
+        `;
+        const data = await client.fetch(query);
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+  
+    fetchPosts();
+  }, []);
 
   const handleToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index); // Toggle between open and closed
@@ -46,11 +74,11 @@ const FAQs = () => {
             </motion.h2>
           </div>
           <div className="flex flex-col mt-10 lg:mt-20">
-            {faqsCard.map((card, index) => (
-              <div key={index} className="flex flex-col mt-5 mb-5">
+            {posts.map((post, index) => (
+              <div key={post._id} className="flex flex-col mt-5 mb-5">
                 <div className="bg-gradient-to-r from-purple-800 to-purple-950 flex items-center justify-center justify-items-center w-[56px] h-[36px] rounded-md">
                   <p className="text-white font-semibold text-[20px]">
-                    {card.id}
+                  {index + 1} {/* Display the index incremented by 1 */}
                   </p>
                 </div>
 
@@ -65,7 +93,7 @@ const FAQs = () => {
                       variants={textVariants}
                       className="text-2xl"
                     >
-                      {card.question}
+                      {post.question}
                     </motion.p>
                     {openIndex === index ? (
                       <ChevronUp className="text-neutral-300 w-6 h-6" />
@@ -80,7 +108,7 @@ const FAQs = () => {
                       variants={slideInFromLeft}
                       className="text-neutral-300 tracking-wide text-[16px] mt-3"
                     >
-                      {card.answer}
+                      <PortableText value={post.answer} />
                     </motion.p>
                   )}
                   <hr className="border-neutral-800 w-full h-[1px] mt-3" />

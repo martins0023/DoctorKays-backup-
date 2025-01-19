@@ -1,12 +1,46 @@
-import React from "react";
-import { clinicSeries } from "../constants";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { pulse, staggerContainer } from "../constants/animations";
 import Button from "./Button";
+import { PortableText } from '@portabletext/react';
+import { client } from "../../lib/client";
 
 const ClinicSeries = () => {
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const query = `
+          *[_type == "clinicseries"] | order(date desc) {
+            _id,
+            category,
+            title,
+            slug,
+            watchtime,
+            videoId,
+            date,
+            "imageUrl": image[0].asset->url,
+            "descriptionText": coalesce(description[0].children[0].text, "") // Get the first block of text safely
+          }
+        `;
+        const data = await client.fetch(query);
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+  
+    fetchPosts();
+  }, []);
+
   const truncateText = (text, maxWords) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
@@ -32,7 +66,7 @@ const ClinicSeries = () => {
       </h2>
       <div className="flex flex-wrap justify-center mb-12 pt-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {clinicSeries.map((post) => (
+          {posts.slice(0, 3).map((post) => (
             <a href={`https://youtu.be/${post.videoId}`}>
               <div
                 key={post.id}
@@ -50,14 +84,14 @@ const ClinicSeries = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                 <p className="text-sm text-gray-400 mb-4">
-                  {truncateText(post.description, 20)}
+                  {truncateText(post.descriptionText, 20)}
                   <span className="text-white"> read more</span>{" "}
                 </p>
                 <div className="flex justify-between items-center">
                   <motion.div variants={pulse} className="flex items-center">
                     <ArrowRightCircle />
                   </motion.div>
-                  <span className="text-sm text-gray-400">{post.readTime}</span>
+                  <span className="text-sm text-gray-400">{post.watchtime} watch</span>
                 </div>
               </div>
             </a>

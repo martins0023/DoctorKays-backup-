@@ -42,9 +42,9 @@ const Allposts = () => {
 
   const categories = [
     "All",
-    "Health Nuggets",
-    "Medicine on the Street",
-    "Clinic Series",
+    "Sleeping",
+    "Cancer",
+    "Sex Education",
   ];
 
   // Combine all series and filter based on the selected tag and search query
@@ -87,9 +87,9 @@ const Allposts = () => {
           onChange={(e) => setFilter(e.target.value)}
         >
           <option value="All">Sort by: All</option>
-          <option value="Health Nuggets">Health Nuggets</option>
-          <option value="Medicine on the Street">Medicine on the Street</option>
-          <option value="Clinic Series">Clinic Series</option>
+          <option value="Health Nuggets">Sleeping</option>
+          <option value="Medicine on the Street">Cancer</option>
+          <option value="Clinic Series">Sex Education</option>
         </select>
       </div>
 

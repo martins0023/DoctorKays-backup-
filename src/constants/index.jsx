@@ -27,7 +27,7 @@ export const clinicSeries = [
     description:
       "Do you know there's an enemy known as HPV that causes cancer of the throat, cervix, anus and penis? People don't really know about this. You need to watch this video.",
     author: "Doctor Kays",
-    readTime: "2min watch",
+    readTime: "2min",
     date: "1st of January, 2024",
     videoId: "p2eG7OM_0_Y",
     imageUrl: clinicseries3, // Replace with actual image paths
@@ -39,7 +39,7 @@ export const clinicSeries = [
     description:
     "Last week, we talked about the mysterious enemy called Human Papolloma Virus. A virus that causes cancer of the cervix, penis, throat and anus.",
     author: "Doctor Kays",
-    readTime: "3min watch",
+    readTime: "3min",
     date: "2nd of January, 2024",
     videoId: "p2eG7OM_0_Y",
     imageUrl: clinicseries4, // Replace with actual image paths
@@ -51,7 +51,7 @@ export const clinicSeries = [
     description:
     "It will be impossible for me to talk about cervical cancer without raising awareness about the mysterious enemy - Human Papilloma Virus",
     author: "Doctor Kays",
-    readTime: "1min watch",
+    readTime: "1min",
     date: "3rd of January, 2024",
     videoId: "p2eG7OM_0_Y",
     imageUrl: clinicseries1, // Replace with actual image paths

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
+import emailjs from "emailjs-com"; // Import Email.js
 
 const Stayintouch = () => {
   const [email, setEmail] = useState("");
@@ -11,9 +12,32 @@ const Stayintouch = () => {
     setEmail(e.target.value);
   };
 
-  const handleSubscribe = () => {
+  const handleSubscribe = async () => {
     if (email) {
-      setModalMessage("Thank you for subscribing. Your email has been successfully received.");
+      try {
+        // Use Email.js to send email data
+        const templateParams = {
+          email, // Pass the user's email to the template
+        };
+
+        await emailjs.send(
+          "service_qo2uuhc", // Replace with your Email.js Service ID
+          "template_0c34mab", // Replace with your Email.js Template ID
+          templateParams,
+          "5_DaWBIfSUtw3os8H" // Replace with your Email.js Public Key
+        );
+
+        // Show success message
+        setModalMessage(
+          "Thank you for subscribing. Your email has been successfully received."
+        );
+      } catch (error) {
+        console.error("Error sending email:", error);
+        setModalMessage(
+          "Oops! Something went wrong. Please try again later."
+        );
+      }
+
       setIsModalOpen(true);
       setEmail(""); // Clear the email input after successful subscription
     }

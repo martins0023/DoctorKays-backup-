@@ -1,33 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { pulse, staggerContainer, textVariants } from "../constants/animations";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Stayintouch from "../components/Stayintouch";
 import Testimonials from "../components/Testimonials";
-import { clinicSeries, mosSeries } from "../constants";
 import { ArrowRightCircle } from "lucide-react";
-import { mosvid } from "../assets";
+import { client } from "../../lib/client";
 
 const Gallery = () => {
   const [filter, setFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [clinicSeries, setClinicSeries] = useState([]);
+  const [mosSeries, setMosSeries] = useState([]);
+  const [error, setError] = useState(null);
 
-  const categories = ["All", "Health Nuggets", "Medicine on the Street", "Clinic Series"];
-  
-  // Combine all series and filter based on the selected tag and search query
-  const allItems = [...clinicSeries, ...mosSeries];
-  const filteredItems = allItems.filter((post) => {
-    const matchesCategory = filter === "All" || post.category === filter;
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const query = `
+          {
+            "clinicSeries": *[_type == "clinicseries"] | order(date desc) {
+              _id,
+              category,
+              title,
+              slug,
+              watchtime,
+              date,
+              "imageUrl": image[0].asset->url,
+              "descriptionText": coalesce(description[0].children[0].text, "")
+            },
+            "mosSeries": *[_type == "mos"] | order(date desc) {
+              _id,
+              category,
+              title,
+              slug,
+              watchtime,
+              videoId,
+              date,
+              "descriptionText": coalesce(description[0].children[0].text, "")
+            }
+          }
+        `;
+        const { clinicSeries, mosSeries } = await client.fetch(query);
+        setClinicSeries(clinicSeries);
+        setMosSeries(mosSeries);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  const categories = ["All", "Clinic Series", "Mos", "Health Nuggets"];
+
+  const filterItems = () => {
+    if (filter === "All") return [...clinicSeries, ...mosSeries];
+    if (filter === "Clinic Series") return clinicSeries;
+    if (filter === "Mos") return mosSeries;
+    return []; // Future: add logic for "Health Nuggets"
+  };
+
+  const filteredItems = filterItems().filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const truncateText = (text, maxWords) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   };
+
   return (
     <div>
       <Navbar />
@@ -57,7 +105,6 @@ const Gallery = () => {
 
           {/* Search and Filter */}
           <div className="flex flex-wrap items-center justify-between mt-10 mb-6 gap-4">
-            {/* Search Box */}
             <input
               type="text"
               placeholder="Search..."
@@ -66,15 +113,15 @@ const Gallery = () => {
               className="w-full sm:w-auto flex-1 border border-gray-700 rounded-lg px-4 py-2 bg-gray-900 text-white placeholder-gray-400"
             />
 
-            {/* Sort Dropdown */}
             <select
               className="border border-gray-700 rounded-lg px-4 py-2 bg-gray-900 text-white"
               onChange={(e) => setFilter(e.target.value)}
             >
-              <option value="All">Sort by: All</option>
-              <option value="Health Nuggets">Health Nuggets</option>
-              <option value="Medicine on the Street">Medicine on the Street</option>
-              <option value="Clinic Series">Clinic Series</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -95,24 +142,29 @@ const Gallery = () => {
             ))}
           </div>
 
-          {/* mos series */}
+          {/* Render Items */}
           <div className="flex flex-wrap justify-center mb-10 pt-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {filteredItems.map((post) => (
-                <a href={`https://youtu.be/${post.videoId}`}>
-                  <div
-                    key={post.id}
-                    className="bg-gradient-to-l from-gray-800 to-gray-950 p-4 rounded-lg cursor-pointer"
-                  >
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      className="w-full h-40 object-cover rounded-lg mb-4"
-                    >
-                      <source src={mosvid} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                <a
+                  href={`https://youtu.be/${post.videoId || ""}`}
+                  key={post._id}
+                >
+                  <div className="bg-gradient-to-l from-gray-800 to-gray-950 p-4 rounded-lg cursor-pointer">
+                    {post.videoId ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${post.videoId}?autoplay=1&mute=1`}
+                        title={post.title}
+                        className="w-full h-40 object-cover rounded-lg mb-4"
+                        allow="autoplay; encrypted-media"
+                      ></iframe>
+                    ) : (
+                      <img
+                        src={post.imageUrl}
+                        alt={post.title}
+                        className="w-full h-40 object-cover rounded-lg mb-4"
+                      />
+                    )}
                     <div className="bg-slate-200 p-1 w-fit rounded-full h-fit mb-1">
                       <p className="text-sm text-primary font-medium">
                         #{post.category}
@@ -120,7 +172,7 @@ const Gallery = () => {
                     </div>
                     <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                     <p className="text-sm text-gray-400 mb-4">
-                      {truncateText(post.description, 20)}
+                      {truncateText(post.descriptionText, 20)}
                       <span className="text-white"> read more</span>{" "}
                     </p>
                     <div className="flex justify-between items-center">
@@ -131,7 +183,7 @@ const Gallery = () => {
                         <ArrowRightCircle />
                       </motion.div>
                       <span className="text-sm text-gray-400">
-                        {post.readTime}
+                        {post.watchtime || "N/A"} watch
                       </span>
                     </div>
                   </div>
@@ -139,49 +191,6 @@ const Gallery = () => {
               ))}
             </div>
           </div>
-
-          {/* clinic series */}
-          <div className="flex flex-wrap justify-center mb-12 pt-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {filteredItems.map((post) => (
-                <a href={`https://youtu.be/${post.videoId}`}>
-                  <div
-                    key={post.id}
-                    className="bg-gradient-to-l from-gray-800 to-gray-950 p-4 rounded-lg cursor-pointer"
-                  >
-                    <img
-                      src={post.imageUrl}
-                      alt={post.title}
-                      className="w-full h-40 object-cover rounded-lg mb-4"
-                    />
-                    <div className="bg-slate-200 p-1 w-fit rounded-full h-fit mb-1">
-                      <p className="text-sm text-primary font-medium">
-                        #{post.category}
-                      </p>
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-                    <p className="text-sm text-gray-400 mb-4">
-                      {truncateText(post.description, 20)}
-                      <span className="text-white"> read more</span>{" "}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <motion.div
-                        variants={pulse}
-                        className="flex items-center"
-                      >
-                        <ArrowRightCircle />
-                      </motion.div>
-                      <span className="text-sm text-gray-400">
-                        {post.readTime}
-                      </span>
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* health nuggets */}
 
           {filteredItems.length === 0 && (
             <div className="text-center text-gray-500 mt-10">

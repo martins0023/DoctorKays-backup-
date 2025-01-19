@@ -3,12 +3,46 @@ import Navbar from "../components/Navbar";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
-import { Calendar, PlayCircle, PauseCircle } from "lucide-react";
+import { Calendar, PlayCircle, PauseCircle, ThumbsUp, ThumbsDown } from "lucide-react";
 import { Blogposts } from "../constants";
 import BlogNotFound from "../components/BlogNotFound";
 import Testimonials from "../components/Testimonials";
 import { client } from "../../lib/client";
 import { PortableText } from '@portabletext/react';
+
+const portableTextComponents = {
+  block: {
+    normal: ({ children }) => <p className="mt-4 text-lg text-gray-300 leading-relaxed">{children}</p>,
+    h1: ({ children }) => <h1 className="text-2xl font-bold mt-6">{children}</h1>,
+    h2: ({ children }) => <h2 className="text-xl font-semibold mt-6">{children}</h2>,
+    h3: ({ children }) => <h3 className="text-lg font-medium mt-4">{children}</h3>,
+    h4: ({ children }) => <h4 className="text-3xl font-medium mt-3">{children}</h4>,
+    h5: ({ children }) => <h5 className="text-2xl font-semibold mt-2">{children}</h5>,
+    h6: ({ children }) => <h6 className="text-2xl font-medium text-gray-400 mt-2">{children}</h6>,
+  },
+  list: {
+    bullet: ({ children }) => <ul className="list-disc list-inside mt-4 space-y-2">{children}</ul>,
+    number: ({ children }) => <ol className="list-decimal list-inside mt-4 space-y-2">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="ml-6">{children}</li>,
+    number: ({ children }) => <li className="ml-6">{children}</li>,
+  },
+  marks: {
+    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+    em: ({ children }) => <em className="italic">{children}</em>,
+    link: ({ value, children }) => (
+      <a
+        href={value.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-500 underline"
+      >
+        {children}
+      </a>
+    ),
+  },
+};
 
 const BlogDetail = () => {
   const { id } = useParams(); // Get the ID from the route
@@ -27,7 +61,10 @@ const BlogDetail = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false); // TTS state
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
   const synth = window.speechSynthesis; // Web Speech API
+  
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -41,11 +78,30 @@ const BlogDetail = () => {
           section,
           date,
           "imageUrl": image[0].asset->url,
-          description
+          description,
+          likes,
+          dislikes
         }`;
         const data = await client.fetch(query, { id }); // Pass the id as a parameter
         setPost(data);
+        setLikes(data.likes || 0);
+        setDislikes(data.dislikes || 0);
         setLoading(false);
+
+        // Fetch recommended articles based on the blog's category
+        const recommendedQuery = `*[_type == "blog" && category == $category && _id != $id]{
+          _id,
+          title,
+          slug,
+          category,
+          "imageUrl": image[0].asset->url,
+          description
+        }`;
+        const recommendedData = await client.fetch(recommendedQuery, {
+          category: data.category,
+          id: data._id,
+        });
+        setRecommendedArticles(recommendedData);
       } catch (error) {
         console.error('Error fetching post:', error);
         setLoading(false);
@@ -54,6 +110,17 @@ const BlogDetail = () => {
 
     fetchPost();
   }, [id]);
+
+  const updateLikes = async (type) => {
+    try {
+      const updatedField = type === "like" ? { likes: likes + 1 } : { dislikes: dislikes + 1 };
+      await client.patch(post._id).setIfMissing(updatedField).commit();
+      if (type === "like") setLikes((prev) => prev + 1);
+      else setDislikes((prev) => prev + 1);
+    } catch (error) {
+      console.error(`Error updating ${type}:`, error);
+    }
+  };
   // Helper function to convert rich text to plain text
   const extractPlainText = (richText) => {
     if (!richText || !Array.isArray(richText)) return "";
@@ -164,8 +231,24 @@ const BlogDetail = () => {
             </button>
           </div>
           <p className="mt-6 text-lg text-gray-300 leading-loose">
-            <PortableText value={post.description} />
+            <PortableText value={post.description} components={portableTextComponents} />
           </p>
+          <div className="mt-4 flex items-center gap-4 justify-center">
+            <button
+              onClick={() => updateLikes("like")}
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+            >
+              <ThumbsUp />
+              Like ({likes})
+            </button>
+            <button
+              onClick={() => updateLikes("dislike")}
+              className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition"
+            >
+              <ThumbsDown />
+              Dislike ({dislikes})
+            </button>
+          </div>
         </div>
 
         {/* Recommended Articles Section */}
@@ -204,39 +287,7 @@ const BlogDetail = () => {
           </div>
           </div>
 
-        {/* Related Articles Section */}
-        <div className="mt-12 p-4">
-          <h2 className="text-2xl font-semibold  mb-4">Related Articles</h2>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Placeholder for related articles */}
-            {Blogposts.map((post) => (
-          <div
-            key={post.id}
-            onClick={() => handleNavigate(post)}
-            className="bg-gradient-to-l from-gray-800 to-gray-950 p-4 rounded-lg cursor-pointer"
-          >
-            <img
-              src={post.imageUrl}
-              alt={post.title}
-              className="w-full h-40 object-cover rounded-lg mb-4"
-            />
-            <div className="bg-slate-200 p-1 w-fit rounded-full h-fit mb-1">
-              <p className="text-sm text-primary font-medium">
-                #{post.category}
-              </p>
-            </div>
-            <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-            <p className="text-sm text-gray-400 mb-4">{truncateText(post.description, 15)}<span className="text-white">{" "}read more</span> </p>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <span className="text-sm text-gray-400">{post.author}</span>
-              </div>
-              <span className="text-sm text-gray-400">{post.readTime}</span>
-            </div>
-          </div>
-        ))}
-          </div>
-        </div>
+        
 
         <Testimonials />
         <Stayintouch />
