@@ -14,7 +14,7 @@ export const navItems = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Doctor Kay's AI", href: "/doctorkaysai" },
+  { label: "Shop", href: "/shop" },
   { label: "Contact", href: "/contact" },
   { label: "FAQs", href: "/faqs" },
 ];

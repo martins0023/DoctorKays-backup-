@@ -13,24 +13,34 @@ import {
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true); // Initial state for dark mode
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem('isDarkMode') === 'true' // Check if dark mode is stored
+  );
+
+  
   const navigate = useNavigate();
   const location = useLocation();
 
   // Dark mode toggle handler
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  
 
   // Effect to apply dark/light mode classes to the body
   useEffect(() => {
+    const root = document.documentElement; // Target the html element
     if (isDarkMode) {
-      document.body.classList.add("dark");
+      root.classList.add("dark");
+      root.classList.remove("light");
     } else {
-      document.body.classList.remove("dark");
+      root.classList.add("light");
+      root.classList.remove("dark");
     }
+    localStorage.setItem('isDarkMode', isDarkMode); // store preference
   }, [isDarkMode]);
-
+  
+const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+    console.log('Dark mode:', !isDarkMode); // check if state updates
+  };
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
   };

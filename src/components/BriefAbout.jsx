@@ -1,6 +1,6 @@
 import React from "react";
 import { checkaboutlists } from "../constants";
-import { doctor1 } from "../assets";
+import { doctor010, doctor1 } from "../assets";
 import { motion } from "framer-motion";
 import {
   bouncex,
@@ -31,13 +31,13 @@ const BriefAbout = () => {
           <div className="flex flex-col gap-2">
             <motion.img
               variants={slideInFromTop}
-              src={doctor1}
+              src={doctor010}
               alt="doctor"
               className="rounded-xl"
             />
             <motion.p
               variants={slideInFromLeft}
-              className="text-md text-neutral-500"
+              className="text-base text-neutral-500"
             >
               Doctor Olayiwola is not your run-of-the-mill medical doctor. He is
               a tech lover, family advocate and firm believer in preventive and

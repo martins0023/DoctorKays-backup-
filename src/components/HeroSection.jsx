@@ -8,6 +8,7 @@ import {
   staggerContainer,
   textVariants,
 } from "../constants/animations";
+import { videoDr } from "../assets";
 
 const HeroSection = () => {
   return (
@@ -18,11 +19,20 @@ const HeroSection = () => {
       className="relative flex items-center justify-center h-screen bg-gray-100"
     >
       <div className="absolute inset-0">
-        <img
+      <video
+            autoPlay
+            loop
+            muted
+            className="object-cover w-full h-full lg:h-full"
+          >
+            <source src={videoDr} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        {/* <img
           src={doctorkays}
           alt="Background"
           className="object-cover w-full h-full lg:h-full"
-        />
+        /> */}
       </div>
       <div className="relative z-10 max-w-4xl px-6 mt-10 text-center text-white justify-center items-center justify-items-center">
         <div className="bg-primarydark w-fit p-2 rounded-full flex justify-center items-center">
@@ -35,14 +45,14 @@ const HeroSection = () => {
             , I AM DOCTOR KAYS
           </p>
         </div>
-        <motion.h1
+        <motion.h5
           initial="hidden"
           animate="visible"
           variants={textVariants}
-          className="mt-4 md:pb-2 h-full text-4xl font-bold sm:text-5xl lg:text-6xl bg-gradient-to-br from-white to-indigo-800 text-transparent bg-clip-text tracking-normal"
+          className="mt-4 md:pb-2 h-full text-2xl font-semibold sm:text-3xl lg:text-5xl text-white bg-clip-text tracking-normal"
         >
           Turning medicine from a head-scratcher, into your friendly companion
-        </motion.h1>
+        </motion.h5>
         <motion.p
           initial="hidden"
           animate="visible"

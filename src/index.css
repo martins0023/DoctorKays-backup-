@@ -6,5 +6,16 @@
 
 :root {
   font-family: "Poppins", sans-serif;
-  color-scheme: dark;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.dark {
+  --background-color: #121212; /* dark mode background */
+  --text-color: #ffffff; /* dark mode text */
+}
+
+.light {
+  --background-color: #ffffff; /* light mode background */
+  --text-color: #000000; /* light mode text */
 }
