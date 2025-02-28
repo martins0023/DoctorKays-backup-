@@ -21,7 +21,7 @@ const FeatureSection = () => {
       </div>
       <div className="flex flex-wrap mt-10 lg:mt-20 transition-transform duration-300 group-hover:bg-white cursor-pointer">
         {features.map((feature, index) => (
-          <div key={index} className="w-full sm:w-1/2 lg:w-1/3" onClick={() => navigate(feature.url)}>
+          <div key={index} className="w-full sm:w-1/2 lg:w-1/3" onClick={() => navigate(feature.url) }>
             <div className="flex">
               <motion.div variants={bounce} className="flex mx-6 h-10 w-10 p-2 bg-neutral-900 text-purple-700 justify-center items-center rounded-full">
                 {feature.icon}

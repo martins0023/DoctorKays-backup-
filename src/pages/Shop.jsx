@@ -36,7 +36,7 @@ const Shop = ({isDarkMode}) => {
             initial="hidden"
             animate="visible"
             variants={continuousTextAnimation}
-            className="md:pb-2 h-full text-5xl text-left font-bold sm:text-3xl lg:text-5xl text-white bg-clip-text tracking-normal"
+            className="md:pb-2 h-full text-4xl text-left font-bold sm:text-3xl lg:text-5xl text-white bg-clip-text tracking-normal"
           >
             Empowering your wellness journey to support your healthy lifestyle.
           </motion.h5>
@@ -44,7 +44,7 @@ const Shop = ({isDarkMode}) => {
             initial="hidden"
             animate="visible"
             variants={slideInFromRight}
-            className="mt-6 text-lg text-left font-normal text-purple-100"
+            className="mt-6 text-lg text-left font-normal text-white"
           >
             Welcome to Doctor Kays Shop - your trusted destination for premium
             healthcare products and wellness essentials....

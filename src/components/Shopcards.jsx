@@ -108,7 +108,7 @@ const Shopcards = ({ isDarkMode }) => {
   if (error) return <p>Error loading shop items it is from our side, please reload.</p>;
 
   return (
-    <div className="max-w-7xl mx-auto py-6">
+    <div className="max-w-7xl mx-auto py-6 p-4">
       <div>
         <h1 className="text-4xl md:text-6xl font-bold  mb-4">Get Inspired</h1>
         <p className="text-lg ">
