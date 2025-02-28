@@ -404,7 +404,7 @@ export const resourcesLinks = [
 ];
 
 export const platformLinks = [
-  { href: "/doctorkaysai", text: "Doctor Kay's AI" },
+  { href: "/doctorkaysai", text: "Doctor Kays AI" },
   { href: "#", text: "Shops and Merch" },
   { href: "#", text: "Clinic Online (coming soon)" },
 ];
