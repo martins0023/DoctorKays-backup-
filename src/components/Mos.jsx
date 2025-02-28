@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { east, mosvid } from "../assets";
 import { ArrowRight, ArrowRightCircle } from "lucide-react";
 import { clinicSeries, mosSeries } from "../constants";
@@ -6,8 +6,41 @@ import Button from "./Button";
 import { motion } from "framer-motion";
 import { staggerContainer, pulse } from "../constants/animations";
 import { useNavigate } from "react-router-dom";
+import { client } from "../../lib/client";
 
 const Mos = () => {
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const query = `
+          *[_type == "mos"] | order(date desc) {
+            _id,
+            category,
+            title,
+            slug,
+            watchtime,
+            videoId,
+            date,
+            "imageUrl": image[0].asset->url,
+            "descriptionText": coalesce(description[0].children[0].text, "") // Get the first block of text safely
+          }
+        `;
+        const data = await client.fetch(query);
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
   const truncateText = (text, maxWords) => {
     const words = text.split(" ");
     if (words.length <= maxWords) return text;
@@ -58,15 +91,27 @@ const Mos = () => {
           </div>
         </div>
         <div className="p-2 w-full lg:w-1/2 h-fit">
-          <video
-            autoPlay
-            loop
-            muted
-            className="rounded-lg object-cover w-full h-80 border border-purple-700 shadow-sm shadow-purple-400 mx-2 my-4"
-          >
-            <source src={mosvid} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          {posts
+            .slice(0, 1)
+            .map((post) =>
+              post.videoId ? (
+                <iframe
+                  key={post._id}
+                  src={`https://www.youtube.com/embed/${post.videoId}?autoplay=1&mute=1`}
+                  title={post.title}
+                  allow="autoplay; encrypted-media"
+                  className="rounded-lg object-cover w-full h-80 border border-purple-700 shadow-sm shadow-purple-400 mx-2 my-4"
+                />
+              ) : (
+                <img
+                  key={post._id}
+                  src={post.imageUrl}
+                  alt={post.title}
+                  className="w-full h-40 object-cover rounded-lg mb-4"
+                />
+              )
+            )}
+
           <div className="justify-center flex pt-4">
             <Button
               onClick={handleGallery}
