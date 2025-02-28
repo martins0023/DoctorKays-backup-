@@ -48,7 +48,7 @@ const BriefAbout = () => {
             <div className="justify-center flex mt-1">
               <Button
                 onClick={handleAbout}
-                img={<ArrowRight className="text-white" />}
+                img={<ArrowRight className="" />}
                 text="Read More"
                 variants={pulse}
                 className="bg-gradient-to-l from-purple-700 to-red-400 rounded-full w-fit"
