@@ -183,7 +183,7 @@ export const features = [
     icon: <LocateFixedIcon />,
     text: "Pharmicies near me",
     description:
-      "Doctor Kay’s website makes it effortless to locate trusted pharmacies, clinics, and laboratories closest to you. Instantly find verified health facilities near you.",
+      "Doctor Kays website makes it effortless to locate trusted pharmacies, clinics, and laboratories closest to you. Instantly find verified health facilities near you.",
     url: "/nearestpharmacy"
   },
   {
@@ -315,7 +315,7 @@ export const checkaboutlists = [
     icon: <Ribbon />,
     title: "Medicine on the street",
     description:
-      "Follow closely as doctor kay's takes you to the street of Nigeria.",
+      "Follow closely as doctor kays takes you to the street of Nigeria.",
   },
   {
     icon: <HeartPulse />,
