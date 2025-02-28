@@ -8,7 +8,7 @@ import {
   staggerContainer,
   textVariants,
 } from "../constants/animations";
-import { videoDr } from "../assets";
+import { viddisplay, videoDr } from "../assets";
 
 const HeroSection = () => {
   return (
@@ -25,7 +25,7 @@ const HeroSection = () => {
           muted
           className="object-cover w-full h-full lg:h-full"
         >
-          <source src={videoDr} type="video/mp4" />
+          <source src={viddisplay} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         {/* <img

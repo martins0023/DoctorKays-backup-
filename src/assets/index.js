@@ -55,6 +55,7 @@ import doc1 from "./doc.jpg";
 
 import notfound1 from "./notfound1.png";
 import notfound2 from "./notfound2.png";
+import viddisplay from "./vid.mp4"
 
 import success from "./success.png";
 
@@ -74,6 +75,7 @@ import ecomm3 from "./ecomm3.jpg";
 import ecomm4 from "./ecomm4.jpg";
 
 export {
+    viddisplay,
     ecomm1,
     ecomm2,
     ecomm3,

@@ -4,7 +4,7 @@ import { ArrowRightCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { pulse, staggerContainer } from "../constants/animations";
 import Button from "./Button";
-import { PortableText } from '@portabletext/react';
+import { PortableText } from "@portabletext/react";
 import { client } from "../../lib/client";
 
 const ClinicSeries = () => {
@@ -37,7 +37,7 @@ const ClinicSeries = () => {
         setLoading(false);
       }
     };
-  
+
     fetchPosts();
   }, []);
 
@@ -83,7 +83,9 @@ const ClinicSeries = () => {
                     #{post.category}
                   </p>
                 </div>
-                <h3 className="text-xl text-white font-semibold mb-2">{post.title}</h3>
+                <h3 className="text-xl text-white font-semibold mb-2">
+                  {post.title}
+                </h3>
                 <p className="text-sm text-gray-400 mb-4">
                   {truncateText(post.descriptionText, 20)}
                   <span className="text-white"> read more</span>{" "}
@@ -92,7 +94,9 @@ const ClinicSeries = () => {
                   <motion.div variants={pulse} className="flex items-center">
                     <ArrowRightCircle />
                   </motion.div>
-                  <span className="text-sm text-gray-400">{post.watchtime} watch</span>
+                  <span className="text-sm text-gray-400">
+                    {post.watchtime} watch
+                  </span>
                 </div>
               </div>
             </a>
