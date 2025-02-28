@@ -28,6 +28,24 @@ import doctor019 from "./020.jpg";
 import doctor020 from "./021.jpg";
 import doctor021 from "./022.jpg";
 
+import bgback1 from "./bgback1.jpg";
+import bgback2 from "./bgback2.png";
+import bgback3 from "./bgback3.jpg";
+import bgback4 from "./bgback4.png";
+import bgback5 from "./bgback5.png";
+
+import shop1 from "./shop1.jpeg";
+import shop3 from "./shop3.jpeg";
+import shop3b from "./shop3.png";
+import shop4 from "./shop4.jpg";
+import shop5 from "./shop5.png";
+import shop6 from "./shop6.jpeg";
+import shop7 from "./shop7.jpg";
+import shop8 from "./shop8.png";
+import shop9 from "./shop9.jpg";
+import shop10 from "./shop10.png";
+
+
 import clinic1 from "./clinic.jpg";
 import clinic from "./clinic.jpg";
 import clinic3 from "./clinic3.jpg";
@@ -50,7 +68,31 @@ import mockup2 from "./mockup2.png";
 import mockup3 from "./mockup3.png";
 import east from "./east.png";
 
+import ecomm1 from "./ecomm1.jpg";
+import ecomm2 from "./ecomm2.jpg";
+import ecomm3 from "./ecomm3.jpg";
+import ecomm4 from "./ecomm4.jpg";
+
 export {
+    ecomm1,
+    ecomm2,
+    ecomm3,
+    ecomm4,
+    shop1,
+    shop3,
+    shop3b,
+    shop4,
+    shop5,
+    shop6,
+    shop7,
+    shop8,
+    shop9,
+    shop10,
+    bgback1,
+    bgback2,
+    bgback3,
+    bgback4,
+    bgback5,
     doctor001,
     doctor002,
     doctor003,

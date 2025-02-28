@@ -5,8 +5,8 @@ const Footer = () => {
     <footer className="mt-20 border-t py-10 border-neutral-700">
       <div className="mb-10">
         <img src={logo} alt="doctorkays" className="w-20 h-20" />
-        <p className="text-white font-semibold text-[16px]">Doctorkays</p>
-        <p className="mt-1 text-[16px] text-neutral-300 font-montserrat">
+        <p className=" font-semibold text-[16px]">Doctorkays</p>
+        <p className="mt-1 text-[16px] font-montserrat">
           Doctor Kays, a dedicated medical professional passionate about
           enhancing community health through education and preventive care.
         </p>
@@ -19,7 +19,7 @@ const Footer = () => {
               <li key={index}>
                 <a
                   href={link.href}
-                  className="text-neutral-300 hover:text-white"
+                  className=" hover:text-neutral-300"
                 >
                   {link.text}
                 </a>
@@ -34,7 +34,7 @@ const Footer = () => {
               <li key={index}>
                 <a
                   href={link.href}
-                  className="text-neutral-300 hover:text-white"
+                  className=" hover:text-neutral-300"
                 >
                   {link.text}
                 </a>
@@ -49,7 +49,7 @@ const Footer = () => {
               <li key={index}>
                 <a
                   href={link.href}
-                  className="text-neutral-300 hover:text-white"
+                  className=" hover:text-neutral-300"
                 >
                   {link.text}
                 </a>

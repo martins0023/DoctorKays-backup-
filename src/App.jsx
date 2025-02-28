@@ -5,12 +5,14 @@ import FAQs from "./pages/FAQs";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
 import NotFound from "./components/NotFound";
+import ProductDetails from "./components/ProductDetails";
 import Contact from "./pages/Contact";
 import Consultation from "./pages/Consultation";
 import Projects from "./pages/Projects";
 import Shop from "./pages/Shop";
 import Gallery from "./pages/Gallery";
 import AllPosts from "./pages/AllPosts";
+import NearestPharmacy from "./pages/NearestPharmacy";
 
 const App = () => {
   return (
@@ -24,7 +26,9 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/consultation" element={<Consultation />} />
-        {/* <Route path="/shop" element={<Shop />} /> */}
+        <Route path="/nearestpharmacy" element={<NearestPharmacy />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/all-posts" element={<AllPosts />} />
         {/* 

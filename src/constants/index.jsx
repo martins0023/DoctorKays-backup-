@@ -1,4 +1,4 @@
-import { ActivityIcon, BotMessageSquare, Briefcase, HeartPulse, MessageCircleQuestion, Notebook, NotebookPen, Pill, Podcast, Ribbon, ShieldPlus, ShoppingCart, Syringe, TableIcon, Waypoints } from "lucide-react";
+import { ActivityIcon, BotMessageSquare, Briefcase, HeartPulse, Locate, LocateFixedIcon, MessageCircleQuestion, Notebook, NotebookPen, Pill, Podcast, Ribbon, ShieldPlus, ShoppingCart, Syringe, TableIcon, Waypoints } from "lucide-react";
 
 
 import user1 from "../assets/profile-pictures/user1.jpg";
@@ -166,7 +166,7 @@ export const testimonials = [
   },
   {
     user: "Ezekiel",
-    company: "Nigeria",
+    company: "London",
     image: user6,
     text: "Great teams and the app is easy to use.",
   },
@@ -180,22 +180,25 @@ export const features = [
       "Learn how street medicine is transforming lives and bringing heathcare awareness to communities.",
   },
   {
-    icon: <MessageCircleQuestion />,
-    text: "Chat with your AI Doctor",
+    icon: <LocateFixedIcon />,
+    text: "Pharmicies near me",
     description:
-      "Meet Doctor Kay's AI, your 24/7 virtual health assistant. Get instant answers to your medical questions and personalized health advice anytime, anywhere.",
+      "Doctor Kay’s website makes it effortless to locate trusted pharmacies, clinics, and laboratories closest to you. Instantly find verified health facilities near you.",
+    url: "/nearestpharmacy"
   },
   {
     icon: <Syringe />,
     text: "Clinic Series",
     description:
       "Get valuable health tips and advice from our clinic series. Wtch our clinic series videos to stay informaed about various health topis and prventive care.",
+    url: "https://www.youtube.com/doctorkays"
   },
   {
     icon: <ShoppingCart />,
     text: "Merch and Shops",
     description:
       "Explore our exclusive range of heath products in Doctor Kay's shop. From supplements to wellness kits, find everything you need to support your health journey.",
+    url: "/shop"
   },
   {
     icon: <ActivityIcon />,
@@ -208,6 +211,7 @@ export const features = [
     text: "Book an Appointment",
     description:
       "Ready to take charge of your health? Book an appointment with Doctor Kay's today and get personalized care you deserve.",
+    url: "/consultation"
   },
 ];
 

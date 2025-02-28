@@ -1,101 +1,269 @@
-import React from "react";
-import { clinic, clinic1, clinic3, clinicseries1 } from "../assets";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  clinic,
+  clinic1,
+  clinic3,
+  clinicseries1,
+  shop1,
+  shop10,
+  shop3,
+  shop3b,
+  shop5,
+  shop6,
+} from "../assets";
 import { clinicSeries } from "../constants";
+import {
+  BadgeCheck,
+  RefreshCw,
+  ShieldCheck,
+  Truck,
+  Star,
+  Heart,
+} from "lucide-react";
+import { client } from "../../lib/client";
+import Footer from "./Footer";
 
-const Shopcards = () => {
+const Shopcards = ({ isDarkMode }) => {
+  const [filter, setFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [shopItems, setShopItems] = useState([]);
+  const [error, setError] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+
+  const navigate = useNavigate();
+  const handleProductClick = (product) => {
+    navigate(`/product/${product._id}`, { state: { product } });
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    const fetchShopItems = async () => {
+      const query = `*[_type == "shop"]{
+        _id,
+        title,
+        product,
+        "imageUrl": icon[0].asset->url,
+        "imageCount": count(icon),
+        price,
+        reviews,
+        rating,
+        "descriptionText": coalesce(description[0].children[0].text, "")
+      }`;
+
+      try {
+        const data = await client.fetch(query);
+        setShopItems(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching shop items:", err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchShopItems();
+  }, []);
+
+  const categories = [
+    "All",
+    "Pharmacy Delivery",
+    "Medical Equipments",
+    "Savings & Essentials",
+    "Personal care",
+  ];
+
+  const filterItems = () => {
+    if (filter === "All") return shopItems;
+    return shopItems.filter((item) =>
+      item.product.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  const filteredItems = filterItems().filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
+    );
+  };
+
+  const renderStars = (rating) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-4 h-4 ${
+          i < rating ? "text-yellow-400" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
+
+  // const isLightMode = mode === 'light';
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading shop items it is from our side, please reload.</p>;
+
   return (
-    <div className="">
-      {/* Header Section */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-400 mb-4">
-          Get Inspired
-        </h1>
-        <p className="text-lg text-gray-300">
-          Browsing for your next long-haul trip, everyday journey, or just fancy
-          a look at what’s new? From community favorites to about-to-sell-out
-          items, see them all here.
+    <div className="max-w-7xl mx-auto py-6">
+      <div>
+        <h1 className="text-4xl md:text-6xl font-bold  mb-4">Get Inspired</h1>
+        <p className="text-lg ">
+          Whether you're looking for innovative medical devices or everyday
+          health solutions, our shop offers quality, convenience, and care in
+          every product.
         </p>
       </div>
 
-      {/* Filter Section */}
-      <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap gap-4 justify-start md:justify-between items-center">
-        <button className="bg-white shadow-md text-gray-600 h-[50px] px-4 rounded-full text-sm flex justify-center items-start flex-col">
-          <span>Category</span>
-          <span className="text-gray-400">All Categories</span>
-        </button>
-        <button className="bg-white shadow-md text-gray-600 px-4 py-2 rounded-full text-sm flex items-center space-x-2">
-          <span>Color</span>
-          <span className="text-gray-400">All Colors</span>
-        </button>
-        <button className="bg-white shadow-md text-gray-600 px-4 py-2 rounded-full text-sm flex items-center space-x-2">
-          <span>Features</span>
-          <span className="text-gray-400">All Features</span>
-        </button>
-        <button className="bg-white shadow-md text-gray-600 px-4 py-2 rounded-full text-sm flex items-center space-x-2">
-          <span>Price</span>
-          <span className="text-gray-400">€0 - €1000</span>
-        </button>
-        <button className="bg-white shadow-md text-gray-600 px-4 py-2 rounded-full text-sm flex items-center space-x-2">
-          <span>Sort</span>
-          <span className="text-gray-400">New In</span>
-        </button>
-      </div>
-
-      {/* Product Section */}
-      <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {/* Features Section */}
+      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 mt-10 `}>
         {[
           {
-            id: 1,
-            name: "Shibuya Totepack",
-            price: "€140.00",
-            image: clinicseries1,
-            likes: 4,
+            title: "Certified",
+            icon: BadgeCheck,
+            content: "Available certificates of authenticity",
           },
           {
-            id: 2,
-            name: "SoFo Backpack City",
-            price: "€280.00",
-            image: clinic3,
-            likes: 1,
+            title: "Secure",
+            icon: ShieldCheck,
+            content: "Certified marketplace since 2024",
           },
           {
-            id: 3,
-            name: "Gion Backpack Pro",
-            price: "€140.00",
-            image: clinic1,
-            likes: 3,
+            title: "Shipping",
+            icon: Truck,
+            content: "Free, fast, and reliable worldwide",
           },
           {
-            id: 4,
-            name: "SoFo Rolltop Backpack X",
-            price: "€170.00",
-            image: clinic,
-            likes: 2,
+            title: "Transparent",
+            icon: RefreshCw,
+            content: "Hassle-free return policy",
           },
-        ].map((product) => (
+        ].map((feature) => (
           <div
-            key={product.id}
-            className="bg-white shadow-md rounded-md overflow-hidden cursor-pointer transition-transform transform hover:scale-105"
+            key={feature.title}
+            className={`flex flex-col border items-center bg-neutral-7 00 rounded-lg p-4 text-center`}
+          >
+            <feature.icon className="text-purple-500 w-8 h-8 mb-2" />
+            <h3 className="text-xl font-semibold">
+              {feature.title}
+            </h3>
+            <p className="text-gray-400 text-sm">{feature.content}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Search and Filter */}
+      <div className="flex flex-wrap items-center justify-between mt-10 mb-6 gap-4">
+        <input
+          type="text"
+          placeholder="Search everything at doctor kays online medical store..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full sm:w-auto flex-1 border border-gray-700 bg-inherit rounded-lg px-4 py-2 text-white placeholder-gray-400"
+        />
+
+        <select
+          className="border border-gray-700 rounded-lg px-4 py-2 bg-inherit"
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Filter Tags */}
+      <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => setFilter(category)}
+            className={`px-4 py-2 rounded-full whitespace-nowrap ${
+              filter === category
+                ? "bg-gradient-to-l from-purple-700 to-purple-400 text-white"
+                : "bg-inherit border text-gray-400"
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <h1 className="text-2xl font-bold mb-4">Available Items</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {filteredItems.map((product) => (
+          // <div key={product._id} className="bg-white rounded-md shadow-md p-4">
+          //   <img
+          //     src={product.imageUrl}
+          //     alt={product.title}
+          //     className="w-full h-48 object-contain"
+          //   />
+          //   <h3 className="text-lg font-semibold">{product.title}</h3>
+          //   <p>{product.price}</p>
+          //   <div className="flex items-center gap-1">
+          //     {renderStars(product.rating)}
+          //     <span>({product.reviews} reviews)</span>
+          //   </div>
+          //   <button onClick={() => toggleFavorite(product._id)}>
+          //     <Heart
+          //       className={`w-5 h-5 ${
+          //         favorites.includes(product._id)
+          //           ? "text-red-500"
+          //           : "text-gray-400"
+          //       }`}
+          //     />
+          //   </button>
+          // </div>
+
+          <div
+            key={product._id}
+            className="bg-white p-4 shadow-md rounded-md overflow-hidden cursor-pointer transition-transform transform hover:scale-105"
           >
             <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-48 object-cover"
+              src={product.imageUrl}
+              alt={product.title}
+              className="w-full h-48 object-contain"
+              onClick={() => handleProductClick(product)}
             />
-            <div className="p-4">
+            <div className="">
               <h3 className="text-lg font-semibold text-gray-900">
-                {product.name}
+                {product.title}
               </h3>
-              <p className="text-sm text-gray-600">{product.price}</p>
+              <p className="text-sm text-gray-600">${product.price}</p>
+              <div className="flex items-center gap-1 mt-2">
+                {renderStars(product.rating)}
+                <span className="text-sm text-gray-600">
+                  ({product.reviews} reviews)
+                </span>
+              </div>
+              <button
+                onClick={() => toggleFavorite(product._id)}
+                className="mt-2"
+              >
+                {favorites.includes(product._id) ? (
+                  <Heart
+                    fill="currentColor"
+                    className="w-5 h-5 text-purple-800"
+                  />
+                ) : (
+                  <Heart className="w-5 h-5 text-gray-400" />
+                )}
+              </button>
             </div>
             <div className="p-2 flex justify-end">
               <span className="bg-gray-200 text-gray-600 px-2 py-1 text-xs rounded-full">
-                +{product.likes}
+                +{product.imageCount || 0}
               </span>
             </div>
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };

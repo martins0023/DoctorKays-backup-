@@ -5,7 +5,7 @@ import { animateOnHover, pulse } from '../constants/animations';
 const Button = ({ text, onClick, className, img, variants }) => {
   return (
     <motion.button
-      variants={`animateOnHover${variants}`}
+      variants={variants}
       onClick={onClick}
       className={`py-2 px-4 rounded flex items-center justify-items-center justify-center gap-3 ${className}`}
     >

@@ -1,8 +1,11 @@
 import { features } from "../constants";
 import { motion } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
 import { bounce, pulse, slideInFromLeft, staggerContainer, textVariants } from "../constants/animations";
 
 const FeatureSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="relative mt-20 border-b border-neutral-800 min-h-[800px]">
       <div className="text-center">
@@ -16,9 +19,9 @@ const FeatureSection = () => {
           </span>
         </motion.h2>
       </div>
-      <div className="flex flex-wrap mt-10 lg:mt-20">
+      <div className="flex flex-wrap mt-10 lg:mt-20 transition-transform duration-300 group-hover:bg-white cursor-pointer">
         {features.map((feature, index) => (
-          <div key={index} className="w-full sm:w-1/2 lg:w-1/3">
+          <div key={index} className="w-full sm:w-1/2 lg:w-1/3" onClick={() => navigate(feature.url)}>
             <div className="flex">
               <motion.div variants={bounce} className="flex mx-6 h-10 w-10 p-2 bg-neutral-900 text-purple-700 justify-center items-center rounded-full">
                 {feature.icon}

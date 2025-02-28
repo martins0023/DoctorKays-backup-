@@ -101,3 +101,32 @@ export const animateOnHover = {
 export const animateOnClick = {
   whileTap: { scale: 0.95, transition: { duration: 0.2 } },
 };
+
+export const continuousTextAnimation = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 2,
+      ease: "easeInOut",
+      repeat: Infinity,
+      repeatType: "reverse",
+    },
+  },
+};
+
+export const marqueeText = {
+  animate: {
+    x: ["100%", "-100%"],
+    transition: {
+      x: {
+        repeat: Infinity,
+        repeatType: "loop",
+        duration: 10,
+        ease: "linear",
+      },
+    },
+  },
+};
+
