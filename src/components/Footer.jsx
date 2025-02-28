@@ -59,7 +59,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="mt-8 text-center text-sm text-gray-500">
-        <a href="#terms" className="hover:underline">
+        <a href="/policy" className="hover:underline">
           Terms Policy
         </a>
         <span className="mx-2">•</span>

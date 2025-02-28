@@ -13,6 +13,7 @@ import Shop from "./pages/Shop";
 import Gallery from "./pages/Gallery";
 import AllPosts from "./pages/AllPosts";
 import NearestPharmacy from "./pages/NearestPharmacy";
+import Policy from "./pages/Policy";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/policy" element={<Policy />} />
         <Route path="/all-posts" element={<AllPosts />} />
         {/* 
         <Route path="/dr-ai" element={<DrAi />} />

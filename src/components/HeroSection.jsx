@@ -19,15 +19,15 @@ const HeroSection = () => {
       className="relative flex items-center justify-center h-screen bg-gray-100"
     >
       <div className="absolute inset-0">
-      <video
-            autoPlay
-            loop
-            muted
-            className="object-cover w-full h-full lg:h-full"
-          >
-            <source src={videoDr} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        <video
+          autoPlay
+          loop
+          muted
+          className="object-cover w-full h-full lg:h-full"
+        >
+          <source src={videoDr} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         {/* <img
           src={doctorkays}
           alt="Background"

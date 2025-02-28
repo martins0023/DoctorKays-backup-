@@ -50,6 +50,7 @@ const ClinicSeries = () => {
   const navigate = useNavigate();
   const handleGallery = () => {
     navigate("/gallery");
+    window.scrollTo(0, 0);
   };
   return (
     <motion.div
