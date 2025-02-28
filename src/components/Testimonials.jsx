@@ -10,7 +10,7 @@ const Testimonials = () => {
       <div className="flex flex-wrap justify-center">
         {testimonials.map((testimonial, index) => (
           <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-4 py-2 transform transition-transform duration-300 hover:scale-105">
-            <div className="bg-white rounded-xl p-6  shadow-lg font-thin">
+            <div className="bg-white rounded-xl p-6  shadow-lg">
               <p className="text-black">{testimonial.text}</p>
               <div className="flex mt-8 items-start">
                 {/* <img
