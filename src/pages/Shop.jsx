@@ -12,7 +12,7 @@ import Shopcards from "../components/Shopcards";
 import Navbar from "../components/Navbar";
 import { ArrowDownRight, ArrowLeft, ArrowRight } from "lucide-react";
 import Button from "../components/Button";
-import { bgback1, bgback2, bgback3, bgback4, ecomm1, ecomm2, ecomm3, ecomm4 } from "../assets";
+import { storebg, ecomm3, ecomm4 } from "../assets";
 
 const Shop = ({isDarkMode}) => {
   return (
@@ -26,7 +26,7 @@ const Shop = ({isDarkMode}) => {
       >
         <div className="absolute inset-0">
           <img
-          src={ecomm3}
+          src={storebg}
           alt="Background"
           className="object-cover w-full h-full lg:h-full"
         />

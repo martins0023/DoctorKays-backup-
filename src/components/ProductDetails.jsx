@@ -49,7 +49,7 @@ const ProductDetails = () => {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8 p-4">
         <nav className="text-sm  mb-4 flex flex-row items-center">
-          <div onClick={handleBack} className="flex items-center flex-row text-base font-medium cursor-pointer "><ChevronLeft className="w-6 h-6"/> back {' '} </div> 
+          {/* <div onClick={handleBack} className="flex items-center flex-row text-base font-medium cursor-pointer "><ChevronLeft className="w-6 h-6"/> back {' '} </div>  */}
           {/* <span className="font-medium">{"  "} {product.title}</span> */}
         </nav>
 

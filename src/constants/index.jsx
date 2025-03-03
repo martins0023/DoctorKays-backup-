@@ -162,13 +162,13 @@ export const testimonials = [
     user: "Commy-Constance Oko",
     company: "Nigeria",
     image: user5,
-    text: "I have learnt so much about personal health and got to know a lot on health matters generally. Thank you so much Dr. Kays for alawys giving prompt response to my questions.",
+    text: "I have learnt so much about personal health and got to know a lot on health matters generally. Thank you so much Dr. Kays for always giving prompt response to my questions.",
   },
   {
     user: "Ezekiel",
     company: "London",
     image: user6,
-    text: "Great teams and the app is easy to use.",
+    text: "Great team and the app is easy to use.",
   },
 ];
 
@@ -181,7 +181,7 @@ export const features = [
   },
   {
     icon: <LocateFixedIcon />,
-    text: "Pharmicies near me",
+    text: "Pharmacies near me",
     description:
       "Doctor Kays website makes it effortless to locate trusted pharmacies, clinics, and laboratories closest to you. Instantly find verified health facilities near you.",
     url: "/nearestpharmacy"
@@ -327,7 +327,7 @@ export const checkaboutlists = [
     icon: <ShieldPlus />,
     title: "Health Nuggets",
     description:
-      "Astonishing quotes and designs that engages people on how to get along with thier health.",
+      "Astonishing quotes and designs that engages people on how to get along with their health.",
   },
   {
     icon: <NotebookPen />,

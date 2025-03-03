@@ -49,7 +49,7 @@ const Booking = () => {
               <div className="flex justify-center">
                 <Button
                   onClick={handleBooking}
-                  text="Book an Appointement"
+                  text="Book an Appointment"
                   className="mt-5 hover:bg-white  rounded-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
                 />
               </div>

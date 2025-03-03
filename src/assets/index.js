@@ -74,7 +74,10 @@ import ecomm2 from "./ecomm2.jpg";
 import ecomm3 from "./ecomm3.jpg";
 import ecomm4 from "./ecomm4.jpg";
 
+import storebg from "./sore-bg.jpg";
+
 export {
+    storebg,
     viddisplay,
     ecomm1,
     ecomm2,
