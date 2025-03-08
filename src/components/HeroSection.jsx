@@ -70,7 +70,7 @@ const HeroSection = () => {
             Book a consultation
           </a>
           <a
-            href="#"
+            href="/partnership"
             className="px-6 py-3 text-sm font-medium text-primary bg-white rounded-md hover:bg-white-200"
           >
             Partner with us

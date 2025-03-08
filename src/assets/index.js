@@ -5,6 +5,7 @@ import mos2 from "./mos2.jpg";
 import mos3 from "./mos3.jpg";
 import mosvid from "./mos.mp4";
 import videoDr from "./VideoDr.mp4";
+import paystack from "./paystack.png";
 
 import doctor001 from "./001.jpg";
 import doctor002 from "./002.jpg";
@@ -77,6 +78,7 @@ import ecomm4 from "./ecomm4.jpg";
 import storebg from "./sore-bg.jpg";
 
 export {
+    paystack,
     storebg,
     viddisplay,
     ecomm1,

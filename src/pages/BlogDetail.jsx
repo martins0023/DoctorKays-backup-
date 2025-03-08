@@ -279,48 +279,57 @@ const BlogDetail = () => {
         </div>
 
         {/* Recommended Articles Section */}
-<div className="mt-12 p-4">
-  <h2 className="text-2xl font-semibold mb-4">Related & Recommended Articles</h2>
-  {recommendedArticles.length > 0 ? (
-    <div className="flex space-x-4 overflow-x-auto">
-      {recommendedArticles.map((article) => (
-        <div
-          key={article._id}
-          onClick={() => navigate(`/blog/${article.slug.current}`, { state: article })}
-          className="min-w-[250px] sm:min-w-[300px] md:min-w-[350px] bg-gradient-to-l from-gray-800 to-gray-950 md:p-4 p-3 rounded-lg cursor-pointer"
-        >
-          <img
-            src={article.imageUrl}
-            alt={article.title}
-            className="w-full h-40 object-cover rounded-lg mb-4"
-          />
-          <div className="bg-slate-200 p-1 w-fit rounded-full h-fit mb-1">
-            <p className="text-sm text-primary font-medium">
-              #{article.category}
-            </p>
-          </div>
-          <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
-          <p className="text-sm text-gray-400 mb-4">
-            {truncateText(article.descriptionText, 20)}...
-            <span className="text-white"> read more</span>
-          </p>
+        <div className="mt-12 p-4">
+          <h2 className="text-2xl font-semibold mb-4">
+            Related & Recommended Articles
+          </h2>
+          {recommendedArticles.length > 0 ? (
+            <div className="flex space-x-4 overflow-x-auto">
+              {recommendedArticles.map((article) => (
+                <div
+                  key={article._id}
+                  onClick={() =>
+                    navigate(`/blog/${article.slug.current}`, {
+                      state: article,
+                    })
+                  }
+                  className="min-w-[250px] sm:min-w-[300px] md:min-w-[350px] bg-gradient-to-l from-gray-800 to-gray-950 md:p-4 p-3 rounded-lg cursor-pointer"
+                >
+                  <img
+                    src={article.imageUrl}
+                    alt={article.title}
+                    className="w-full h-40 object-cover rounded-lg mb-4"
+                  />
+                  <div className="bg-slate-200 p-1 w-fit rounded-full h-fit mb-1">
+                    <p className="text-sm text-primary font-medium">
+                      #{article.category}
+                    </p>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">
+                    {article.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 mb-4">
+                    {truncateText(article.descriptionText, 20)}...
+                    <span className="text-white"> read more</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-gray-400 mt-6">
+              <p>
+                No related or recommended articles found for this blog post.
+              </p>
+            </div>
+          )}
         </div>
-      ))}
-    </div>
-  ) : (
-    <div className="text-center text-gray-400 mt-6">
-      <p>No related or recommended articles found for this blog post.</p>
-    </div>
-  )}
-</div>
-
 
         <Testimonials />
         <Stayintouch />
         <Footer />
       </div>
       <footer className="bg-primary text-white p-4 text-center">
-        <div>© 2025 Drkays</div>
+        <div>© 2025 Doctor kays</div>
       </footer>
     </div>
   );

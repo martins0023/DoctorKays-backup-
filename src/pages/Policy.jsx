@@ -95,7 +95,7 @@ const Policy = () => {
         ))}
       </div>
       <footer className="bg-primary text-white p-4 text-center">
-        <div>© 2025 Drkays</div>
+        <div>© 2025 Doctor kays</div>
       </footer>
     </div>
   );

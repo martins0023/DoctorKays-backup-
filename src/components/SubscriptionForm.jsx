@@ -99,7 +99,7 @@ const SubscriptionForm = ({ option, onClose }) => {
           disabled={!agreed}
           className="w-full bg-gradient-to-r from-purple-600 to-red-500 text-white py-2 rounded-lg hover:opacity-90 transition"
         >
-          Submit
+          Continue
         </button>
       </form>
     </div>

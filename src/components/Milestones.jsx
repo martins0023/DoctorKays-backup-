@@ -25,7 +25,24 @@ const milestones = [
   },
 ];
 
+
+
 const Milestones = () => {
+  const formatDescription = (description, itemNo) => {
+    if (itemNo === "1") {
+      const parts = description.split("Medicine on the Street");
+      // If the phrase isn't found, return the original string.
+      if (parts.length === 1) return description;
+      return parts.reduce((acc, part, i, arr) => {
+        if (i < arr.length - 1) {
+          return [...acc, part, <strong key={i}>Medicine on the Street</strong>];
+        }
+        return [...acc, part];
+      }, []);
+    }
+    return description;
+  };
+  
   return (
     <section className="max-w-4xl mx-auto px-4 py-8">
       <div className="text-center">
@@ -59,7 +76,7 @@ const Milestones = () => {
 
               {/* Description */}
               <p className=" text-sm leading-normal">
-                {milestone.description}
+                {formatDescription(milestone.description, milestone.itemNo)}
               </p>
 
               {/* Connector (hidden on last milestone) */}

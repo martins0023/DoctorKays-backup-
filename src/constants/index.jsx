@@ -211,7 +211,7 @@ export const features = [
     icon: <NotebookPen />,
     text: "Book an Appointment",
     description:
-      "Ready to take charge of your health? Book an appointment with Doctor Kay's today and get personalized care you deserve.",
+      "Ready to take charge of your health? Book an appointment with Doctor Kays today and get personalized care you deserve.",
     url: "/consultation"
   },
 ];
@@ -379,21 +379,7 @@ export const pricingOptions = [
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
-  {
-    title: "Enterprise Package",
-    price: "Based on agreement",
-    type: "solution",
-    features: [
-      "Join the Community",
-      "Newsletter Subscription",
-      "Weekly Health Nugget",
-      "Consultation Chat, Audio and Video Calls",
-      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
-      "Unlimited Consultation",
-      "Unlimited Family Members"
-    ],
-    link: "https://calendly.com/martinsmiracle45/one_time_appointment",
-  },
+  
 ];
 
 export const resourcesLinks = [

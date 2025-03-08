@@ -62,7 +62,7 @@ const About = () => {
                     lifestyle, disease prevention, general health and wellness.
                   </p>
                   <p className="mt-2">
-                    <b>Our mission</b> <br />Is to turn medicine from a head-scratcher into
+                    <strong>Our mission</strong> <br />Is to turn medicine from a head-scratcher into
                     your friendly companion - relatable, understandable, and
                     yes, even a bit fun!
                   </p>
@@ -184,7 +184,7 @@ const About = () => {
         <Footer />
       </motion.div>
       <footer className="bg-primary text-white p-4 text-center">
-        <div>© 2025 Drkays</div>
+        <div>© 2025 Doctor kays</div>
       </footer>
     </div>
   );
