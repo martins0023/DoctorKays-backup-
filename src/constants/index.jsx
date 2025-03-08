@@ -178,7 +178,7 @@ export const features = [
     text: "Medicine on the Street (MOS)",
     description:
       "Learn how street medicine is transforming lives and bringing heathcare awareness to communities.",
-    url: "https://www.youtube.com/doctorkays"
+    url: "https://www.youtube.com/@Doctorkays"
   },
   {
     icon: <LocateFixedIcon />,
@@ -192,7 +192,7 @@ export const features = [
     text: "Clinic Series",
     description:
       "Get valuable health tips and advice from our clinic series. Watch our clinic series videos to stay informed about various health topics and preventive care.",
-    url: "https://www.youtube.com/doctorkays"
+    url: "https://www.youtube.com/@Doctorkays"
   },
   {
     icon: <ShoppingCart />,
