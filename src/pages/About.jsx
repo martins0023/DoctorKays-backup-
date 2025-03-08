@@ -62,7 +62,7 @@ const About = () => {
                     lifestyle, disease prevention, general health and wellness.
                   </p>
                   <p className="mt-2">
-                    Our mission? Is to turn medicine from a head-scratcher into
+                    <b>Our mission</b> <br />Is to turn medicine from a head-scratcher into
                     your friendly companion - relatable, understandable, and
                     yes, even a bit fun!
                   </p>

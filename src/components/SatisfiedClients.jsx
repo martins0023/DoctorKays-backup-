@@ -10,7 +10,7 @@ const SatisfiedClients = () => {
   return (
     <div ref={ref}>
         {inView && (
-            <CountUp end={100} duration={9} suffix="+" />
+            <CountUp end={500} duration={9} suffix="+" />
         )}
         <p className="text-md text-neutral-500">Satisfied clients</p>
     </div>

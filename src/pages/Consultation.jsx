@@ -13,7 +13,7 @@ import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
-import { doctor1 } from "../assets";
+import { doctor020, doctor1 } from "../assets";
 import { useNavigate } from "react-router-dom";
 
 const Consultation = () => {
@@ -84,7 +84,7 @@ const Consultation = () => {
           <div className="p-2 w-full lg:w-1/2 h-fit">
             <motion.img
               variants={slideInFromRight}
-              src={doctor1}
+              src={doctor020}
               alt="doctor"
               className="rounded-xl"
             />

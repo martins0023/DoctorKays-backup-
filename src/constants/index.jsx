@@ -178,6 +178,7 @@ export const features = [
     text: "Medicine on the Street (MOS)",
     description:
       "Learn how street medicine is transforming lives and bringing heathcare awareness to communities.",
+    url: "https://www.youtube.com/doctorkays"
   },
   {
     icon: <LocateFixedIcon />,
@@ -190,14 +191,14 @@ export const features = [
     icon: <Syringe />,
     text: "Clinic Series",
     description:
-      "Get valuable health tips and advice from our clinic series. Wtch our clinic series videos to stay informaed about various health topis and prventive care.",
+      "Get valuable health tips and advice from our clinic series. Watch our clinic series videos to stay informed about various health topics and preventive care.",
     url: "https://www.youtube.com/doctorkays"
   },
   {
     icon: <ShoppingCart />,
     text: "Merch and Shops",
     description:
-      "Explore our exclusive range of heath products in Doctor Kay's shop. From supplements to wellness kits, find everything you need to support your health journey.",
+      "Explore our exclusive range of health products in Doctor Kay's shop. From supplements to wellness kits, find everything you need to support your health journey.",
     url: "/shop"
   },
   {
@@ -220,7 +221,7 @@ export const mission = [
     icon: <TableIcon />,
     text: "Mission Statement",
     description:
-      "To turn medicine from a head- scratcher into your friendly companion...",
+      "To turn medicine from a head- scratcher into your friendly companion.",
   },
   {
     icon: <Notebook />,
@@ -232,13 +233,13 @@ export const mission = [
     icon: <Waypoints />,
     text: "Connect Users With Healthcare Services",
     description:
-      "Creating a system to connect users with pharmicies, specialists, and labs based on reviews and refferals.",
+      "Creating a system to connect users with pharmicies, specialists, and laboratory based on reviews and refferals.",
   },
   {
     icon: <Podcast />,
     text: "Expert Talks: Health Tips and From Professionals",
     description:
-      "Ensure clients are satisfied with the services provided by expert indutry leaders with medical content.",
+      "Ensure clients are satisfied with the services provided by leaders and experts in the industry leaders with medical content.",
   },
 ];
 
@@ -315,13 +316,13 @@ export const checkaboutlists = [
     icon: <Ribbon />,
     title: "Medicine on the street",
     description:
-      "Follow closely as doctor kays takes you to the street of Nigeria.",
+      "Follow closely as doctor kays takes you to the streets of Nigeria.",
   },
   {
     icon: <HeartPulse />,
     title: "Clinic Series",
     description:
-      "Doctor kay's powerful vision on keeping people updated on self-preventive medical measures.",
+      "Doctor kays powerful vision: To keep everyone updated on self-preventive medical measures.",
   },
   {
     icon: <ShieldPlus />,
@@ -338,9 +339,9 @@ export const checkaboutlists = [
 ];
 export const pricingOptions = [
   {
-    title: "Silver Package",
-    price: "$5",
-    type: "week",
+    title: "Lab Interpretation",
+    price: "$4",
+    type: "once",
     features: [
       "Join the Community",
       "Newsletter Subscription",
@@ -352,8 +353,8 @@ export const pricingOptions = [
   },
   {
     title: "Gold Package",
-    price: "$15",
-    type: "month",
+    price: "$9",
+    type: "10 minutes",
     features: [
       "Join the Community",
       "Newsletter Subscription",
@@ -366,8 +367,8 @@ export const pricingOptions = [
   },
   {
     title: "Family Package",
-    price: "$20",
-    type: "week",
+    price: "$19",
+    type: "20 minutes",
     features: [
       "Join the Community",
       "Newsletter Subscription",
@@ -379,9 +380,9 @@ export const pricingOptions = [
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
-    title: "Premium Family Package",
-    price: "$70",
-    type: "month",
+    title: "Enterprise Package",
+    price: "Based on agreement",
+    type: "solution",
     features: [
       "Join the Community",
       "Newsletter Subscription",
@@ -413,6 +414,6 @@ export const communityLinks = [
   { href: "/about", text: "About us" },
   { href: "/contact", text: "Contact Us" },
   { href: "#", text: "Become a Sponsor/Collaborate" },
-  { href: "/projects", text: "Upcoming Projects" },
+  { href: "/projects", text: "Projects" },
   { href: "/volunteer", text: "Become a volunteer" },
 ];

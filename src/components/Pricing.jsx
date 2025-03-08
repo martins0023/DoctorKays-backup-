@@ -2,8 +2,23 @@ import { CheckCircle2 } from "lucide-react";
 import { pricingOptions } from "../constants";
 import { motion } from "framer-motion";
 import { staggerContainer, textVariants } from "../constants/animations";
+import { useState } from "react";
+import Modal from "./ModalPrice";
+import SubscriptionForm from "./SubscriptionForm";
 
 const Pricing = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const openModal = (option) => {
+    setSelectedOption(option);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedOption(null);
+  };
   return (
     <motion.div
       initial="hidden"
@@ -49,16 +64,22 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <a
-                href={option.link}
+              <button
+                onClick={() => openModal(option)}
                 className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-gradient-to-r from-purple-600 to-red-400 border border-primary rounded-lg transition duration-200"
               >
                 Subscribe
-              </a>
+              </button>
             </div>
           </div>
         ))}
       </div>
+      {/* Modal Form */}
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          <SubscriptionForm option={selectedOption} onClose={closeModal} />
+        </Modal>
+      )}
     </motion.div>
   );
 };

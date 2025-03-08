@@ -44,7 +44,7 @@ const Milestones = () => {
           {milestones.map((milestone, index) => (
             <div
               key={index}
-              className="rounded-2xl hover:bg-slate-900 border p-4 relative flex flex-col items-center md:w-1/3 text-center"
+              className="rounded-2xl hover:bg-slate-200 border p-4 relative flex flex-col items-center md:w-1/3 text-center"
             >
               {/* itemNo */}
               {/* <div className="bg-purple-800 text-white py-1 px-3 rounded-full mb-4 items-center w-15 h-15 border ">
@@ -58,7 +58,7 @@ const Milestones = () => {
               <h3 className="font-semibold text-lg mb-2">{milestone.title}</h3>
 
               {/* Description */}
-              <p className="text-gray-300 text-sm leading-normal">
+              <p className=" text-sm leading-normal">
                 {milestone.description}
               </p>
 

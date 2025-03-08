@@ -25,28 +25,37 @@ const ContactPage = () => {
         <div className="order-2 md:order-1">
           <h1 className="text-3xl font-bold mb-6">Contact Our Team</h1>
           <p className="mb-4">
-            Got any questions or inquiries about the product or scaling on our platform?
-            We're here to help. Chat to our friendly team 24/7 and get onboard
-            in less than 5 minutes.
+            Got any questions or inquiries about the product or scaling on our
+            platform? We're here to help. Chat to our friendly team 24/7 and get
+            onboard in less than 5 minutes.
           </p>
           <Form onSubmit={handleFormSubmit} />
         </div>
-        <div className="order-1 md:order-2 mt-10">
-          <div className="bg-gradient-to-br from-gray-900 to-purple-9500 p-6 rounded-lg shadow-lg">
+        <div className="border-1 md:order-2 mt-10">
+          <div className="border p-6 rounded-lg ">
             <h2 className="text-xl font-bold mb-4">Chat with us</h2>
             <ul className="mb-6">
               <li className="mb-2">
-                <a href="https://wa.link/vedmgv" className="text-gray-400 hover:underline">
+                <a
+                  href="https://wa.link/vedmgv"
+                  className="text-gray-400 hover:underline"
+                >
                   Start a live chat
                 </a>
               </li>
               <li className="mb-2">
-                <a href="mailto:drkaysofficial@gmail.com" className="text-gray-400 hover:underline">
+                <a
+                  href="mailto:drkaysofficial@gmail.com"
+                  className="text-gray-400 hover:underline"
+                >
                   Shoot us an email
                 </a>
               </li>
               <li className="mb-2">
-                <a href="https://x.com/doctor_kays" className="text-gray-400 hover:underline">
+                <a
+                  href="https://x.com/doctor_kays"
+                  className="text-gray-400 hover:underline"
+                >
                   Message us on X
                 </a>
               </li>
