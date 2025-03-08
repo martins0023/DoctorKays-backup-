@@ -56,8 +56,13 @@ const FeatureSection = () => {
                 >
                   {feature.description}
                   <motion.div
-                    onClick={() => {navigate(feature.url);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    onClick={() => {
+                      if (feature.url && feature.url.startsWith("https")) {
+                        window.location.href = feature.url;
+                      } else {
+                        navigate(feature.url);
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }
                     }}
                     
                     className="flex flex-row items-center p-3 mt-3 gap-2 h-fit w-fit rounded-full cursor-pointer"
