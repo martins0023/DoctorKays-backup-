@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SubscriptionForm = ({ option, onClose }) => {
+const SubscriptionForm = ({ option, onClose, onProceedToPayment }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,26 +12,39 @@ const SubscriptionForm = ({ option, onClose }) => {
     price: option?.price || "",
   });
   const [agreed, setAgreed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Here, send formData to your backend or email service.
-    onClose();
-    // Optionally, navigate to a thank-you page:
-    // navigate('/thank-you');
+    setSubmitting(true);
+    try {
+      // Use an environment variable or fallback for the API URL
+      const apiUrl = "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/consultation`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json();
+      console.log("Saved consultation:", result);
+      
+      // Proceed to payment modal with form data if saving was successful
+      onProceedToPayment(formData);
+    } catch (error) {
+      console.error("Error saving consultation:", error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="bg-white rounded-lg p-6 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">
-        Subscribe to {option?.title}
-      </h2>
+      <h2 className="text-2xl font-bold mb-4">Subscribe to {option?.title}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium">Name</label>
@@ -92,14 +105,24 @@ const SubscriptionForm = ({ option, onClose }) => {
             onChange={(e) => setAgreed(e.target.checked)}
             required
           />
-          <span className="text-sm">I agree to the <a href="/policy" className="text-blue-500 underline">Terms and Policy</a></span>
+          <span className="text-sm">
+            I agree to the{" "}
+            <a
+              href="/policy"
+              className="text-blue-500 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Terms and Policy
+            </a>
+          </span>
         </div>
         <button
           type="submit"
-          disabled={!agreed}
+          disabled={!agreed || submitting}
           className="w-full bg-gradient-to-r from-purple-600 to-red-500 text-white py-2 rounded-lg hover:opacity-90 transition"
         >
-          Continue
+          {submitting ? "Submitting..." : "Continue"}
         </button>
       </form>
     </div>

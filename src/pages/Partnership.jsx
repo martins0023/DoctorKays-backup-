@@ -50,15 +50,15 @@ const Partnership = () => {
               <li className="mb-2">
                 <a
                   href=""
-                  className="font-semibold hover:underline"
+                  className="font-semibold"
                 >
-                  KMC BANK
+                  Zenith Bank
                 </a>
               </li>
               <li className="mb-2">
                 <a
                   href=""
-                  className=" hover:underline"
+                  className="font-semibold hover:underline"
                 >
                   1229495475
                 </a>
@@ -66,7 +66,7 @@ const Partnership = () => {
               <li className="mb-2">
                 <a
                   href=""
-                  className=" hover:underline"
+                  className="font-semibold hover:underline"
                 >
                   KMC Hospital
                 </a>

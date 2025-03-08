@@ -346,7 +346,7 @@ export const pricingOptions = [
       "Join the Community",
       "Newsletter Subscription",
       "Weekly Health Nugget",
-      "Consultation Chat, and Calls",
+      "Laboratory Interpretation",
       "Free Referral suggestions to trusted pharmicies and diagnostic centers",
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",

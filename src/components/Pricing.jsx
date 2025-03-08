@@ -4,21 +4,43 @@ import { motion } from "framer-motion";
 import { staggerContainer, textVariants } from "../constants/animations";
 import { useState } from "react";
 import Modal from "./ModalPrice";
+import PaymentForm from "./PaymentForm";
 import SubscriptionForm from "./SubscriptionForm";
 
 const Pricing = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [consultationData, setConsultationData] = useState(null);
 
-  const openModal = (option) => {
+  const openSubscriptionModal = (option) => {
     setSelectedOption(option);
-    setIsModalOpen(true);
+    setIsSubscriptionModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeSubscriptionModal = () => {
+    setIsSubscriptionModalOpen(false);
     setSelectedOption(null);
   };
+
+  const handleProceedToPayment = (formData) => {
+    setConsultationData(formData);
+    setIsSubscriptionModalOpen(false);
+    setIsPaymentModalOpen(true);
+  };
+
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setConsultationData(null);
+  };
+
+  const handlePaymentSuccess = (paymentResponse) => {
+    console.log("Payment successful:", paymentResponse);
+    // Here you could call your email confirmation endpoint.
+    setIsPaymentModalOpen(false);
+    // Optionally, navigate to a thank-you page.
+  };
+
   return (
     <motion.div
       initial="hidden"
@@ -65,7 +87,7 @@ const Pricing = () => {
                 ))}
               </ul>
               <button
-                onClick={() => openModal(option)}
+                onClick={() => openSubscriptionModal(option)}
                 className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-gradient-to-r from-purple-600 to-red-400 border border-primary rounded-lg transition duration-200"
               >
                 Subscribe
@@ -75,9 +97,25 @@ const Pricing = () => {
         ))}
       </div>
       {/* Modal Form */}
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <SubscriptionForm option={selectedOption} onClose={closeModal} />
+      {/* Subscription Modal */}
+      {isSubscriptionModalOpen && selectedOption && (
+        <Modal onClose={closeSubscriptionModal}>
+          <SubscriptionForm
+            option={selectedOption}
+            onClose={closeSubscriptionModal}
+            onProceedToPayment={handleProceedToPayment}
+          />
+        </Modal>
+      )}
+
+      {/* Payment Modal */}
+      {isPaymentModalOpen && consultationData && (
+        <Modal onClose={closePaymentModal}>
+          <PaymentForm
+            consultationData={consultationData}
+            onPaymentSuccess={handlePaymentSuccess}
+            onClose={closePaymentModal}
+          />
         </Modal>
       )}
     </motion.div>
