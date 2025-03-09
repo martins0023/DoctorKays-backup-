@@ -8,10 +8,12 @@ import { slideInFromLeft, staggerContainer } from "../constants/animations";
 import Modal from "../components/Modal";
 import Form from "../components/Form";
 import { paystack } from "../assets";
+import Donation from "../components/Donation";
 
-const Partnership = () => {
+const Partnership = ({ onProceedToPayment }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+
 
   const handleFormSubmit = (formData) => {
     console.log("Form Data:", formData);
@@ -81,13 +83,14 @@ const Partnership = () => {
               </li>
             </ul>
             <h2 className="text-xl font-bold mb-4">Make donation using paystack</h2>
-            
+            {/* <div className="items-center flex justify-center">
             <img 
               src={paystack}
               alt="paystack"
               className="w-fit h-fit mb-3 cursor-pointer"
             />
-            
+            </div> */}
+            <Donation />
           </div>
         </div>
       </div>

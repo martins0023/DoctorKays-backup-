@@ -31,10 +31,10 @@ const projects = [
   },
   {
     id: 4,
-    name: "Health Navigator",
+    name: "MOS Behind The Scene",
     status: "upcoming",
     description:
-      "A guide to navigating healthcare systems with ease, ensuring patients receive the right care.",
+      "BTS entails how we perform our medicine on the street series.",
     cagr: "8.20%",
     duration: "Upcoming",
   },
@@ -62,7 +62,7 @@ const UpcomingProjects = () => {
         </span>
       </div>
       <div className="flex justify-between items-center mb-6 mt-10">
-        <h1 className="text-2xl font-bold text-gray-100">Ongoing & Upcoming Projects</h1>
+        <h1 className="text-2xl font-bold ">Ongoing & Upcoming Projects</h1>
         <button className="text-sm text-blue-600 hover:underline">
           Explore All
         </button>

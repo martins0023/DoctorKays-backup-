@@ -34,30 +34,74 @@ const Pricing = () => {
     setConsultationData(null);
   };
 
+  // const handlePaymentSuccess = async (paymentResponse) => {
+  //   console.log("Payment successful:", paymentResponse);
+  //   try {
+  //     const apiUrl = "http://localhost:5000"; // Ensure this is your backend URL in development
+  //     console.log("Sending confirmation email with consultationData:", consultationData);
+  //     const emailResponse = await fetch(`${apiUrl}/api/sendConfirmationEmail`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         email: consultationData.email,
+  //         name: consultationData.name,
+  //         consultationType: consultationData.consultationType,
+  //       }),
+  //     });
+  //     console.log("HTTP status for email request:", emailResponse.status);
+  //     const emailResult = await emailResponse.json();
+  //     console.log("Email confirmation response:", emailResult);
+  //   } catch (err) {
+  //     console.error("Error sending confirmation email:", err);
+  //   }
+  //   setIsPaymentModalOpen(false);
+  //   // Optionally, navigate to a thank-you page.
+  // };
+  
   const handlePaymentSuccess = async (paymentResponse) => {
-    console.log("Payment successful:", paymentResponse);
+    console.log("Payment success:", paymentResponse);
+    
     try {
-      const apiUrl = "http://localhost:5000"; // Ensure this is your backend URL in development
-      console.log("Sending confirmation email with consultationData:", consultationData);
+      const apiUrl = "http://localhost:5000";
+      const payload = {
+        email: consultationData.email,
+        name: consultationData.name,
+        consultationType: consultationData.consultationType,
+      };
+  
+      console.log("Sending email request to:", `${apiUrl}/api/sendConfirmationEmail`);
+      
       const emailResponse = await fetch(`${apiUrl}/api/sendConfirmationEmail`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: consultationData.email,
-          name: consultationData.name,
-          consultationType: consultationData.consultationType,
-        }),
+        headers: { 
+          "Content-Type": "application/json",
+          "X-Request-ID": paymentResponse.transactionId // For tracking
+        },
+        body: JSON.stringify(payload),
       });
-      console.log("HTTP status for email request:", emailResponse.status);
-      const emailResult = await emailResponse.json();
-      console.log("Email confirmation response:", emailResult);
-    } catch (err) {
-      console.error("Error sending confirmation email:", err);
-    }
-    setIsPaymentModalOpen(false);
-    // Optionally, navigate to a thank-you page.
-  };
   
+      const responseText = await emailResponse.text();
+      const emailResult = emailResponse.ok 
+        ? JSON.parse(responseText)
+        : { error: `HTTP ${emailResponse.status}`, details: responseText };
+  
+      console.log("Email service response:", emailResult);
+  
+      if (!emailResponse.ok) {
+        throw new Error(emailResult.error || "Email delivery failed");
+      }
+  
+    } catch (err) {
+      console.error("Email error details:", {
+        error: err.message,
+        stack: err.stack,
+        timestamp: new Date().toISOString(),
+      });
+      // Consider adding user notification
+    } finally {
+      setIsPaymentModalOpen(false);
+    }
+  };
 
   return (
     <motion.div

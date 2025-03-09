@@ -385,21 +385,21 @@ export const pricingOptions = [
 export const resourcesLinks = [
   { href: "/blog", text: "Blog" },
   { href: "/faqs", text: "FAQs" },
-  { href: "#", text: "MOS" },
-  { href: "#", text: "Clinic Series" },
-  { href: "#", text: "Community Forums" },
+  { href: "https://www.youtube.com/@Doctorkays", text: "MOS" },
+  { href: "https://www.youtube.com/@Doctorkays", text: "Clinic Series" },
+  { href: "/community", text: "Community Forums" },
 ];
 
 export const platformLinks = [
   { href: "/doctorkaysai", text: "Doctor Kays AI" },
-  { href: "#", text: "Shops and Merch" },
+  { href: "/shops", text: "Shops and Merch" },
   { href: "#", text: "Clinic Online (coming soon)" },
 ];
 
 export const communityLinks = [
   { href: "/about", text: "About us" },
   { href: "/contact", text: "Contact Us" },
-  { href: "#", text: "Become a Sponsor/Collaborate" },
+  { href: "/partnership", text: "Become a Sponsor/Collaborate" },
   { href: "/projects", text: "Projects" },
   { href: "/volunteer", text: "Become a volunteer" },
 ];
