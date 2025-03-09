@@ -4,6 +4,7 @@ import { paystack } from "../assets";
 
 const PaymentForm = ({ consultationData, onPaymentSuccess, onClose }) => {
   const [conversionRate, setConversionRate] = useState(null);
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
 
   // Fetch the USD -> NGN conversion rate on mount
   useEffect(() => {
@@ -71,7 +72,11 @@ const PaymentForm = ({ consultationData, onPaymentSuccess, onClose }) => {
       ref: "" + Math.floor(Math.random() * 1000000000 + 1),
       callback: function (response) {
         console.log("Payment successful:", response);
-        onPaymentSuccess(response);
+        setPaymentCompleted(true);
+        // Show thank you message and delay further action
+        setTimeout(() => {
+          onPaymentSuccess(response);
+        }, 5000); // 5 seconds delay
       },
       onClose: function () {
         console.log("Payment window closed");
@@ -81,30 +86,41 @@ const PaymentForm = ({ consultationData, onPaymentSuccess, onClose }) => {
 
   return (
     <div className="bg-white rounded-lg p-6 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Proceed to Payment</h2>
-      <p className="mb-4">
-        You are about to pay <strong>{consultationData.price}</strong> for a{" "}
-        <strong>{consultationData.consultationType}</strong> consultation.
-      </p>
-      <div className="justify-center items-center flex mb-2">
-        <img
-          src={paystack}
-          alt="paystack"
-          className="w-fit h-fit mb-3 cursor-pointer "
-        />
-      </div>
-      <button
-        onClick={payWithPaystack}
-        className="w-full bg-green-600 text-white py-2 rounded-lg hover:opacity-90 transition"
-      >
-        Pay Now
-      </button>
-      <button
-        onClick={onClose}
-        className="mt-4 w-full border py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
-      >
-        Cancel
-      </button>
+      {paymentCompleted ? (
+        <div className="text-center">
+          <h2 className="text-2xl text-black font-bold mb-4">Thank You!</h2>
+          <p className="text-black">
+            Your payment was successful. Thank you for using our service.
+          </p>
+        </div>
+      ) : (
+        <>
+          <h2 className="text-2xl font-bold text-black mb-4">Proceed to Payment</h2>
+          <p className="mb-4 text-black">
+            You are about to pay <strong>{consultationData.price}</strong> for a{" "}
+            <strong>{consultationData.consultationType}</strong> consultation.
+          </p>
+          <div className="justify-center items-center flex mb-2">
+            <img
+              src={paystack}
+              alt="paystack"
+              className="w-fit h-fit mb-3 cursor-pointer "
+            />
+          </div>
+          <button
+            onClick={payWithPaystack}
+            className="w-full bg-green-600 text-white py-2 rounded-lg hover:opacity-90 transition"
+          >
+            Pay Now
+          </button>
+          <button
+            onClick={onClose}
+            className="mt-4 w-full border py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+          >
+            Cancel
+          </button>
+        </>
+      )}
     </div>
   );
 };

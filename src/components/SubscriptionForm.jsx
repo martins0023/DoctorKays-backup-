@@ -48,7 +48,7 @@ const SubscriptionForm = ({ option, onClose, onProceedToPayment }) => {
     agreed;
 
   return (
-    <div className="bg-white rounded-lg p-6 max-w-md mx-auto">
+    <div className="bg-white rounded-lg p-6 max-w-md mx-auto text-black">
       <h2 className="text-2xl font-bold mb-4">Subscribe to {option?.title}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

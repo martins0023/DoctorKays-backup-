@@ -24,6 +24,7 @@ const fetchConversionRate = async () => {
 
 const DonationModal = ({ donationData, onPaymentSuccess, onClose }) => {
   const [conversionRate, setConversionRate] = useState(450);
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
 
   useEffect(() => {
     const getRate = async () => {
@@ -59,7 +60,11 @@ const DonationModal = ({ donationData, onPaymentSuccess, onClose }) => {
       ref: "" + Math.floor(Math.random() * 1000000000 + 1),
       callback: function (response) {
         console.log("Payment successful:", response);
-        onPaymentSuccess(response);
+        // Show thank you message and delay further action
+        setPaymentCompleted(true);
+        setTimeout(() => {
+          onPaymentSuccess(response);
+        }, 5000); // 5 seconds delay
       },
       onClose: function () {
         console.log("Payment window closed");
@@ -68,34 +73,44 @@ const DonationModal = ({ donationData, onPaymentSuccess, onClose }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg p-6 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Proceed to Payment</h2>
-      <p className="mb-4">
-        You are about to pay <strong>{donationData.price} USD</strong> (approx.{" "}
-        <strong>
-          {(parseFloat(donationData.price) * conversionRate).toFixed(2)} NGN
-        </strong>
-        ) for your donation.
-      </p>
-      <div className="justify-center items-center flex mb-2">
-        <img
-          src={paystack}
-          alt="paystack"
-          className="w-fit h-fit mb-3 cursor-pointer "
-        />
-      </div>
-      <button
-        onClick={payWithPaystack}
-        className="w-full bg-green-600 text-white py-2 rounded-lg hover:opacity-90 transition"
-      >
-        Pay Now
-      </button>
-      <button
-        onClick={onClose}
-        className="mt-4 w-full border py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
-      >
-        Cancel
-      </button>
+    <div className="bg-white rounded-lg p-6 max-w-md mx-auto mt-10">
+      {paymentCompleted ? (
+        <div className="text-center">
+          <h2 className="text-2xl text-black font-bold mb-4">Thank You!</h2>
+          <p className="text-black">Your payment was successful. Thank you for using our service.</p>
+        </div>
+      ) : (
+        <>
+          <h2 className="text-2xl text-black font-bold mb-4">Proceed to Payment</h2>
+          <p className="mb-4 text-black">
+            You are about to pay <strong>{donationData.price} USD</strong>{" "}
+            (approx.{" "}
+            <strong>
+              {(parseFloat(donationData.price) * conversionRate).toFixed(2)} NGN
+            </strong>
+            ) for your donation.
+          </p>
+          <div className="justify-center items-center flex mb-2">
+            <img
+              src={paystack}
+              alt="paystack"
+              className="w-fit h-fit mb-3 cursor-pointer "
+            />
+          </div>
+          <button
+            onClick={payWithPaystack}
+            className="w-full bg-green-600 text-white py-2 rounded-lg hover:opacity-90 transition"
+          >
+            Pay Now
+          </button>
+          <button
+            onClick={onClose}
+            className="mt-4 w-full border py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+          >
+            Cancel
+          </button>
+        </>
+      )}
     </div>
   );
 };

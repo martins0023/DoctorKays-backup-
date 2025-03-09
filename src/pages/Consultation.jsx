@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import {
   slideInFromLeft,
@@ -18,9 +18,16 @@ import { useNavigate } from "react-router-dom";
 
 const Consultation = () => {
   const navigate = useNavigate();
+  const bookingSectionRef = useRef(null);
 
   const requestInfo = () => {
     navigate("/contact");
+  };
+
+  const scrollToBooking = () => {
+    if (bookingSectionRef.current) {
+      bookingSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
   return (
     <div>
@@ -68,6 +75,7 @@ const Consultation = () => {
 
                 <div className="flex justify-center">
                   <Button
+                    onClick={scrollToBooking}
                     text="Book Appointment"
                     className="mt-5 hover:bg-primarydark  rounded-tl-full rounded-bl-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
                   />
@@ -90,7 +98,7 @@ const Consultation = () => {
           </div>
         </div>
 
-        <div className="relative mt-20 border-neutral-800 min-h-[800px]">
+        <div ref={bookingSectionRef} className="relative mt-20 border-neutral-800 min-h-[800px]">
           <Pricing />
           <div className="mt-20">
             <ContactPage />

@@ -67,9 +67,9 @@ const UpcomingProjects = () => {
       </div>
       <div className="flex justify-between items-center mb-6 mt-10">
         <h1 className="text-2xl font-bold ">Ongoing & Upcoming Projects</h1>
-        <button className="text-sm text-blue-600 hover:underline">
+        {/* <button className="text-sm text-blue-600 hover:underline">
           Explore All
-        </button>
+        </button> */}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {projects.map((project) => (

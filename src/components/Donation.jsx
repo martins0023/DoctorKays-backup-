@@ -66,7 +66,7 @@ const Donation = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="mt-1 w-full border rounded-lg p-2"
+            className="mt-1 w-full text-black border rounded-lg p-2"
             required
           />
         </div>
@@ -78,7 +78,7 @@ const Donation = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="mt-1 w-full border rounded-lg p-2"
+            className="mt-1 w-full text-black border rounded-lg p-2"
             required
           />
         </div>
@@ -90,7 +90,7 @@ const Donation = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="mt-1 w-full border rounded-lg p-2"
+            className="mt-1 w-full text-black border rounded-lg p-2"
           />
         </div>
         <div className="flex flex-col space-y-2">
@@ -101,7 +101,7 @@ const Donation = () => {
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="mt-1 w-full border rounded-lg p-2"
+            className="mt-1 w-full text-black border rounded-lg p-2"
           />
         </div>
         <div className="flex items-center space-x-2">
