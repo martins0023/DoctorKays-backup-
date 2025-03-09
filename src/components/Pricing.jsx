@@ -34,12 +34,30 @@ const Pricing = () => {
     setConsultationData(null);
   };
 
-  const handlePaymentSuccess = (paymentResponse) => {
+  const handlePaymentSuccess = async (paymentResponse) => {
     console.log("Payment successful:", paymentResponse);
-    // Here you could call your email confirmation endpoint.
+    try {
+      const apiUrl = "http://localhost:5000"; // Ensure this is your backend URL in development
+      console.log("Sending confirmation email with consultationData:", consultationData);
+      const emailResponse = await fetch(`${apiUrl}/api/sendConfirmationEmail`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: consultationData.email,
+          name: consultationData.name,
+          consultationType: consultationData.consultationType,
+        }),
+      });
+      console.log("HTTP status for email request:", emailResponse.status);
+      const emailResult = await emailResponse.json();
+      console.log("Email confirmation response:", emailResult);
+    } catch (err) {
+      console.error("Error sending confirmation email:", err);
+    }
     setIsPaymentModalOpen(false);
     // Optionally, navigate to a thank-you page.
   };
+  
 
   return (
     <motion.div

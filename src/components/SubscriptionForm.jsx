@@ -24,7 +24,7 @@ const SubscriptionForm = ({ option, onClose, onProceedToPayment }) => {
     setSubmitting(true);
     try {
       // Use an environment variable or fallback for the API URL
-      const apiUrl = "http://localhost:5000";
+      const apiUrl = "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
       const response = await fetch(`${apiUrl}/api/consultation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
