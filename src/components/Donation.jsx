@@ -23,7 +23,7 @@ const Donation = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const apiUrl = "http://localhost:5000"; // or your production URL
+      const apiUrl = "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000"; // or your production URL
       const response = await fetch(`${apiUrl}/api/sponsor`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -15,6 +15,7 @@ import AllPosts from "./pages/AllPosts";
 import NearestPharmacy from "./pages/NearestPharmacy";
 import Policy from "./pages/Policy";
 import Partnership from "./pages/Partnership";
+import Community from "./pages/Community";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/policy" element={<Policy />} />
         <Route path="/partnership" element={<Partnership />} />
         <Route path="/all-posts" element={<AllPosts />} />
+        <Route path="/community" element={<Community />} />
         {/* 
         <Route path="/dr-ai" element={<DrAi />} />
         <Route path="/services" element={<Services />} />

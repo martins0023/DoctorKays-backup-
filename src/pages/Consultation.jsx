@@ -20,8 +20,8 @@ const Consultation = () => {
   const navigate = useNavigate();
 
   const requestInfo = () => {
-    navigate("/contact")
-  }
+    navigate("/contact");
+  };
   return (
     <div>
       <Navbar />
@@ -54,17 +54,16 @@ const Consultation = () => {
                 </motion.p>
                 <p className="text-md tracking-wider gap-auto text-neutral-400">
                   Booking with Doctor Kays is easy and convenient. You can book
-                  an appointment through the booking section by
-                  selecting any service. You can either have a virtual
-                  consultation for convenience or meet him in person if you want
-                  it more personal; both options are available. The platform
-                  offers an easy-to-use interface that ensures a smooth booking
-                  process. 
+                  an appointment through the booking section by selecting any
+                  service. You can either have a virtual consultation for
+                  convenience or meet him in person if you want it more
+                  personal; both options are available. The platform offers an
+                  easy-to-use interface that ensures a smooth booking process.
                   <p className="mt-2"></p>
-                  You can see available time slots and book an
-                  appointment immediately after selecting the service you want.
-                  Doctor Kays's online booking system puts accessibility and
-                  efficiency at the core for all users.
+                  You can see available time slots and book an appointment
+                  immediately after selecting the service you want. Doctor
+                  Kays's online booking system puts accessibility and efficiency
+                  at the core for all users.
                 </p>
 
                 <div className="flex justify-center">
@@ -92,7 +91,6 @@ const Consultation = () => {
         </div>
 
         <div className="relative mt-20 border-neutral-800 min-h-[800px]">
-          
           <Pricing />
           <div className="mt-20">
             <ContactPage />

@@ -10,6 +10,7 @@ const projects = [
       "This unique, interactive segment brings health conversations to the people directly. By responding to health questions on the spot, Doctor Kays opens up free discussions about health concerns and builds a forum of community interaction.",
     cagr: "7.20%",
     duration: "1 yr +",
+    link: "",
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const projects = [
       "This series takes an in-depth look at various specific topics in health matters, bringing clarity and action steps into view. Addressing common misconceptions and deconstructing medical concepts, the series empowers an individual with the knowledge to handle their health better.",
     cagr: "14.20%",
     duration: "1 yr +",
+    link: "",
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ const projects = [
       "A virtual platform that provides interactive health education, Clinic Online makes healthcare information more accessible. Such a service is designed to provide easy access for the public and medical professionals.",
     cagr: "11.20%",
     duration: "Upcoming",
+    link: "",
   },
   {
     id: 4,
@@ -37,6 +40,7 @@ const projects = [
       "BTS entails how we perform our medicine on the street series.",
     cagr: "8.20%",
     duration: "Upcoming",
+    link: "",
   },
 ];
 
@@ -76,7 +80,7 @@ const UpcomingProjects = () => {
             )}`}
           >
             <span className="text-sm font-medium uppercase text-gray-500">
-              {project.status === "completed" ? "Strategy" : "Plans"}
+              {project.status === "completed" ? "Project" : "project"}
             </span>
             <h2 className="text-lg font-bold text-gray-800 mt-2">
               {project.name}
@@ -90,9 +94,9 @@ const UpcomingProjects = () => {
                 <p className="text-sm font-medium text-gray-500">
                   {project.duration}
                 </p>
-                <div className="mt-2 text-gray-900 cursor-pointer underline rounded-md h-6 text-sm font-medium">
+                <a href="/partnership" className="mt-2 text-gray-900 cursor-pointer underline rounded-md h-6 text-sm font-medium">
                   support
-                </div>
+                </a>
               </div>
               <button className="bg-white p-2 rounded-md hover:bg-gray-200 transition">
                 <ArrowRight className="text-gray-800 w-5 h-5" />

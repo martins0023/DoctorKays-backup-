@@ -8,12 +8,51 @@ const ContactPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
-  const handleFormSubmit = (formData) => {
-    console.log("Form Data:", formData);
-    setModalMessage(
-      "Thank you for your message. We will get back to you shortly."
-    );
-    setIsModalOpen(true);
+  const handleFormDataSubmit = async (data) => {
+    console.log("Form Data:", data);
+    try {
+      const response = await fetch(
+        "https://doctorkays-backend-1.onrender.com/api/contact" ||
+          "http://localhost:5000/api/contact",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+      console.log("HTTP status:", response.status);
+
+      // If the response is not OK, it might be an HTML page (404, 500, etc.)
+      if (!response.ok) {
+        // Try to read text to see what we got
+        const errorText = await response.text();
+        console.log("Error text response:", errorText);
+        throw new Error(`Server responded with ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Parsed JSON result:", result);
+
+      if (response.ok) {
+        // The data was saved and email sent successfully
+        setModalMessage(
+          "Thank you for your message. We have received your request and sent a confirmation email."
+        );
+        setIsModalOpen(true);
+      } else {
+        setModalMessage(
+          "Oops! There was an error sending your request. Please try again."
+        );
+        setIsModalOpen(true);
+      }
+      console.log("Server response:", result);
+    } catch (error) {
+      console.error("Error submitting contact data:", error);
+      setModalMessage(
+        "An unexpected error occurred. Please check your connection and try again."
+      );
+      setIsModalOpen(true);
+    }
   };
 
   const closeModal = () => {
@@ -29,7 +68,7 @@ const ContactPage = () => {
             platform? We're here to help. Chat to our friendly team 24/7 and get
             onboard in less than 5 minutes.
           </p>
-          <Form onSubmit={handleFormSubmit} />
+          <Form handleFormDataSubmit={handleFormDataSubmit} />
         </div>
         <div className="border-1 md:order-2 mt-10">
           <div className="border p-6 rounded-lg ">

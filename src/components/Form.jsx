@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
 
-const Form = ({ onSubmit }) => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    message: '',
-    services: [],
-  });
+const initialFormState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  message: '',
+  services: [],
+};
+const Form = ({ handleFormDataSubmit }) => {
+  const [formData, setFormData] = useState(initialFormState);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const { firstName, lastName, email, phone, message, services } = formData;
@@ -19,27 +21,32 @@ const Form = ({ onSubmit }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       services: checked
-        ? [...formData.services, name]
-        : formData.services.filter((service) => service !== name)
-    });
+        ? [...prev.services, name]
+        : prev.services.filter((service) => service !== name),
+    }));
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitting(true);
     if (isFormValid) {
-      onSubmit(formData);
+      // Call the parent callback with the form data
+      handleFormDataSubmit(formData);
+      // Clear the form by resetting it to the initial state
+      setFormData(initialFormState);
     }
+    setSubmitting(false);
   };
 
   return (
@@ -52,7 +59,7 @@ const Form = ({ onSubmit }) => {
           placeholder="First Name"
           value={formData.firstName}
           onChange={handleChange}
-          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          className="w-full p-3 mt-2 h-[60px] text-black border-gray-300 border focus:outline-none focus:border-primary"
           required
         />
       </div>
@@ -64,7 +71,7 @@ const Form = ({ onSubmit }) => {
           placeholder="Last Name"
           value={formData.lastName}
           onChange={handleChange}
-          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          className="w-full p-3 mt-2 h-[60px] text-black border-gray-300 border focus:outline-none focus:border-primary"
           required
         />
       </div>
@@ -76,7 +83,7 @@ const Form = ({ onSubmit }) => {
           placeholder="you@company.com"
           value={formData.email}
           onChange={handleChange}
-          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          className="w-full p-3 mt-2 h-[60px] text-black border-gray-300 border focus:outline-none focus:border-primary"
           required
         />
       </div>
@@ -88,7 +95,7 @@ const Form = ({ onSubmit }) => {
           placeholder="NGN +(234) 00-000-0000"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full p-3 mt-2 h-[60px] border-gray-300 border focus:outline-none focus:border-primary"
+          className="w-full p-3 mt-2 h-[60px] text-black border-gray-300 border focus:outline-none focus:border-primary"
           required
         />
       </div>
@@ -99,7 +106,7 @@ const Form = ({ onSubmit }) => {
           placeholder="Leave us a message..."
           value={formData.message}
           onChange={handleChange}
-          className="w-full p-3 mt-2 h-[160px] border-gray-300 border focus:outline-none focus:border-primary"
+          className="w-full p-3 mt-2 text-black h-[160px] border-gray-300 border focus:outline-none focus:border-primary"
           required
         />
       </div>
@@ -122,9 +129,9 @@ const Form = ({ onSubmit }) => {
       </div>
       <div className="md:col-span-2 flex">
         <Button
-          text="Send message"
+          text={submitting ? "Sending..." : "Send message"}
           className={`bg-gradient-to-l from-purple-600 to-purple-950 font-semibold w-full text-[16px] text-white rounded-md h-[51px] p-3 ${!isFormValid && 'opacity-50 cursor-not-allowed'}`}
-          disabled={!isFormValid}
+          disabled={!isFormValid || submitting}
         />
       </div>
     </form>
