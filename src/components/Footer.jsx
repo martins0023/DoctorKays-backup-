@@ -64,7 +64,7 @@ const Footer = () => {
         </a>
         <span className="mx-2">•</span>
         <a href="#story" className="hover:underline">
-          Customer Story
+          Designed by <span className="text-blue-500">Miracle</span>
         </a>
       </div>
     </footer>

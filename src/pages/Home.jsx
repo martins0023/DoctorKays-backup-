@@ -48,7 +48,7 @@ const Home = () => {
       </button>
 
       <footer className="bg-primary text-white p-4 text-center">
-        <div>© 2025 Doctor kays</div>
+        <div>© 2025 Doctor kays </div>
       </footer>
     </>
   )
