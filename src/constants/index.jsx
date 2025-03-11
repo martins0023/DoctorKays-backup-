@@ -369,9 +369,9 @@ export const pricingOptions = [
   {
     title: "Gold Package",
     price: "$19",
-    type: "20 minutes",
+    type: "10 minutes",
     features: [
-      "Prompt consultation time within 24hrs",
+      "Swift consultation within 24hrs",
       "Join the Community",
       "Newsletter Subscription",
       "Weekly Health Nugget",
