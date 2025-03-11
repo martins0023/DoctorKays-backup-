@@ -106,7 +106,7 @@ const FAQs = () => {
                       initial="hidden"
                       animate="visible"
                       variants={slideInFromLeft}
-                      className="text-neutral-300 tracking-wide text-[16px] mt-3"
+                      className=" tracking-wide text-[16px] mt-3"
                     >
                       <PortableText value={post.answer} />
                     </motion.p>

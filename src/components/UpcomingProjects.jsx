@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const projects = [
   {
@@ -10,7 +11,7 @@ const projects = [
       "This unique, interactive segment brings health conversations to the people directly. By responding to health questions on the spot, Doctor Kays opens up free discussions about health concerns and builds a forum of community interaction.",
     cagr: "7.20%",
     duration: "1 yr +",
-    link: "",
+    link: "https://www.youtube.com/@Doctorkays",
   },
   {
     id: 2,
@@ -20,7 +21,7 @@ const projects = [
       "This series takes an in-depth look at various specific topics in health matters, bringing clarity and action steps into view. Addressing common misconceptions and deconstructing medical concepts, the series empowers an individual with the knowledge to handle their health better.",
     cagr: "14.20%",
     duration: "1 yr +",
-    link: "",
+    link: "https://www.youtube.com/@Doctorkays",
   },
   {
     id: 3,
@@ -58,6 +59,7 @@ const getStatusColor = (status) => {
 };
 
 const UpcomingProjects = () => {
+  const navigate = useNavigate();
   return (
     <div className="">
       <div className="text-center mt-10">
@@ -98,9 +100,18 @@ const UpcomingProjects = () => {
                   support
                 </a>
               </div>
-              <button className="bg-white p-2 rounded-md hover:bg-gray-200 transition">
+              <div
+                onClick={() => {
+                  if (project.link && project.link.startsWith("https")) {
+                    window.location.href = project.link;
+                  } else {
+                    navigate(project.link);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
+                className="bg-white p-2 rounded-md hover:bg-gray-200 transition">
                 <ArrowRight className="text-gray-800 w-5 h-5" />
-              </button>
+              </div>
             </div>
           </div>
         ))}

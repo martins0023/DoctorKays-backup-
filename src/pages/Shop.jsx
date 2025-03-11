@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import { motion } from "framer-motion";
 import {
   bouncex,
@@ -15,6 +15,13 @@ import Button from "../components/Button";
 import { storebg, ecomm3, ecomm4 } from "../assets";
 
 const Shop = ({isDarkMode}) => {
+  const shopSectionRef = useRef(null);
+
+  const scrollToShopping = () => {
+    if (shopSectionRef.current) {
+      shopSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <div>
       <Navbar />
@@ -47,12 +54,12 @@ const Shop = ({isDarkMode}) => {
             className="mt-6 text-lg text-left font-normal text-white"
           >
             Welcome to Doctor Kays Shop - your trusted destination for premium
-            healthcare products and wellness essentials....
+            healthcare products, medical devices and wellness essentials....
           </motion.p>
 
           <motion.div className="flex justify-center mt-8">
             <Button
-              href="#"
+              onClick={scrollToShopping}
               img={<ArrowRight />}
               className="px-6 py-3 text-sm font-medium text-primary bg-white rounded-md hover:bg-white-200"
               variants={bouncex}
@@ -62,7 +69,9 @@ const Shop = ({isDarkMode}) => {
         </div>
       </motion.div>
 
-      <Shopcards isDarkMode={isDarkMode} />
+      <div ref={shopSectionRef}>
+      <Shopcards  isDarkMode={isDarkMode} />
+      </div>
     </div>
   );
 };

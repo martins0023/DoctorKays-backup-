@@ -184,7 +184,7 @@ export const features = [
     icon: <LocateFixedIcon />,
     text: "Pharmacies near me",
     description:
-      "Doctor Kays website makes it effortless to locate trusted pharmacies, clinics, and laboratories closest to you. Instantly find verified health facilities near you.",
+      "Doctor Kays website makes it effortless to locate nearest pharmacies, clinics, and laboratories closest to you. Instantly find verified health facilities near you.",
     url: "/nearestpharmacy"
   },
   {
@@ -206,6 +206,7 @@ export const features = [
     text: "Health Nuggets",
     description:
       "Get your weekly dose of health tips with our Health Nuggets series. Simple, actionable advice to help you lead a healthier lifestyle.",
+    url: "https://www.instagram.com/doctor_kays"
   },
   {
     icon: <NotebookPen />,
@@ -339,7 +340,7 @@ export const checkaboutlists = [
 ];
 export const pricingOptions = [
   {
-    title: "Lab Interpretation",
+    title: "Blood Tests and Scan Report",
     price: "$4",
     type: "once",
     features: [
@@ -347,12 +348,12 @@ export const pricingOptions = [
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Laboratory Interpretation",
-      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
+      "Free Referral suggestions to nearest pharmicies and diagnostic centers",
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
-    title: "Gold Package",
+    title: "Silver Package",
     price: "$9",
     type: "10 minutes",
     features: [
@@ -360,21 +361,22 @@ export const pricingOptions = [
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat, Audio and Video Calls",
-      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
-      "Unlimited Consultation",
+      "Free Referral suggestions to nearest pharmicies and diagnostic centers",
+      "Limited to 2 family members",
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
-    title: "Family Package",
+    title: "Gold Package",
     price: "$19",
     type: "20 minutes",
     features: [
+      "Prompt consultation time within 24hrs",
       "Join the Community",
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat and Calls",
-      "Free Referral suggestions to trusted pharmicies and diagnostic centers",
+      "Free Referral suggestions to nearest pharmicies and diagnostic centers",
       "Limited to 2 family members",
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",

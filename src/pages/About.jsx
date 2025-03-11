@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { doctor004, doctor005, doctor006, doctor007, doctor008, doctor009, doctor1, mos } from "../assets";
 import Button from "../components/Button";
@@ -20,10 +21,19 @@ import {
 import Milestones from "../components/Milestones";
 
 const About = () => {
+  const navigate = useNavigate();
   const { ref, inView } = useInView({
     triggerOnce: true, //count only once when in view
     threshold: 0.5, //trigger when 50% of the element is in view
   });
+
+  const requestInfo = () => {
+    navigate("/contact");
+  };
+
+  const partnerWithMe = () => {
+    navigate("/partnership");
+  };
   return (
     <div>
       <Navbar />
@@ -75,10 +85,12 @@ const About = () => {
 
                 <div className="flex justify-center">
                   <Button
+                    onClick={partnerWithMe}
                     text="Partner With Me"
                     className="mt-5 hover:bg-white  rounded-tl-full rounded-bl-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
                   />
                   <Button
+                    onClick={requestInfo}
                     text="Request For More Information"
                     className="mt-5 border hover:bg-primary border-primary rounded-tr-full rounded-br-full py-2 px-3"
                   />
