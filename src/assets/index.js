@@ -70,21 +70,18 @@ import mockup2 from "./mockup2.png";
 import mockup3 from "./mockup3.png";
 import east from "./east.png";
 
-import ecomm1 from "./ecomm1.jpg";
-import ecomm2 from "./ecomm2.jpg";
-import ecomm3 from "./ecomm3.jpg";
-import ecomm4 from "./ecomm4.jpg";
-
 import storebg from "./sore-bg.jpg";
+import storebg1 from "./store-bg.jpg";
+import storebg2 from "./store-bg1.jpg";
+import sorebg3 from "./sore-bg1.jpg";
 
 export {
     paystack,
+    sorebg3,
     storebg,
+    storebg1,
+    storebg2,
     viddisplay,
-    ecomm1,
-    ecomm2,
-    ecomm3,
-    ecomm4,
     shop1,
     shop3,
     shop3b,

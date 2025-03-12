@@ -1,20 +1,33 @@
-import React, {useRef} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   bouncex,
   continuousTextAnimation,
-  pulse,
   slideInFromRight,
   staggerContainer,
-  textVariants,
 } from "../constants/animations";
 import Shopcards from "../components/Shopcards";
 import Navbar from "../components/Navbar";
-import { ArrowDownRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Button from "../components/Button";
-import { storebg, ecomm3, ecomm4 } from "../assets";
+import { sorebg3, storebg1, storebg2 } from "../assets";
 
-const Shop = ({isDarkMode}) => {
+const images = [
+  sorebg3,
+  storebg1,
+  storebg2,
+];
+
+const Shop = ({ isDarkMode }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // Change images every 5 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   const shopSectionRef = useRef(null);
 
   const scrollToShopping = () => {
@@ -32,11 +45,16 @@ const Shop = ({isDarkMode}) => {
         className="relative flex items-center justify-left h-screen bg-gray-900"
       >
         <div className="absolute inset-0">
-          <img
-          src={storebg}
-          alt="Background"
-          className="object-cover w-full h-full lg:h-full"
-        />
+          {images.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`Background ${index + 1}`}
+              className={`absolute inset-0 object-cover w-full h-full lg:h-full transition-opacity duration-1000 ${
+                index === currentImageIndex ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
         </div>
         <div className="relative z-10 max-w-4xl px-6 text-center text-white justify-start items-start justify-items-start">
           <motion.h5
@@ -51,7 +69,7 @@ const Shop = ({isDarkMode}) => {
             initial="hidden"
             animate="visible"
             variants={slideInFromRight}
-            className="mt-6 text-lg text-left font-normal text-white"
+            className="mt-6 text-lg text-left font-normal text-"
           >
             Welcome to Doctor Kays Shop - your trusted destination for premium
             healthcare products, medical devices and wellness essentials....
@@ -61,7 +79,7 @@ const Shop = ({isDarkMode}) => {
             <Button
               onClick={scrollToShopping}
               img={<ArrowRight />}
-              className="px-6 py-3 text-sm font-medium text-primary bg-white rounded-md hover:bg-white-200"
+              className="px-6 py-3 border text-sm font-medium text-primary bg-white rounded-full hover:bg-white-200"
               variants={bouncex}
               text="Shop now"
             />
@@ -70,7 +88,7 @@ const Shop = ({isDarkMode}) => {
       </motion.div>
 
       <div ref={shopSectionRef}>
-      <Shopcards  isDarkMode={isDarkMode} />
+        <Shopcards isDarkMode={isDarkMode} />
       </div>
     </div>
   );

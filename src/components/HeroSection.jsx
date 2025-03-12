@@ -8,7 +8,7 @@ import {
   staggerContainer,
   textVariants,
 } from "../constants/animations";
-import { viddisplay, videoDr } from "../assets";
+import { viddisplay, videoDr, doctor020 } from "../assets";
 
 const HeroSection = () => {
   return (
@@ -19,11 +19,19 @@ const HeroSection = () => {
       className="relative flex items-center justify-center h-screen bg-gray-100"
     >
       <div className="absolute inset-0">
+        {/* Mobile Image (shown on small screens) */}
+        <img
+          src={doctor020}
+          alt="Doctor Kays"
+          className="object-cover w-full h-full lg:hidden"
+        />
+
+        {/* Desktop Video (shown on large screens) */}
         <video
           autoPlay
           loop
           muted
-          className="object-cover w-full h-full lg:h-full"
+          className="hidden lg:block object-cover w-full h-full"
         >
           <source src={viddisplay} type="video/mp4" />
           Your browser does not support the video tag.

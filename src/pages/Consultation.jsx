@@ -98,7 +98,10 @@ const Consultation = () => {
           </div>
         </div>
 
-        <div ref={bookingSectionRef} className="relative mt-20 border-neutral-800 min-h-[800px]">
+        <div
+          ref={bookingSectionRef}
+          className="relative mt-20 border-neutral-800 min-h-[800px]"
+        >
           <Pricing />
           <div className="mt-20">
             <ContactPage />

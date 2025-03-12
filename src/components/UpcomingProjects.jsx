@@ -96,7 +96,10 @@ const UpcomingProjects = () => {
                 <p className="text-sm font-medium text-gray-500">
                   {project.duration}
                 </p>
-                <a href="/partnership" className="mt-2 text-gray-900 cursor-pointer underline rounded-md h-6 text-sm font-medium">
+                <a
+                  href="/partnership"
+                  className="mt-2 text-gray-900 cursor-pointer underline rounded-md h-6 text-sm font-medium"
+                >
                   support
                 </a>
               </div>
@@ -109,7 +112,8 @@ const UpcomingProjects = () => {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="bg-white p-2 rounded-md hover:bg-gray-200 transition">
+                className="bg-white p-2 rounded-md hover:bg-gray-200 transition"
+              >
                 <ArrowRight className="text-gray-800 w-5 h-5" />
               </div>
             </div>

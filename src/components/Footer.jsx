@@ -17,10 +17,7 @@ const Footer = () => {
           <ul className="space-y-2">
             {resourcesLinks.map((link, index) => (
               <li key={index}>
-                <a
-                  href={link.href}
-                  className=" hover:text-neutral-300"
-                >
+                <a href={link.href} className=" hover:text-neutral-300">
                   {link.text}
                 </a>
               </li>
@@ -32,10 +29,7 @@ const Footer = () => {
           <ul className="space-y-2">
             {platformLinks.map((link, index) => (
               <li key={index}>
-                <a
-                  href={link.href}
-                  className=" hover:text-neutral-300"
-                >
+                <a href={link.href} className=" hover:text-neutral-300">
                   {link.text}
                 </a>
               </li>
@@ -47,10 +41,7 @@ const Footer = () => {
           <ul className="space-y-2">
             {communityLinks.map((link, index) => (
               <li key={index}>
-                <a
-                  href={link.href}
-                  className=" hover:text-neutral-300"
-                >
+                <a href={link.href} className=" hover:text-neutral-300">
                   {link.text}
                 </a>
               </li>

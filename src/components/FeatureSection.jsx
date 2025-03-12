@@ -37,10 +37,7 @@ const FeatureSection = () => {
       </div>
       <div className="flex flex-wrap mt-10 lg:mt-20 transition-transform duration-300 group-hover:bg-white cursor-pointer">
         {features.map((feature, index) => (
-          <div
-            key={index}
-            className="w-full sm:w-1/2 lg:w-1/3 rounded-2xl"
-          >
+          <div key={index} className="w-full sm:w-1/2 lg:w-1/3 rounded-2xl">
             <div className="flex">
               <motion.div
                 variants={bounce}
@@ -64,7 +61,6 @@ const FeatureSection = () => {
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }
                     }}
-                    
                     className="flex flex-row items-center p-3 mt-3 gap-2 h-fit w-fit rounded-full cursor-pointer"
                     initial={{ backgroundPosition: "0% 50%" }}
                     animate={{

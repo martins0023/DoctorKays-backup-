@@ -357,6 +357,7 @@ export const pricingOptions = [
     price: "$9",
     type: "10 minutes",
     features: [
+      "Consultation is scheduled only on available dates",
       "Join the Community",
       "Newsletter Subscription",
       "Weekly Health Nugget",

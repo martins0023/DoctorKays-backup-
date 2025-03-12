@@ -1,7 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { doctor004, doctor005, doctor006, doctor007, doctor008, doctor009, doctor1, mos } from "../assets";
+import {
+  doctor004,
+  doctor005,
+  doctor006,
+  doctor007,
+  doctor008,
+  doctor009,
+  doctor1,
+  mos,
+} from "../assets";
 import Button from "../components/Button";
 import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
@@ -60,7 +69,9 @@ const About = () => {
                   Meet Doctor Kays
                 </motion.p>
                 <p className="text-md tracking-wider gap-auto text-neutral-400">
-                  Doctor Olayiwola is not your run-of-the-mill medical doctor.
+                  Doctor Olayiwola Babatunde Emmanuel (Dr Kays) is a medical doctor
+                  with close on a decade years of clinical experience across Ukraine,
+                  Nigeria, and Dubai.
                   He is a tech lover, family advocate and firm believer in
                   preventive and community medicine. His passion lies in
                   promoting health awareness through engaging, relatable content
@@ -72,9 +83,10 @@ const About = () => {
                     lifestyle, disease prevention, general health and wellness.
                   </p>
                   <p className="mt-2">
-                    <strong>Our mission</strong> <br />Is to turn medicine from a head-scratcher into
-                    your friendly companion - relatable, understandable, and
-                    yes, even a bit fun!
+                    <strong>Our mission</strong> <br />
+                    Is to turn medicine from a head-scratcher into your friendly
+                    companion - relatable, understandable, and yes, even a bit
+                    fun!
                   </p>
                   <p className="mt-2"></p>
                   We align our works with the World Health Organization calendar

@@ -1,18 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  clinic,
-  clinic1,
-  clinic3,
-  clinicseries1,
-  shop1,
-  shop10,
-  shop3,
-  shop3b,
-  shop5,
-  shop6,
-} from "../assets";
-import { clinicSeries } from "../constants";
+
 import {
   BadgeCheck,
   RefreshCw,
