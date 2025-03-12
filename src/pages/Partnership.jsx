@@ -9,6 +9,8 @@ import Modal from "../components/Modal";
 import Form from "../components/Form";
 import { paystack } from "../assets";
 import Donation from "../components/Donation";
+import { Info } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Partnership = ({ onProceedToPayment }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +26,11 @@ const Partnership = ({ onProceedToPayment }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const navigate = useNavigate();
+  const handlePolicy = () => {
+    navigate("/policy");
   };
   return (
     <div>
@@ -50,6 +57,22 @@ const Partnership = ({ onProceedToPayment }) => {
             </div>
             <div className="border-1 md:order-2 mt-10">
               <div className="border p-6 rounded-lg ">
+                
+                <div className="mb-4 bg-red-600 p-3 gap-2 rounded-lg flex">
+                  <div>
+                    <Info className="text-white" />
+                  </div>
+                  <span className="text-white">
+                    Thank you for your interest in supporting Medicine on the Streets. This is a movement that listens to real-life health experiences-both inspiring and hearthbreaking-while raising awareness and providing financial assistance to those in need, ensuring no one is left behing in accessing medical care.{" "}
+                    {/* <span
+                      honClick={handlePolicy}
+                      className="text-neutral-200 underline"
+                    >
+                      Check Out
+                    </span> */}
+                  </span>
+                </div>
+
                 <h2 className="text-xl font-bold mb-4">
                   You can directly make donations now
                 </h2>

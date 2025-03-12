@@ -4,7 +4,7 @@ import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
 import { faqsCard } from "../constants";
-import { client, urlFor } from "../../lib/client"; 
+import { client, urlFor } from "../../lib/client";
 import { motion } from "framer-motion";
 import { PortableText } from "@portabletext/react";
 import {
@@ -39,7 +39,7 @@ const FAQs = () => {
         setLoading(false);
       }
     };
-  
+
     fetchPosts();
   }, []);
 
@@ -78,7 +78,7 @@ const FAQs = () => {
               <div key={post._id} className="flex flex-col mt-5 mb-5">
                 <div className="bg-gradient-to-r from-purple-800 to-purple-950 flex items-center justify-center justify-items-center w-[56px] h-[36px] rounded-md">
                   <p className="text-white font-semibold text-[20px]">
-                  {index + 1} {/* Display the index incremented by 1 */}
+                    {index + 1} {/* Display the index incremented by 1 */}
                   </p>
                 </div>
 

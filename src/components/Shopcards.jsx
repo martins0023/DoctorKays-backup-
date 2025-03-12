@@ -93,7 +93,8 @@ const Shopcards = ({ isDarkMode }) => {
   // const isLightMode = mode === 'light';
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading shop items it is from our side, please reload.</p>;
+  if (error)
+    return <p>Error loading shop items it is from our side, please reload.</p>;
 
   return (
     <div className="max-w-7xl mx-auto py-6 p-4">
@@ -107,7 +108,9 @@ const Shopcards = ({ isDarkMode }) => {
       </div>
 
       {/* Features Section */}
-      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 mt-10 `}>
+      <div
+        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 mt-10 `}
+      >
         {[
           {
             title: "Certified",
@@ -135,9 +138,7 @@ const Shopcards = ({ isDarkMode }) => {
             className={`flex flex-col border items-center bg-neutral-7 00 rounded-lg p-4 text-center`}
           >
             <feature.icon className="text-purple-500 w-8 h-8 mb-2" />
-            <h3 className="text-xl font-semibold">
-              {feature.title}
-            </h3>
+            <h3 className="text-xl font-semibold">{feature.title}</h3>
             <p className="text-gray-400 text-sm">{feature.content}</p>
           </div>
         ))}

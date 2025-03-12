@@ -12,11 +12,7 @@ import { ArrowRight } from "lucide-react";
 import Button from "../components/Button";
 import { sorebg3, storebg1, storebg2 } from "../assets";
 
-const images = [
-  sorebg3,
-  storebg1,
-  storebg2,
-];
+const images = [sorebg3, storebg1, storebg2];
 
 const Shop = ({ isDarkMode }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);

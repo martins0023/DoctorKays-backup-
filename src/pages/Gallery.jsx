@@ -57,7 +57,7 @@ const Gallery = () => {
     fetchPosts();
   }, []);
 
-  const categories = ["All", "Clinic Series", "Mos", "Health Nuggets"];
+  const categories = ["All", "Clinic Series", "MOS", "Health Nuggets"];
 
   const filterItems = () => {
     if (filter === "All") return [...clinicSeries, ...mosSeries];
@@ -170,7 +170,9 @@ const Gallery = () => {
                         #{post.category}
                       </p>
                     </div>
-                    <h3 className="text-xl text-white font-semibold mb-2">{post.title}</h3>
+                    <h3 className="text-xl text-white font-semibold mb-2">
+                      {post.title}
+                    </h3>
                     <p className="text-sm text-gray-400 mb-4">
                       {truncateText(post.descriptionText, 20)}
                       <span className="text-white"> read more</span>{" "}

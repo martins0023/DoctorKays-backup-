@@ -69,13 +69,13 @@ const About = () => {
                   Meet Doctor Kays
                 </motion.p>
                 <p className="text-md tracking-wider gap-auto text-neutral-400">
-                  Doctor Olayiwola Babatunde Emmanuel (Dr Kays) is a medical doctor
-                  with close on a decade years of clinical experience across Ukraine,
-                  Nigeria, and Dubai.
-                  He is a tech lover, family advocate and firm believer in
-                  preventive and community medicine. His passion lies in
-                  promoting health awareness through engaging, relatable content
-                  that combines storytelling and humor.
+                  Doctor Olayiwola Babatunde Emmanuel (Dr Kays) is a medical
+                  doctor with close on a decade years of clinical experience
+                  across Ukraine, Nigeria, and Dubai. He is a tech lover, family
+                  advocate and firm believer in preventive and community
+                  medicine. His passion lies in promoting health awareness
+                  through engaging, relatable content that combines storytelling
+                  and humor.
                   <p className="mt-2">
                     Weekly, through our unique content pillars—Health Nuggets,
                     Clinic Series, Clinic online and the interactive street
