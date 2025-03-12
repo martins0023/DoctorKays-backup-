@@ -363,7 +363,7 @@ export const pricingOptions = [
       "Weekly Health Nugget",
       "Consultation Chat, Audio and Video Calls",
       "Free Referral suggestions to nearest pharmicies and diagnostic centers",
-      "Limited to 2 family members",
+      
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
@@ -378,7 +378,7 @@ export const pricingOptions = [
       "Weekly Health Nugget",
       "Consultation Chat and Calls",
       "Free Referral suggestions to nearest pharmicies and diagnostic centers",
-      "Limited to 2 family members",
+      
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
