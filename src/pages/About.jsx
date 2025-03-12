@@ -84,7 +84,7 @@ const About = () => {
                   </p>
                   <p className="mt-2">
                     <strong>Our mission</strong> <br />
-                    Is to turn medicine from a head-scratcher into your friendly
+                    To turn medicine from a head-scratcher into your friendly
                     companion - relatable, understandable, and yes, even a bit
                     fun!
                   </p>

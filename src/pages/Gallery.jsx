@@ -62,7 +62,7 @@ const Gallery = () => {
   const filterItems = () => {
     if (filter === "All") return [...clinicSeries, ...mosSeries];
     if (filter === "Clinic Series") return clinicSeries;
-    if (filter === "Mos") return mosSeries;
+    if (filter === "MOS") return mosSeries;
     return []; // Future: add logic for "Health Nuggets"
   };
 

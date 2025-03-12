@@ -198,7 +198,7 @@ export const features = [
     icon: <ShoppingCart />,
     text: "Merch and Shops",
     description:
-      "Explore our exclusive range of health products in Doctor Kay's shop. From supplements to wellness kits, find everything you need to support your health journey.",
+      "Explore our exclusive range of health products in Doctor Kays shop. From supplements to wellness kits, find everything you need to support your health journey.",
     url: "/shop"
   },
   {
@@ -234,13 +234,13 @@ export const mission = [
     icon: <Waypoints />,
     text: "Connect Users With Healthcare Services",
     description:
-      "Creating a system to connect users with pharmicies, specialists, and laboratory based on reviews and refferals.",
+      "Creating a system to connect users with pharmacies, specialists, and laboratory based on reviews and refferals.",
   },
   {
     icon: <Podcast />,
     text: "Expert Talks: Health Tips and From Professionals",
     description:
-      "Ensure clients are satisfied with the services provided by leaders and experts in the industry leaders with medical content.",
+      "Ensure clients are satisfied with the services provided by leaders and experts in the industry with medical content.",
   },
 ];
 
