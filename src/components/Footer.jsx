@@ -54,9 +54,9 @@ const Footer = () => {
           Terms Policy
         </a>
         <span className="mx-2">•</span>
-        <a href="#story" className="hover:underline">
-          Designed by <span className="text-blue-500">Miracle</span>
-        </a>
+        <span href="" className="">
+          Designed by <a href="https://www.linkedin.com/in/miracle-oladapo/" className="text-blue-500 hover:underline">Miracle</a>
+        </span>
       </div>
     </footer>
   );
