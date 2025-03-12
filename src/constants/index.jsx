@@ -348,7 +348,7 @@ export const pricingOptions = [
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Laboratory Interpretation",
-      "Free Referral suggestions to nearest pharmicies and diagnostic centers",
+      "Free Referral suggestions to nearest pharmacies and diagnostic centers",
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
@@ -362,7 +362,7 @@ export const pricingOptions = [
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat, Audio and Video Calls",
-      "Free Referral suggestions to nearest pharmicies and diagnostic centers",
+      "Free Referral suggestions to nearest pharmacies and diagnostic centers",
       
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
@@ -377,7 +377,7 @@ export const pricingOptions = [
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat and Calls",
-      "Free Referral suggestions to nearest pharmicies and diagnostic centers",
+      "Free Referral suggestions to nearest pharmacies and diagnostic centers",
       
     ],
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
