@@ -73,7 +73,7 @@ const HeroSection = () => {
         <div className="flex justify-center mt-8 space-x-4">
           <a
             href="/consultation"
-            className="px-6 py-3 text-sm font-medium text-white bg-primary rounded-md hover:bg-primarydark"
+            className="px-6 py-3 hidden lg:block text-sm font-medium text-white bg-primary rounded-md hover:bg-primarydark"
           >
             Book a consultation
           </a>
