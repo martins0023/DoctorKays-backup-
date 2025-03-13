@@ -51,6 +51,14 @@ const Mos = () => {
   const handleGallery = () => {
     navigate("/gallery");
   };
+
+  const requestInfo = () => {
+    navigate("/contact");
+  };
+
+  const partnerWithMe = () => {
+    navigate("/partnership");
+  };
   return (
     <motion.div
       initial="hidden"
@@ -79,10 +87,12 @@ const Mos = () => {
 
               <div className="flex justify-center">
                 <Button
+                  onClick={partnerWithMe}
                   text="Partner With Us"
                   className="mt-5 hover:bg-white  rounded-tl-full rounded-bl-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
                 />
                 <Button
+                  onClick={requestInfo}
                   text="Request For More Information"
                   className="mt-5 border hover:bg-primary border-primary rounded-tr-full rounded-br-full py-2 px-3"
                 />
