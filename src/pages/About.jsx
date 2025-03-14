@@ -2,14 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {
-  doctor004,
-  doctor005,
   doctor006,
-  doctor007,
+  doctor020,
   doctor008,
   doctor009,
-  doctor1,
-  mos,
 } from "../assets";
 import Button from "../components/Button";
 import Testimonials from "../components/Testimonials";
@@ -135,7 +131,7 @@ const About = () => {
           </div>
           <div className="flex flex-wrap justify-center">
             <div className="p-2 w-full lg:w-1/2 h-fit">
-              <img src={doctor008} alt="Doctor" className="mt-5 rounded-xl" />
+              <img src={doctor020} alt="Doctor" className="mt-5 rounded-xl" />
             </div>
             <div className="pt-12 w-full lg:w-1/2">
               {mission.map((item, index) => (
