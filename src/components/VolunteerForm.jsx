@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import Button from './Button';
+import React, { useState, useEffect } from "react";
+import Button from "./Button";
 
 const initialFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  message: '',
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  message: "",
 };
 
-const VolunteerForm = () => {
+const VolunteerForm = ({ handleFormDataSubmit }) => {
   const [formData, setFormData] = useState(initialFormState);
   const [isFormValid, setIsFormValid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   useEffect(() => {
     const { firstName, lastName, email, phone, message } = formData;
-    setIsFormValid(firstName && lastName && email && phone && message );
+    setIsFormValid(firstName && lastName && email && phone && message);
   }, [formData]);
 
   const handleChange = (e) => {
@@ -27,16 +28,16 @@ const VolunteerForm = () => {
     }));
   };
 
-//   const handleCheckboxChange = (e) => {
-//     const { name, checked } = e.target;
-//     setFormData((prev) => ({
-//       ...prev,
-//       services: checked
-//         ? [...prev.services, name]
-//         : prev.services.filter((service) => service !== name),
-//     }));
-//   };
-  
+  //   const handleCheckboxChange = (e) => {
+  //     const { name, checked } = e.target;
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       services: checked
+  //         ? [...prev.services, name]
+  //         : prev.services.filter((service) => service !== name),
+  //     }));
+  //   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -49,7 +50,10 @@ const VolunteerForm = () => {
     setSubmitting(false);
   };
   return (
-    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mt-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-4xl mx-auto mt-7 grid grid-cols-1 md:grid-cols-2 gap-6"
+    >
       <div className="mb-4">
         <label className="font-semibold text-[16px] ">First Name</label>
         <input
@@ -109,32 +113,36 @@ const VolunteerForm = () => {
           required
         />
       </div>
-      {/* <div className="mb-4 md:col-span-2">
-        <label className="font-semibold text-[16px] ">Services</label>
-        <div className="flex flex-wrap mt-2">
-          {['Appointment booking', 'Recommendations', 'Comments', 'Request', 'Consultation', 'Other'].map((service) => (
-            <label key={service} className="flex items-center mr-6 mb-4">
-              <input
-                type="checkbox"
-                name={service}
-                checked={formData.services.includes(service)}
-                onChange={handleCheckboxChange}
-                className="mr-2"
-              />
-              {service}
-            </label>
-          ))}
-        </div>
-      </div> */}
+      <div className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          checked={agreed}
+          onChange={(e) => setAgreed(e.target.checked)}
+          required
+        />
+        <span className="text-sm">
+          I agree to the{" "}
+          <a
+            href="/policy"
+            className="text-blue-500 underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Terms and Policy
+          </a>
+        </span>
+      </div>
       <div className="md:col-span-2 flex">
         <Button
           text={submitting ? "Sending..." : "Become a volunteer"}
-          className={`bg-gradient-to-l from-purple-600 to-purple-950 font-semibold w-full text-[16px] text-white rounded-md h-[51px] p-3 ${!isFormValid && 'opacity-50 cursor-not-allowed'}`}
+          className={`bg-gradient-to-l from-purple-600 to-purple-950 font-semibold w-full text-[16px] text-white rounded-md h-[51px] p-3 ${
+            !isFormValid && "opacity-50 cursor-not-allowed"
+          }`}
           disabled={!isFormValid || submitting}
         />
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default VolunteerForm
+export default VolunteerForm;

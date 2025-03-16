@@ -11,7 +11,7 @@ const SubscriptionForm = ({ option, onClose, onProceedToPayment }) => {
     consultationType: option?.title || "",
     price: option?.price || "",
   });
-  const [agreed, setAgreed] = useState(false);
+  
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 

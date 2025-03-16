@@ -13,6 +13,7 @@ const Form = ({ handleFormDataSubmit }) => {
   const [formData, setFormData] = useState(initialFormState);
   const [isFormValid, setIsFormValid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   useEffect(() => {
     const { firstName, lastName, email, phone, message, services } = formData;
@@ -127,6 +128,25 @@ const Form = ({ handleFormDataSubmit }) => {
           ))}
         </div>
       </div>
+      <div className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            required
+          />
+          <span className="text-sm">
+            I agree to the{" "}
+            <a
+              href="/policy"
+              className="text-blue-500 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Terms and Policy
+            </a>
+          </span>
+        </div>
       <div className="md:col-span-2 flex">
         <Button
           text={submitting ? "Sending..." : "Send message"}

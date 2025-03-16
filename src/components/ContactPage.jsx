@@ -7,6 +7,7 @@ import Modal from "./Modal";
 const ContactPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [agreed, setAgreed] = useState(false);
 
   const handleFormDataSubmit = async (data) => {
     console.log("Form Data:", data);
