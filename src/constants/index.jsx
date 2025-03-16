@@ -341,7 +341,7 @@ export const checkaboutlists = [
 export const pricingOptions = [
   {
     title: "Blood Tests and Scan Report",
-    price: "$4",
+    price: "$0",
     type: "once",
     features: [
       "Join the Community",
@@ -354,7 +354,7 @@ export const pricingOptions = [
   },
   {
     title: "Silver Package",
-    price: "$9",
+    price: "$0",
     type: "10 minutes",
     features: [
       "Consultation is scheduled only on available dates",
@@ -369,7 +369,7 @@ export const pricingOptions = [
   },
   {
     title: "Gold Package",
-    price: "$19",
+    price: "$9.5",
     type: "10 minutes",
     features: [
       "Swift consultation within 24hrs",
