@@ -16,6 +16,7 @@ import NearestPharmacy from "./pages/NearestPharmacy";
 import Policy from "./pages/Policy";
 import Partnership from "./pages/Partnership";
 import Community from "./pages/Community";
+import Volunteer from "./pages/Volunteer";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/partnership" element={<Partnership />} />
+        <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/all-posts" element={<AllPosts />} />
         <Route path="/community" element={<Community />} />
         {/* 

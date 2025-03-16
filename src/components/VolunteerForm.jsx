@@ -7,16 +7,16 @@ const initialFormState = {
   email: '',
   phone: '',
   message: '',
-  services: [],
 };
-const Form = ({ handleFormDataSubmit }) => {
+
+const VolunteerForm = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [isFormValid, setIsFormValid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    const { firstName, lastName, email, phone, message, services } = formData;
-    setIsFormValid(firstName && lastName && email && phone && message && services.length > 0);
+    const { firstName, lastName, email, phone, message } = formData;
+    setIsFormValid(firstName && lastName && email && phone && message );
   }, [formData]);
 
   const handleChange = (e) => {
@@ -27,15 +27,15 @@ const Form = ({ handleFormDataSubmit }) => {
     }));
   };
 
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      services: checked
-        ? [...prev.services, name]
-        : prev.services.filter((service) => service !== name),
-    }));
-  };
+//   const handleCheckboxChange = (e) => {
+//     const { name, checked } = e.target;
+//     setFormData((prev) => ({
+//       ...prev,
+//       services: checked
+//         ? [...prev.services, name]
+//         : prev.services.filter((service) => service !== name),
+//     }));
+//   };
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +48,6 @@ const Form = ({ handleFormDataSubmit }) => {
     }
     setSubmitting(false);
   };
-
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mt-7 grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="mb-4">
@@ -110,7 +109,7 @@ const Form = ({ handleFormDataSubmit }) => {
           required
         />
       </div>
-      <div className="mb-4 md:col-span-2">
+      {/* <div className="mb-4 md:col-span-2">
         <label className="font-semibold text-[16px] ">Services</label>
         <div className="flex flex-wrap mt-2">
           {['Appointment booking', 'Recommendations', 'Comments', 'Request', 'Consultation', 'Other'].map((service) => (
@@ -126,16 +125,16 @@ const Form = ({ handleFormDataSubmit }) => {
             </label>
           ))}
         </div>
-      </div>
+      </div> */}
       <div className="md:col-span-2 flex">
         <Button
-          text={submitting ? "Sending..." : "Send message"}
+          text={submitting ? "Sending..." : "Become a volunteer"}
           className={`bg-gradient-to-l from-purple-600 to-purple-950 font-semibold w-full text-[16px] text-white rounded-md h-[51px] p-3 ${!isFormValid && 'opacity-50 cursor-not-allowed'}`}
           disabled={!isFormValid || submitting}
         />
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default Form;
+export default VolunteerForm

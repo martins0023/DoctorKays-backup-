@@ -63,7 +63,7 @@ const Partnership = ({ onProceedToPayment }) => {
                     <Info className="text-white" />
                   </div>
                   <span className="text-white">
-                    Thank you for your interest in supporting Medicine on the Streets. This is a movement that listens to real-life health experiences-both inspiring and hearthbreaking-while raising awareness and providing financial assistance to those in need, ensuring no one is left behing in accessing medical care.{" "}
+                    Thank you for your interest in supporting Medicine on the Streets. This is a movement that listens to real-life health experiences-both inspiring and hearthbreaking-while raising awareness and providing financial assistance to those in need, ensuring no one is left behind in accessing medical care.{" "}
                     {/* <span
                       honClick={handlePolicy}
                       className="text-neutral-200 underline"
