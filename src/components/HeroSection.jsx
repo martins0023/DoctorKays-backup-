@@ -1,4 +1,3 @@
-import doctorkays from "../assets/doctorkays.jpg";
 import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 import {

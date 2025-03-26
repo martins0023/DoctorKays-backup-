@@ -22,6 +22,7 @@ export default {
           {title: 'For Men', value: 'For Men'},
           {title: 'Sex Education', value: 'Sex education'},
           {title: 'Pregnant Women', value: 'Pregnant women'},
+          {title: 'Articles and Scripts', value: 'Articles and Scripts'},
         ],
       },
     },
