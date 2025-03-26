@@ -104,7 +104,7 @@ const PaymentForm = ({ consultationData, onPaymentSuccess, onClose }) => {
             <img
               src={paystack}
               alt="paystack"
-              className="w-fit h-fit mb-3 cursor-pointer "
+              className="w-fit h-fit mb-3 cursor-pointer"
             />
           </div>
           <button

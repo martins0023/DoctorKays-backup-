@@ -14,6 +14,7 @@ const SubscriptionForm = ({ option, onClose, onProceedToPayment }) => {
   
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+  const [agreed, setAgreed] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
