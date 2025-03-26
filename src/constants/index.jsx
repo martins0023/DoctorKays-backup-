@@ -341,6 +341,7 @@ export const checkaboutlists = [
 export const pricingOptions = [
   {
     title: "Blood Tests and Scan Report",
+    originalPrice: "$4",
     price: "$0",
     type: "once",
     features: [
@@ -354,11 +355,14 @@ export const pricingOptions = [
   },
   {
     title: "Silver Package",
+    originalPrice: "$9",
     price: "$0",
     type: "10 minutes",
     features: [
       "Consultation is scheduled only on available dates",
       "Join the Community",
+      "Middle East Time Zone 2pm - 3pm",
+      "Middle East Time Zone 2am - 3am",
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat, Audio and Video Calls",
@@ -369,11 +373,14 @@ export const pricingOptions = [
   },
   {
     title: "Gold Package",
+    originalPrice: "$19",
     price: "$9.5",
     type: "10 minutes",
     features: [
       "Swift consultation within 24hrs",
       "Join the Community",
+      "Middle East Time Zone 2pm - 3pm",
+      "Middle East Time Zone 2am - 3am",
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat and Calls",

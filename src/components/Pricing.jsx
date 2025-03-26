@@ -57,40 +57,42 @@ const Pricing = () => {
   //   setIsPaymentModalOpen(false);
   //   // Optionally, navigate to a thank-you page.
   // };
-  
+
   const handlePaymentSuccess = async (paymentResponse) => {
     console.log("Payment success:", paymentResponse);
-    
+
     try {
-      const apiUrl = "http://localhost:5000";
+      const apiUrl = "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
       const payload = {
         email: consultationData.email,
         name: consultationData.name,
         consultationType: consultationData.consultationType,
       };
-  
-      console.log("Sending email request to:", `${apiUrl}/api/sendConfirmationEmail`);
-      
+
+      console.log(
+        "Sending email request to:",
+        `${apiUrl}/api/sendConfirmationEmail`
+      );
+
       const emailResponse = await fetch(`${apiUrl}/api/sendConfirmationEmail`, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          "X-Request-ID": paymentResponse.transactionId // For tracking
+          "X-Request-ID": paymentResponse.transactionId, // For tracking
         },
         body: JSON.stringify(payload),
       });
-  
+
       const responseText = await emailResponse.text();
-      const emailResult = emailResponse.ok 
+      const emailResult = emailResponse.ok
         ? JSON.parse(responseText)
         : { error: `HTTP ${emailResponse.status}`, details: responseText };
-  
+
       console.log("Email service response:", emailResult);
-  
+
       if (!emailResponse.ok) {
         throw new Error(emailResult.error || "Email delivery failed");
       }
-  
     } catch (err) {
       console.error("Email error details:", {
         error: err.message,
@@ -132,15 +134,26 @@ const Pricing = () => {
                   </span>
                 )}
               </p>
+
+              {/* Pricing Section */}
               <p className="mb-8">
+                {/* Original Price (crossed out) if present */}
+                {option.originalPrice && (
+                  <span className="text-2xl mr-2 line-through text-gray-400">
+                    {option.originalPrice}
+                  </span>
+                )}
+
+                {/* Current Price */}
                 <span className="text-5xl mt-6 mr-2">{option.price}</span>
                 <span className="text-neutral-400 tracking-tight">
                   / {option.type}
                 </span>
               </p>
+
               <ul>
-                {option.features.map((feature, index) => (
-                  <li key={index} className="mt-8 flex items-center">
+                {option.features.map((feature, idx) => (
+                  <li key={idx} className="mt-8 flex items-center">
                     <div>
                       <CheckCircle2 className="" />
                     </div>
@@ -148,6 +161,7 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
+
               <button
                 onClick={() => openSubscriptionModal(option)}
                 className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-gradient-to-r from-purple-600 to-red-400 border border-primary rounded-lg transition duration-200"
@@ -158,6 +172,7 @@ const Pricing = () => {
           </div>
         ))}
       </div>
+
       {/* Modal Form */}
       {/* Subscription Modal */}
       {isSubscriptionModalOpen && selectedOption && (
