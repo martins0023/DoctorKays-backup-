@@ -19,7 +19,7 @@ import { PortableText } from "@portabletext/react";
 const portableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="mt-4 text-lg text-gray-300 leading-relaxed">{children}</p>
+      <p className="mt-4 text-lg leading-relaxed">{children}</p>
     ),
     h1: ({ children }) => (
       <h1 className="text-2xl font-bold mt-6">{children}</h1>
@@ -37,7 +37,7 @@ const portableTextComponents = {
       <h5 className="text-2xl font-semibold mt-2">{children}</h5>
     ),
     h6: ({ children }) => (
-      <h6 className="text-2xl font-medium text-gray-400 mt-2">{children}</h6>
+      <h6 className="text-2xl font-medium mt-2">{children}</h6>
     ),
   },
   list: {
@@ -254,7 +254,7 @@ const BlogDetail = () => {
               {isSpeaking ? "Pause Audio" : "Listen to Blog"}
             </button>
           </div>
-          <p className="mt-6 text-lg text-white leading-loose">
+          <p className="mt-6 text-lg leading-loose">
             <PortableText
               value={post.description}
               components={portableTextComponents}
