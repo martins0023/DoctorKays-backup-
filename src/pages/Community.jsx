@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+// src/pages/Community.jsx
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { motion } from "framer-motion";
+import { staggerContainer } from "../constants/animations";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Stayintouch from "../components/Stayintouch";
-import { motion } from "framer-motion";
-import { staggerContainer } from "../constants/animations";
 import {
   Bell,
   FileQuestionIcon,
@@ -13,60 +15,66 @@ import {
   ThumbsDown,
   ThumbsUp,
 } from "lucide-react";
-
-// Example question data structure for demonstration
-// In production, you'd fetch these from your MongoDB backend
-const initialQuestions = [
-  {
-    _id: "1",
-    user: "John Doe",
-    question: "How do I handle migraines effectively?",
-    hasDoctorReplied: true,
-    likes: 10,
-    dislikes: 2,
-    comments: 4,
-    date: "2025-03-10",
-  },
-  {
-    _id: "2",
-    user: "Jane Smith",
-    question: "What are the best supplements for daily health?",
-    hasDoctorReplied: false,
-    likes: 3,
-    dislikes: 0,
-    comments: 1,
-    date: "2025-03-09",
-  },
-];
+import Modal from "../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 const Community = () => {
-  const [questions, setQuestions] = useState(initialQuestions);
+  const [questions, setQuestions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Sort questions in reverse chronological order if date is a real date
-  // If your date is a string like "2025-03-10", you can parse it or store a timestamp
-  // For demonstration, we'll assume the data is already in order, or you can do:
-  // const sortedQuestions = [...questions].sort((a,b) => new Date(b.date) - new Date(a.date))
-
-  // Toggle the modal for asking a question
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
-  // Handle question submission from the modal
-  const handleQuestionSubmit = (formData) => {
-    // Typically you'd POST to your backend here. For now, just add to local state.
-    const newQuestion = {
-      _id: Date.now().toString(),
-      user: formData.name,
-      question: formData.question,
-      hasDoctorReplied: false,
-      likes: 0,
-      dislikes: 0,
-      comments: 0,
-      date: new Date().toISOString().slice(0, 10), // e.g., "2025-03-10"
+  // Fetch questions from the backend on mount
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/api/questions" ||
+            "https://doctorkays-backend-1.onrender.com/api/questions"
+        );
+        setQuestions(res.data);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
     };
-    setQuestions((prev) => [newQuestion, ...prev]); // Prepend to keep newest on top
-    closeModal();
+    fetchQuestions();
+  }, []);
+
+  // Handle new question submission
+  const handleQuestionSubmit = async (formData) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/questions" ||
+          "https://doctorkays-backend-1.onrender.com/api/questions",
+        formData
+      );
+      // Prepend new question to the list
+      setQuestions((prev) => [res.data, ...prev]);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error submitting question:", error);
+    }
+  };
+
+  const handleReaction = async (questionId, type) => {
+    try {
+      // Call the backend endpoint to update the reaction count
+      const res = await axios.patch(
+        `http://localhost:5000/api/questions/${questionId}/reactions` ||
+          `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions`,
+        { type }
+      );
+      // Update local state (assuming you have setQuestions in your component)
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((q) => (q._id === questionId ? res.data : q))
+      );
+    } catch (err) {
+      console.error(`Error updating ${type}:`, err);
+    }
+  };
+
+  // Navigate to question detail page when a question is clicked
+  const goToQuestionDetail = (question) => {
+    navigate(`/community/${question._id}`, { state: { question } });
   };
 
   return (
@@ -81,7 +89,7 @@ const Community = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Community Forum</h1>
           <button
-            onClick={openModal}
+            onClick={() => setIsModalOpen(true)}
             className="bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition"
           >
             Ask a Question
@@ -90,9 +98,9 @@ const Community = () => {
 
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left Sidebar */}
-          <aside className="hidden md:block md:w-1/4 bg-gray-50 opacity-100 p-4 rounded ">
-            <p className="mb-3 opacity-50">main menu</p>
-            <nav className="space-y-5 ">
+          <aside className="hidden md:block md:w-1/4 bg-gray-50 p-4 rounded">
+            <p className="mb-3 opacity-50">Main Menu</p>
+            <nav className="space-y-5">
               <div className="flex items-center gap-2">
                 <HomeIcon className="text-black" />
                 <a
@@ -135,48 +143,50 @@ const Community = () => {
           {/* Main Feed */}
           <main className="md:w-2/4 w-full">
             {questions.map((q) => (
-              <div key={q._id} className="border bg-white p-4 mb-4 rounded-lg">
+              <div
+                key={q._id}
+                className="border bg-white p-4 mb-4 rounded-lg cursor-pointer hover:shadow-lg transition"
+              >
                 <div className="flex justify-between items-center">
                   <h2 className="text-lg text-black font-semibold">{q.user}</h2>
-                  <span className="text-sm text-gray-400">{q.date}</span>
+                  <span className="text-sm text-gray-400">
+                    {new Date(q.date).toLocaleDateString()}
+                  </span>
                 </div>
-                <p className="text-black mt-2">{q.question}</p>
-
-                {/* 
-         flex-wrap on small screens ensures items wrap to a new line if there's not enough space 
-         gap-2 on mobile, gap-5 on larger screens for better spacing 
-      */}
+                <p
+                  onClick={() => goToQuestionDetail(q)}
+                  className="text-black mt-2 cursor-pointer"
+                >
+                  {q.question}
+                </p>
                 <div className="mt-2 flex flex-wrap md:flex-nowrap items-center justify-between md:gap-5 text-sm text-gray-500">
-                  {/* Likes */}
-                  <div className="flex items-center gap-1">
+                  <div
+                    className="flex items-center gap-1 cursor-pointer"
+                    onClick={() => handleReaction(q._id, "like")}
+                  >
                     <ThumbsUp className="w-4 h-4" />
-                    {/* 
-            Hide the label text on extra small screens, only show the number
-            On bigger screens, show "Likes: 12" 
-          */}
                     <span className="hidden sm:inline">Likes: {q.likes}</span>
                     <span className="inline sm:hidden">{q.likes}</span>
                   </div>
-
-                  {/* Dislikes */}
-                  <div className="flex items-center gap-1">
+                  <div
+                    className="flex items-center gap-1 cursor-pointer"
+                    onClick={() => handleReaction(q._id, "dislike")}
+                  >
                     <ThumbsDown className="w-4 h-4" />
                     <span className="hidden sm:inline">
                       Dislikes: {q.dislikes}
                     </span>
                     <span className="inline sm:hidden">{q.dislikes}</span>
                   </div>
-
-                  {/* Comments */}
                   <div className="flex items-center gap-1">
                     <MessageCircle className="w-4 h-4" />
                     <span className="hidden sm:inline">
-                      Comments: {q.comments}
+                      Comments: {q.comments.length}
                     </span>
-                    <span className="inline sm:hidden">{q.comments}</span>
+                    <span className="inline sm:hidden">
+                      {q.comments.length}
+                    </span>
                   </div>
-
-                  {/* Doctor Kays Replied Status */}
                   {q.hasDoctorReplied ? (
                     <span className="bg-green-100 text-green-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
                       Doctor Kays has replied
@@ -212,7 +222,7 @@ const Community = () => {
       {/* Ask Question Modal */}
       {isModalOpen && (
         <AskQuestionModal
-          onClose={closeModal}
+          onClose={() => setIsModalOpen(false)}
           onSubmit={handleQuestionSubmit}
         />
       )}
@@ -222,14 +232,19 @@ const Community = () => {
 
 export default Community;
 
-/** Modal for Asking a Question */
+/** AskQuestionModal Component */
 const AskQuestionModal = ({ onClose, onSubmit }) => {
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
 
+  // Compute validity: both name and question must be non-empty
+  const isFormValid = name.trim() !== "" && question.trim() !== "";
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ name, question });
+    if (isFormValid) {
+      onSubmit({ user: name, question });
+    }
   };
 
   return (
@@ -269,7 +284,10 @@ const AskQuestionModal = ({ onClose, onSubmit }) => {
           </div>
           <button
             type="submit"
-            className="bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition"
+            disabled={!isFormValid}
+            className={`bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition ${
+              !isFormValid && "opacity-50 cursor-not-allowed"
+            }`}
           >
             Submit
           </button>

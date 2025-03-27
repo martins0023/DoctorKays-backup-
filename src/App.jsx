@@ -17,6 +17,7 @@ import Policy from "./pages/Policy";
 import Partnership from "./pages/Partnership";
 import Community from "./pages/Community";
 import Volunteer from "./pages/Volunteer";
+import QuestionDetail from "./pages/QuestionDetail";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/community/:id" element={<QuestionDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/consultation" element={<Consultation />} />

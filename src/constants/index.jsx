@@ -361,8 +361,6 @@ export const pricingOptions = [
     features: [
       "Consultation is scheduled only on available dates",
       "Join the Community",
-      "Middle East Time Zone 2pm - 3pm",
-      "Middle East Time Zone 2am - 3am",
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat, Audio and Video Calls",
@@ -379,8 +377,6 @@ export const pricingOptions = [
     features: [
       "Swift consultation within 24hrs",
       "Join the Community",
-      "Middle East Time Zone 2pm - 3pm",
-      "Middle East Time Zone 2am - 3am",
       "Newsletter Subscription",
       "Weekly Health Nugget",
       "Consultation Chat and Calls",
