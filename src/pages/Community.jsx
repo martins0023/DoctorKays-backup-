@@ -153,12 +153,12 @@ const Community = () => {
                     {new Date(q.date).toLocaleDateString("en-CA")}
                   </span>
                 </div>
-                <p
+                <div
                   onClick={() => goToQuestionDetail(q)}
                   className="text-black mt-2 cursor-pointer"
                 >
                   {q.question}
-                </p>
+                </div>
                 <div className="mt-2 flex flex-wrap md:flex-nowrap items-center justify-between md:gap-5 text-sm text-gray-500">
                   <div
                     className="flex items-center gap-1 cursor-pointer"
@@ -178,7 +178,7 @@ const Community = () => {
                     </span>
                     <span className="inline sm:hidden">{q.dislikes}</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 cursor-pointer" onClick={() => goToQuestionDetail(q)}>
                     <MessageCircle className="w-4 h-4" />
                     <span className="hidden sm:inline">
                       Comments: {q.comments.length}
