@@ -3,37 +3,81 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
+import { ThumbsUp, ThumbsDown, MessageCircle, Share2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const QuestionDetail = () => {
   const location = useLocation();
-  const { question } = location.state || {};
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState(question ? question.comments : []);
+  const initialQuestion = location.state?.question;
 
-  if (!question) return <p>Question not found.</p>;
+  // Use a local state so we can update the question details when reactions change.
+  const [questionDetail, setQuestionDetail] = useState(initialQuestion);
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState(
+    initialQuestion ? initialQuestion.comments : []
+  );
+  const [submitting, setSubmitting] = useState(false);
+
+  // Compute validity: comment must be non-empty
+  const isFormValid = comment.trim() !== "";
+
+  if (!questionDetail) return <p>Question not found.</p>;
+
+  // Function to update likes/dislikes
+  const handleReaction = async (type) => {
+    try {
+      const res = await axios.patch(
+        `https://doctorkays-backend-1.onrender.com/api/questions/${questionDetail._id}/reactions`,
+        { type }
+      );
+      // Update the local question state with the updated question data
+      setQuestionDetail(res.data);
+    } catch (err) {
+      console.error(`Error updating ${type}:`, err);
+    }
+  };
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    if (!isFormValid) return;
+    setSubmitting(true);
     try {
       const res = await axios.post(
-        `https://doctorkays-backend-1.onrender.com/api/questions/${question._id}/comments` || `http://localhost:5000/api/questions/${question._id}/comments`,
+        `https://doctorkays-backend-1.onrender.com/api/questions/${questionDetail._id}/comments` ||
+          `http://localhost:5000/api/questions/${questionDetail._id}/comments`,
         { user: "Anonymous", content: comment }
       );
       setComments(res.data.comments);
       setComment("");
     } catch (error) {
       console.error("Error adding comment:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  // Example: If you want interactive likes/dislikes on detail page, you'd do something like:
-  // const handleLike = async () => {
-  //   // ...call your patch endpoint
-  // };
-  // const handleDislike = async () => {
-  //   // ...call your patch endpoint
-  // };
+  // Share function using Web Share API or fallback to clipboard
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Check out this question on Doctor Kays",
+          url: shareUrl,
+        });
+        console.log("Shared successfully");
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        alert("Link copied to clipboard!");
+      } catch (err) {
+        console.error("Failed to copy the link", err);
+      }
+    }
+  };
 
   return (
     <div>
@@ -42,30 +86,57 @@ const QuestionDetail = () => {
         {/* Question Header */}
         <div className="bg-white p-4 rounded shadow mb-4">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-2xl font-bold text-gray-800">{question.user}</h2>
+            <h2 className="text-2xl font-bold text-gray-800">
+              {questionDetail.user}
+            </h2>
             <span className="text-sm text-gray-500">
-              {new Date(question.date).toLocaleDateString("en-CA")}
+              {new Date(questionDetail.date).toLocaleDateString("en-CA")}
             </span>
           </div>
-          <p className="text-lg text-gray-700 mb-3">{question.question}</p>
+          <p className="text-lg text-gray-700 mb-3">
+            {questionDetail.question}
+          </p>
 
           {/* Likes / Dislikes Section */}
-          <div className="flex items-center gap-4 text-sm text-gray-500">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-4 text-sm text-gray-500"
+          >
             {/* Enhanced Like Button */}
-            <div className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full">
+            <div
+              className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:scale-110 transition-transform"
+              onClick={() => handleReaction("like")}
+            >
               <ThumbsUp className="w-4 h-4 text-green-600" />
-              <span className="font-medium text-gray-600">{question.likes}</span>
+              <span className="font-medium text-gray-600">
+                {questionDetail.likes}
+              </span>
             </div>
             {/* Enhanced Dislike Button */}
-            <div className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full">
+            <div
+              className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:scale-110 transition-transform"
+              onClick={() => handleReaction("dislike")}
+            >
               <ThumbsDown className="w-4 h-4 text-red-600" />
-              <span className="font-medium text-gray-600">{question.dislikes}</span>
+              <span className="font-medium text-gray-600">
+                {questionDetail.dislikes}
+              </span>
             </div>
-          </div>
+            {/* Share Button */}
+            <div
+              className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:scale-110 transition-transform"
+              onClick={handleShare}
+            >
+              <Share2 className="w-4 h-4 text-blue-600" />
+              <span className="font-medium text-gray-600">Share</span>
+            </div>
+          </motion.div>
 
           {/* Doctor Replied Status */}
           <div className="mt-3">
-            {question.hasDoctorReplied ? (
+            {questionDetail.hasDoctorReplied ? (
               <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold">
                 Doctor Kays has replied
               </span>
@@ -82,7 +153,10 @@ const QuestionDetail = () => {
           <h3 className="text-xl font-semibold mb-4 text-gray-800">Comments</h3>
           {comments.length > 0 ? (
             comments.map((c, idx) => (
-              <div key={idx} className="border-b last:border-b-0 pb-3 mb-3 last:mb-0 last:pb-0">
+              <div
+                key={idx}
+                className="border-b last:border-b-0 pb-3 mb-3 last:mb-0 last:pb-0"
+              >
                 <div className="flex items-center justify-between">
                   <span className="text-gray-700 font-medium">{c.user}</span>
                   <span className="text-xs text-gray-500">
@@ -93,7 +167,9 @@ const QuestionDetail = () => {
               </div>
             ))
           ) : (
-            <p className="text-sm text-gray-500">No comments yet. Be the first to comment!</p>
+            <p className="text-sm text-gray-500">
+              No comments yet. Be the first to comment!
+            </p>
           )}
 
           {/* Comment Form */}
@@ -107,10 +183,15 @@ const QuestionDetail = () => {
               required
             />
             <button
+              disabled={!isFormValid || submitting}
               type="submit"
-              className="mt-2 bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition"
+              className={`bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition ${
+                !isFormValid || submitting
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
             >
-              Submit Comment
+              {submitting ? "Commenting..." : "Submit comment"}
             </button>
           </form>
         </div>

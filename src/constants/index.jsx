@@ -13,6 +13,7 @@ import { clinic1, clinic3, clinicseries1, clinicseries2, clinicseries3, clinicse
 export const navItems = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
+  { label: "Community Forums", href: "/community" },
   { label: "Blog", href: "/blog" },
   { label: "Shop", href: "/shop" },
   { label: "Contact", href: "/contact" },

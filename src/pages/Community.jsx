@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 const Community = () => {
   const [questions, setQuestions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   // Fetch questions from the backend on mount
@@ -32,6 +33,7 @@ const Community = () => {
             "http://localhost:5000/api/questions"
         );
         setQuestions(res.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching questions:", error);
       }
@@ -142,63 +144,74 @@ const Community = () => {
 
           {/* Main Feed */}
           <main className="md:w-2/4 w-full">
-            {questions.map((q) => (
-              <div
-                key={q._id}
-                className="border bg-white p-4 mb-4 rounded-lg cursor-pointer hover:shadow-lg transition"
-              >
-                <div className="flex justify-between items-center">
-                  <h2 className="text-lg text-black font-semibold">{q.user}</h2>
-                  <span className="text-sm text-gray-400">
-                    {new Date(q.date).toLocaleDateString("en-CA")}
-                  </span>
-                </div>
-                <div
-                  onClick={() => goToQuestionDetail(q)}
-                  className="text-black mt-2 cursor-pointer"
-                >
-                  {q.question}
-                </div>
-                <div className="mt-2 flex flex-wrap md:flex-nowrap items-center justify-between md:gap-5 text-sm text-gray-500">
-                  <div
-                    className="flex items-center gap-1 cursor-pointer"
-                    onClick={() => handleReaction(q._id, "like")}
-                  >
-                    <ThumbsUp className="w-4 h-4" />
-                    <span className="hidden sm:inline">Likes: {q.likes}</span>
-                    <span className="inline sm:hidden">{q.likes}</span>
-                  </div>
-                  <div
-                    className="flex items-center gap-1 cursor-pointer"
-                    onClick={() => handleReaction(q._id, "dislike")}
-                  >
-                    <ThumbsDown className="w-4 h-4" />
-                    <span className="hidden sm:inline">
-                      Dislikes: {q.dislikes}
-                    </span>
-                    <span className="inline sm:hidden">{q.dislikes}</span>
-                  </div>
-                  <div className="flex items-center gap-1 cursor-pointer" onClick={() => goToQuestionDetail(q)}>
-                    <MessageCircle className="w-4 h-4" />
-                    <span className="hidden sm:inline">
-                      Comments: {q.comments.length}
-                    </span>
-                    <span className="inline sm:hidden">
-                      {q.comments.length}
-                    </span>
-                  </div>
-                  {q.hasDoctorReplied ? (
-                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
-                      Doctor Kays has replied
-                    </span>
-                  ) : (
-                    <span className="bg-red-100 text-red-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
-                      Doctor Kays hasn't replied
-                    </span>
-                  )}
-                </div>
+            {loading ? (
+              <div className="flex justify-center items-center py-10">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-purple-500"></div>
               </div>
-            ))}
+            ) : (
+              questions.map((q) => (
+                <div
+                  key={q._id}
+                  className="border bg-white p-4 mb-4 rounded-lg cursor-pointer hover:shadow-lg transition"
+                >
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-lg text-black font-semibold">
+                      {q.user}
+                    </h2>
+                    <span className="text-sm text-gray-400">
+                      {new Date(q.date).toLocaleDateString("en-CA")}
+                    </span>
+                  </div>
+                  <div
+                    onClick={() => goToQuestionDetail(q)}
+                    className="text-black mt-2 cursor-pointer"
+                  >
+                    {q.question}
+                  </div>
+                  <div className="mt-2 flex flex-wrap md:flex-nowrap items-center justify-between md:gap-5 text-sm text-gray-500">
+                    <div
+                      className="flex items-center gap-1 cursor-pointer"
+                      onClick={() => handleReaction(q._id, "like")}
+                    >
+                      <ThumbsUp className="w-4 h-4" />
+                      <span className="hidden sm:inline">Likes: {q.likes}</span>
+                      <span className="inline sm:hidden">{q.likes}</span>
+                    </div>
+                    <div
+                      className="flex items-center gap-1 cursor-pointer"
+                      onClick={() => handleReaction(q._id, "dislike")}
+                    >
+                      <ThumbsDown className="w-4 h-4" />
+                      <span className="hidden sm:inline">
+                        Dislikes: {q.dislikes}
+                      </span>
+                      <span className="inline sm:hidden">{q.dislikes}</span>
+                    </div>
+                    <div
+                      className="flex items-center gap-1 cursor-pointer"
+                      onClick={() => goToQuestionDetail(q)}
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span className="hidden sm:inline">
+                        Comments: {q.comments.length}
+                      </span>
+                      <span className="inline sm:hidden">
+                        {q.comments.length}
+                      </span>
+                    </div>
+                    {q.hasDoctorReplied ? (
+                      <span className="bg-green-100 text-green-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
+                        Doctor Kays has replied
+                      </span>
+                    ) : (
+                      <span className="bg-red-100 text-red-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
+                        Doctor Kays hasn't replied
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
           </main>
 
           {/* Right Sidebar */}
