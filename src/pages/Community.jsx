@@ -28,7 +28,7 @@ const Community = () => {
     const fetchQuestions = async () => {
       try {
         const res = await axios.get(
-            "https://doctorkays-backend-1.onrender.com/api/questions" ||
+          "https://doctorkays-backend-1.onrender.com/api/questions" ||
             "http://localhost:5000/api/questions"
         );
         setQuestions(res.data);
@@ -43,9 +43,8 @@ const Community = () => {
   const handleQuestionSubmit = async (formData) => {
     try {
       const res = await axios.post(
-          "https://doctorkays-backend-1.onrender.com/api/questions" ||
-          "http://localhost:5000/api/questions"
-          ,
+        "https://doctorkays-backend-1.onrender.com/api/questions" ||
+          "http://localhost:5000/api/questions",
         formData
       );
       // Prepend new question to the list
@@ -60,7 +59,7 @@ const Community = () => {
     try {
       // Call the backend endpoint to update the reaction count
       const res = await axios.patch(
-          `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions` ||
+        `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions` ||
           `http://localhost:5000/api/questions/${questionId}/reactions`,
         { type }
       );
@@ -88,7 +87,7 @@ const Community = () => {
         className="max-w-7xl mx-auto md:pt-20 pt-10 px-6"
       >
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Community Forum</h1>
+          <h1 className="sm:text-3xl text-xl font-bold">Community Forum</h1>
           <button
             onClick={() => setIsModalOpen(true)}
             className="bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition"
@@ -151,7 +150,7 @@ const Community = () => {
                 <div className="flex justify-between items-center">
                   <h2 className="text-lg text-black font-semibold">{q.user}</h2>
                   <span className="text-sm text-gray-400">
-                    {new Date(q.date).toLocaleDateString('en-CA')}
+                    {new Date(q.date).toLocaleDateString("en-CA")}
                   </span>
                 </div>
                 <p
@@ -237,14 +236,22 @@ export default Community;
 const AskQuestionModal = ({ onClose, onSubmit }) => {
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   // Compute validity: both name and question must be non-empty
   const isFormValid = name.trim() !== "" && question.trim() !== "";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isFormValid) {
-      onSubmit({ user: name, question });
+    if (!isFormValid) return;
+    setSubmitting(true);
+    try {
+      // Await onSubmit in case it returns a Promise
+      await onSubmit({ user: name, question });
+    } catch (error) {
+      console.error("Error during submission:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -285,12 +292,12 @@ const AskQuestionModal = ({ onClose, onSubmit }) => {
           </div>
           <button
             type="submit"
-            disabled={!isFormValid}
+            disabled={!isFormValid || submitting}
             className={`bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition ${
-              !isFormValid && "opacity-50 cursor-not-allowed"
+              !isFormValid || submitting ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            Submit
+            {submitting ? "Submitting..." : "Submit"}
           </button>
         </form>
       </div>
