@@ -77,6 +77,7 @@ const SubscriptionForm = ({ option, onClose, onProceedToPayment }) => {
         <div>
           <label className="block text-sm font-medium">Phone</label>
           <input
+            placeholder="optional"
             type="tel"
             name="phone"
             value={formData.phone}
