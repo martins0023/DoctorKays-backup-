@@ -33,7 +33,7 @@ const QuestionDetail = () => {
       <div className="max-w-3xl mx-auto p-6">
         <h2 className="text-3xl font-bold mb-2">{question.user}</h2>
         <p className="text-gray-600 mb-4">
-          {new Date(question.date).toLocaleDateString()}
+          {new Date(question.date).toLocaleDateString('en-CA')}
         </p>
         <p className="text-xl mb-4">{question.question}</p>
         <div className="mb-4">
@@ -62,7 +62,7 @@ const QuestionDetail = () => {
             <div key={idx} className="border p-3 rounded mb-2">
               <p>
                 <strong>{c.user}</strong> on{" "}
-                {new Date(c.date).toLocaleDateString()}
+                {new Date(c.date).toLocaleDateString('en-CA')}
               </p>
               <p>{c.content}</p>
             </div>

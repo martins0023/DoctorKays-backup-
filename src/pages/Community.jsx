@@ -28,8 +28,8 @@ const Community = () => {
     const fetchQuestions = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/questions" ||
-            "https://doctorkays-backend-1.onrender.com/api/questions"
+            "https://doctorkays-backend-1.onrender.com/api/questions" ||
+            "http://localhost:5000/api/questions"
         );
         setQuestions(res.data);
       } catch (error) {
@@ -150,7 +150,7 @@ const Community = () => {
                 <div className="flex justify-between items-center">
                   <h2 className="text-lg text-black font-semibold">{q.user}</h2>
                   <span className="text-sm text-gray-400">
-                    {new Date(q.date).toLocaleDateString()}
+                    {new Date(q.date).toLocaleDateString('en-CA')}
                   </span>
                 </div>
                 <p
