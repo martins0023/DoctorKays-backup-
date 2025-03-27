@@ -17,7 +17,7 @@ const QuestionDetail = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/questions/${question._id}/comments` || `https://doctorkays-backend-1.onrender.com/api/questions/${question._id}/comments`,
+        `https://doctorkays-backend-1.onrender.com/api/questions/${question._id}/comments` || `http://localhost:5000/api/questions/${question._id}/comments`,
         { user: "Anonymous", content: comment }
       );
       setComments(res.data.comments);

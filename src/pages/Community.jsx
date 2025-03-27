@@ -43,8 +43,9 @@ const Community = () => {
   const handleQuestionSubmit = async (formData) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/questions" ||
-          "https://doctorkays-backend-1.onrender.com/api/questions",
+          "https://doctorkays-backend-1.onrender.com/api/questions" ||
+          "http://localhost:5000/api/questions"
+          ,
         formData
       );
       // Prepend new question to the list
@@ -59,8 +60,8 @@ const Community = () => {
     try {
       // Call the backend endpoint to update the reaction count
       const res = await axios.patch(
-        `http://localhost:5000/api/questions/${questionId}/reactions` ||
-          `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions`,
+          `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions` ||
+          `http://localhost:5000/api/questions/${questionId}/reactions`,
         { type }
       );
       // Update local state (assuming you have setQuestions in your component)
