@@ -77,6 +77,7 @@ const Community = () => {
   // Navigate to question detail page when a question is clicked
   const goToQuestionDetail = (question) => {
     navigate(`/community/${question._id}`, { state: { question } });
+    window. scrollTo({ top: 0, left: 0})
   };
 
   return (

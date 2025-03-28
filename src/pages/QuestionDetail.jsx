@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { ThumbsUp, ThumbsDown, MessageCircle, Share2 } from "lucide-react";
@@ -8,11 +9,13 @@ import { motion } from "framer-motion";
 
 const QuestionDetail = () => {
   const location = useLocation();
+  const { id } = useParams(); // assuming your route is something like /community/:id
   const initialQuestion = location.state?.question;
 
   // Use a local state so we can update the question details when reactions change.
   const [questionDetail, setQuestionDetail] = useState(initialQuestion);
 
+  const [error, setError] = useState(null);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(
     initialQuestion ? initialQuestion.comments : []
@@ -23,7 +26,24 @@ const QuestionDetail = () => {
   // Compute validity: comment must be non-empty
   const isFormValid = comment.trim() !== "";
 
-  if (!questionDetail) return <p>Question not found.</p>;
+  // If questionDetail is not available from location state, fetch it
+  useEffect(() => {
+    if (!questionDetail && id) {
+      const fetchQuestion = async () => {
+        try {
+          const res = await axios.get(`https://doctorkays-backend-1.onrender.com/api/questions/${id}` || `http://localhost:5000/api/questions/${id}`);
+          setQuestionDetail(res.data);
+          setComments(res.data.comments);
+          setLoading(false);
+        } catch (err) {
+          console.error("Error fetching question:", err);
+          setError("Question not found.");
+          setLoading(false);
+        }
+      };
+      fetchQuestion();
+    }
+  }, [id, questionDetail]);
 
   // Function to update likes/dislikes
   const handleReaction = async (type) => {
@@ -83,6 +103,11 @@ const QuestionDetail = () => {
 
   return (
     <div>
+      {/* Use Helmet to update meta tags dynamically */}
+      <Helmet>
+        <title>{questionDetail.question}</title>
+        <meta name="description" content={questionDetail.question} />
+      </Helmet>
       <Navbar />
       <div className="max-w-3xl mx-auto p-6">
         {/* Question Header */}
