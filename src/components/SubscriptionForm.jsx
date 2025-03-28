@@ -2,6 +2,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Upload, Trash2, PlusCircle, Download } from "lucide-react";
+import Modal from "./Modal";
 
 // Define which consultation types require file uploads (adjust these values as needed)
 const fileRequiredTypes = [
@@ -29,6 +30,8 @@ const SubscriptionForm = ({
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // For drag-and-drop events
   const dropZoneRef = useRef(null);
@@ -96,10 +99,14 @@ const SubscriptionForm = ({
       const result = await response.json();
       console.log("Saved consultation:", result);
 
-      // Check if this is a free subscription (price is 0)
-      if (parseFloat(formData.price) === 0) {
-        // Handle free subscriptions: call a separate handler
+      // Remove any non-numeric characters and parse the price
+      const numericPrice = parseFloat(formData.price.replace(/[^0-9.]/g, ""));
+      if (numericPrice === 0) {
         onFreeSubscription(formData);
+        setModalMessage(
+          "Thank you for your message. We have received your request and sent a confirmation email."
+        );
+        setIsModalOpen(true);
       } else {
         // Otherwise, proceed to payment workflow
         onProceedToPayment(formData);
@@ -109,6 +116,10 @@ const SubscriptionForm = ({
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   // Form is valid if name and email are filled, terms are accepted,
@@ -293,6 +304,7 @@ const SubscriptionForm = ({
           {submitting ? "Submitting..." : "Continue"}
         </button>
       </form>
+      <Modal isOpen={isModalOpen} onClose={closeModal} message={modalMessage} />
     </div>
   );
 };
