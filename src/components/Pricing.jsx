@@ -1,4 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
+import axios from "axios";
 import { pricingOptions } from "../constants";
 import { motion } from "framer-motion";
 import { staggerContainer, textVariants } from "../constants/animations";
@@ -105,6 +106,21 @@ const Pricing = () => {
     }
   };
 
+  const handleFreeSubscription = async (formData) => {
+    try {
+      const apiUrl = "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
+      const response = await axios.post(`${apiUrl}/api/free-subscription`, {
+        name: formData.name,
+        email: formData.email,
+        consultationType: formData.consultationType,
+      });
+      console.log("Free subscription confirmation email sent:", response.data);
+      // You can show a confirmation modal or toast here if needed.
+    } catch (error) {
+      console.error("Error sending free subscription confirmation email:", error);
+    }
+  };
+
   return (
     <motion.div
       initial="hidden"
@@ -181,6 +197,7 @@ const Pricing = () => {
             option={selectedOption}
             onClose={closeSubscriptionModal}
             onProceedToPayment={handleProceedToPayment}
+            onFreeSubscription={handleFreeSubscription}
           />
         </Modal>
       )}
