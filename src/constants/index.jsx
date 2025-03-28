@@ -1,4 +1,4 @@
-import { ActivityIcon, BotMessageSquare, Briefcase, HeartPulse, Locate, LocateFixedIcon, MessageCircleQuestion, Notebook, NotebookPen, Pill, Podcast, Ribbon, ShieldPlus, ShoppingCart, Syringe, TableIcon, Waypoints } from "lucide-react";
+import { ActivityIcon, BotMessageSquare, Briefcase, Edit3, HeartPulse, HelpCircle, Home, Info, Locate, LocateFixedIcon, MessageCircleQuestion, Notebook, NotebookPen, Phone, Pill, Podcast, Ribbon, ShieldPlus, ShoppingCart, Syringe, TableIcon, Users, Waypoints } from "lucide-react";
 
 
 import user1 from "../assets/profile-pictures/user1.jpg";
@@ -11,13 +11,13 @@ import SatisfiedClients from "../components/SatisfiedClients";
 import { clinic1, clinic3, clinicseries1, clinicseries2, clinicseries3, clinicseries4, doc1 } from "../assets";
 
 export const navItems = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Community Forums", href: "/community" },
-  { label: "Blog", href: "/blog" },
-  { label: "Shop", href: "/shop" },
-  { label: "Contact", href: "/contact" },
-  { label: "FAQs", href: "/faqs" },
+  { label: "Home", href: "/", iconMapping: <Home className="w-5 h-5 inline mr-2" /> },
+  { label: "About Us", href: "/about", iconMapping: <Info className="w-5 h-5 inline mr-2" /> },
+  { label: "Community Forums", href: "/community", iconMapping: <Users className="w-5 h-5 inline mr-2" /> },
+  { label: "Blog", href: "/blog", iconMapping: <Edit3 className="w-5 h-5 inline mr-2" /> },
+  { label: "Shop", href: "/shop", iconMapping: <ShoppingCart className="w-5 h-5 inline mr-2" /> },
+  { label: "Contact", href: "/contact", iconMapping: <Phone className="w-5 h-5 inline mr-2" /> },
+  { label: "FAQs", href: "/faqs", iconMapping: <HelpCircle className="w-5 h-5 inline mr-2" /> },
 ];
 
 export const clinicSeries = [

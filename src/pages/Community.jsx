@@ -169,36 +169,64 @@ const Community = () => {
                     {q.question}
                   </div>
                   <div className="mt-2 flex flex-wrap md:flex-nowrap items-center justify-between md:gap-5 text-sm text-gray-500">
-                    <div
+                    {/* Like Button with continuous pulse */}
+                    <motion.div
                       className="flex items-center gap-1 cursor-pointer"
                       onClick={() => handleReaction(q._id, "like")}
+                      whileHover={{ scale: 1.2 }}
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     >
-                      <ThumbsUp className="w-4 h-4" />
+                      <ThumbsUp className="w-4 h-4 text-green-600" />
                       <span className="hidden sm:inline">Likes: {q.likes}</span>
                       <span className="inline sm:hidden">{q.likes}</span>
-                    </div>
-                    <div
+                    </motion.div>
+
+                    {/* Dislike Button with continuous pulse */}
+                    <motion.div
                       className="flex items-center gap-1 cursor-pointer"
                       onClick={() => handleReaction(q._id, "dislike")}
+                      whileHover={{ scale: 1.2 }}
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     >
-                      <ThumbsDown className="w-4 h-4" />
+                      <ThumbsDown className="w-4 h-4 text-red-600" />
                       <span className="hidden sm:inline">
                         Dislikes: {q.dislikes}
                       </span>
                       <span className="inline sm:hidden">{q.dislikes}</span>
-                    </div>
-                    <div
+                    </motion.div>
+
+                    {/* Comment Button with a slight rotation effect */}
+                    <motion.div
                       className="flex items-center gap-1 cursor-pointer"
                       onClick={() => goToQuestionDetail(q)}
+                      whileHover={{ scale: 1.2 }}
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     >
-                      <MessageCircle className="w-4 h-4" />
+                      <MessageCircle className="w-4 h-4 text-blue-600" />
                       <span className="hidden sm:inline">
                         Comments: {q.comments.length}
                       </span>
                       <span className="inline sm:hidden">
                         {q.comments.length}
                       </span>
-                    </div>
+                    </motion.div>
+
+                    {/* Doctor Replied Status (static) */}
                     {q.hasDoctorReplied ? (
                       <span className="bg-green-100 text-green-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
                         Doctor Kays has replied
@@ -303,6 +331,9 @@ const AskQuestionModal = ({ onClose, onSubmit }) => {
               required
             />
           </div>
+          {/* <div>
+            <p className="text-gray-700">Terms and policy</p>
+          </div> */}
           <button
             type="submit"
             disabled={!isFormValid || submitting}

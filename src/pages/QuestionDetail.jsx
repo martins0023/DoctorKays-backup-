@@ -12,11 +12,13 @@ const QuestionDetail = () => {
 
   // Use a local state so we can update the question details when reactions change.
   const [questionDetail, setQuestionDetail] = useState(initialQuestion);
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(
     initialQuestion ? initialQuestion.comments : []
   );
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Compute validity: comment must be non-empty
   const isFormValid = comment.trim() !== "";

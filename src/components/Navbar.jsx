@@ -1,4 +1,16 @@
-import { Menu, X, Sun, Moon } from "lucide-react";
+import {
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Home,
+  Info,
+  Users,
+  Edit3,
+  ShoppingCart,
+  Phone,
+  HelpCircle,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
@@ -11,18 +23,27 @@ import {
   staggerContainer,
 } from "../constants/animations";
 
+// Map nav labels to icons
+// const iconMapping = {
+//   "Home": <Home className="w-5 h-5 inline mr-2" />,
+//   "About Us": <Info className="w-5 h-5 inline mr-2" />,
+//   "Community Forums": <Users className="w-5 h-5 inline mr-2" />,
+//   "Blog": <Edit3 className="w-5 h-5 inline mr-2" />,
+//   "Shop": <ShoppingCart className="w-5 h-5 inline mr-2" />,
+//   "Contact": <Phone className="w-5 h-5 inline mr-2" />,
+//   "FAQs": <HelpCircle className="w-5 h-5 inline mr-2" />,
+// };
+
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(
-    localStorage.getItem('isDarkMode') === 'true' // Check if dark mode is stored
+    localStorage.getItem("isDarkMode") === "true" // Check if dark mode is stored
   );
 
-  
   const navigate = useNavigate();
   const location = useLocation();
 
   // Dark mode toggle handler
-  
 
   // Effect to apply dark/light mode classes to the body
   useEffect(() => {
@@ -34,12 +55,12 @@ const Navbar = () => {
       root.classList.add("light");
       root.classList.remove("dark");
     }
-    localStorage.setItem('isDarkMode', isDarkMode); // store preference
+    localStorage.setItem("isDarkMode", isDarkMode); // store preference
   }, [isDarkMode]);
-  
-const toggleDarkMode = () => {
+
+  const toggleDarkMode = () => {
     setIsDarkMode((prev) => !prev);
-    console.log('Dark mode:', !isDarkMode); // check if state updates
+    console.log("Dark mode:", !isDarkMode); // check if state updates
   };
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -122,7 +143,12 @@ const toggleDarkMode = () => {
           >
             <ul>
               {navItems.map((item, index) => (
-                <li key={index} className="py-4">
+                <motion.li
+                  key={index}
+                  className="py-4"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <a
                     href={item.href}
                     className={`${
@@ -131,9 +157,9 @@ const toggleDarkMode = () => {
                         : "text-gray-300 hover:text-primary"
                     } pb-1`}
                   >
-                    {item.label}
+                    {item.iconMapping} {item.label}
                   </a>
-                </li>
+                </motion.li>
               ))}
             </ul>
             {/* Dark Mode Toggle for Mobile */}
