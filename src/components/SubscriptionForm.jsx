@@ -120,12 +120,13 @@ const SubscriptionForm = ({
     agreed;
 
   return (
-    <div className="bg-white rounded-lg p-6 max-w-md mx-auto text-black">
+    <div className="bg-white rounded-lg p-6 max-w-md mx-auto text-black overflow-y-auto max-h-[80vh]">
       <h2 className="text-2xl font-bold mb-4">Subscribe to {option?.title}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium">Name</label>
           <input
+            placeholder="John Doe"
             type="text"
             name="name"
             value={formData.name}
@@ -137,6 +138,7 @@ const SubscriptionForm = ({
         <div>
           <label className="block text-sm font-medium">Email</label>
           <input
+            placeholder="myemail@email.com"
             type="email"
             name="email"
             value={formData.email}
@@ -145,10 +147,12 @@ const SubscriptionForm = ({
             required
           />
         </div>
+
+        {/* phone */}
         <div>
-          <label className="block text-sm font-medium">Phone</label>
+          <label className="block text-sm font-medium">Phone <span className="text-gray-600">(optional)</span></label>
           <input
-            placeholder="optional"
+            placeholder="+234 "
             type="tel"
             name="phone"
             value={formData.phone}
