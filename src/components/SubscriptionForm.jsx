@@ -188,7 +188,7 @@ const SubscriptionForm = ({
             name="story"
             value={formData.story}
             onChange={handleChange}
-            className="mt-1 w-full border rounded-lg p-2"
+            className="mt-1 w-full border rounded-lg p-2 h-32"
             required
           />
         </div>

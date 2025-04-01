@@ -113,6 +113,7 @@ const Pricing = () => {
         name: formData.name,
         email: formData.email,
         consultationType: formData.consultationType,
+        story: formData.story,
       });
       console.log("Free subscription confirmation email sent:", response.data);
       // You can show a confirmation modal or toast here if needed.
