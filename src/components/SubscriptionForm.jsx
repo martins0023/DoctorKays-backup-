@@ -22,6 +22,7 @@ const SubscriptionForm = ({
     name: "",
     email: "",
     phone: "",
+    story: "",
     consultationType: option?.title || "",
     price: option?.price || "",
     reportFile: null,
@@ -102,6 +103,9 @@ const SubscriptionForm = ({
       // Remove any non-numeric characters and parse the price
       const numericPrice = parseFloat(formData.price.replace(/[^0-9.]/g, ""));
       if (numericPrice === 0) {
+        // Close the subscription modal before proceeding
+        onClose();
+        // Handle free subscriptions and show confirmation modal
         onFreeSubscription(formData);
         setModalMessage(
           "Thank you for your message. We have received your request and sent a confirmation email."
@@ -127,6 +131,7 @@ const SubscriptionForm = ({
   const isFormValid =
     formData.name.trim() !== "" &&
     formData.email.trim() !== "" &&
+    formData.story.trim() !== "" &&
     (!isFileRequired || formData.reportFile) &&
     agreed;
 
@@ -146,6 +151,8 @@ const SubscriptionForm = ({
             required
           />
         </div>
+
+        {/* email */}
         <div>
           <label className="block text-sm font-medium">Email</label>
           <input
@@ -169,6 +176,20 @@ const SubscriptionForm = ({
             value={formData.phone}
             onChange={handleChange}
             className="mt-1 w-full border rounded-lg p-2"
+          />
+        </div>
+
+        {/* brief history */}
+        <div>
+          <label className="block text-sm font-medium">Brief History</label>
+          <textarea
+            placeholder="write a short story about yourself..."
+            type="text"
+            name="story"
+            value={formData.story}
+            onChange={handleChange}
+            className="mt-1 w-full border rounded-lg p-2"
+            required
           />
         </div>
 
