@@ -7,12 +7,15 @@ import { useState } from "react";
 import Modal from "./ModalPrice";
 import PaymentForm from "./PaymentForm";
 import SubscriptionForm from "./SubscriptionForm";
+import ModalDisplay from "./Modal";
 
 const Pricing = () => {
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [consultationData, setConsultationData] = useState(null);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openSubscriptionModal = (option) => {
     setSelectedOption(option);
@@ -33,6 +36,10 @@ const Pricing = () => {
   const closePaymentModal = () => {
     setIsPaymentModalOpen(false);
     setConsultationData(null);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   // const handlePaymentSuccess = async (paymentResponse) => {
@@ -63,11 +70,13 @@ const Pricing = () => {
     console.log("Payment success:", paymentResponse);
 
     try {
-      const apiUrl = "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
+      const apiUrl =
+        "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
       const payload = {
         email: consultationData.email,
         name: consultationData.name,
         consultationType: consultationData.consultationType,
+        story: consultationData.story,
       };
 
       console.log(
@@ -108,17 +117,35 @@ const Pricing = () => {
 
   const handleFreeSubscription = async (formData) => {
     try {
-      const apiUrl = "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
-      const response = await axios.post(`${apiUrl}/api/free-subscription`, {
-        name: formData.name,
-        email: formData.email,
-        consultationType: formData.consultationType,
-        story: formData.story,
-      });
+      // Use the production URL if needed, otherwise default to localhost.
+      const apiUrl = "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000"; // or "https://doctorkays-backend-1.onrender.com"
+      let response;
+      // Check if formData is an instance of FormData (for file uploads)
+      if (formData instanceof FormData) {
+        response = await axios.post(
+          `${apiUrl}/api/free-subscription`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+      } else {
+        response = await axios.post(
+          `${apiUrl}/api/free-subscription`,
+          formData
+        );
+      }
       console.log("Free subscription confirmation email sent:", response.data);
-      // You can show a confirmation modal or toast here if needed.
+      setModalMessage(
+        "We have received your request and sent a confirmation email. Kindly check your spam, if you do not receive a confirmation email in the next 30 seconds."
+      );
+      setIsModalOpen(true);
+      // Optionally, show a confirmation modal or toast here.
     } catch (error) {
-      console.error("Error sending free subscription confirmation email:", error);
+      console.error(
+        "Error sending free subscription confirmation email:",
+        error
+      );
     }
   };
 
@@ -213,6 +240,12 @@ const Pricing = () => {
           />
         </Modal>
       )}
+
+      <ModalDisplay
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        message={modalMessage}
+      />
     </motion.div>
   );
 };

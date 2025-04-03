@@ -89,30 +89,58 @@ const SubscriptionForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+
     try {
+      // Remove non-numeric characters from the price and parse it
+      const numericPrice = parseFloat(formData.price.replace(/[^0-9.]/g, ""));
       const apiUrl =
         "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
-      const response = await fetch(`${apiUrl}/api/consultation`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const result = await response.json();
-      console.log("Saved consultation:", result);
 
-      // Remove any non-numeric characters and parse the price
-      const numericPrice = parseFloat(formData.price.replace(/[^0-9.]/g, ""));
       if (numericPrice === 0) {
-        // Close the subscription modal before proceeding
-        onClose();
-        // Handle free subscriptions and show confirmation modal
-        onFreeSubscription(formData);
-        setModalMessage(
-          "Thank you for your message. We have received your request and sent a confirmation email."
-        );
-        setIsModalOpen(true);
+        // Build FormData for free subscription including file upload if required
+        const formDataToSend = new FormData();
+        formDataToSend.append("name", formData.name);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("phone", formData.phone);
+        formDataToSend.append("story", formData.story);
+        formDataToSend.append("consultationType", formData.consultationType);
+        formDataToSend.append("price", formData.price);
+        if (formData.reportFile) {
+          formDataToSend.append("reportFile", formData.reportFile);
+        }
+
+        // Send the consultation data (with file, if any) to the consultation endpoint
+        const response = await fetch(`${apiUrl}/api/consultation`, {
+          method: "POST",
+          body: formDataToSend,
+        });
+        const result = await response.json();
+        console.log("Saved consultation (free subscription):", result);
+
+        // // Close the subscription modal before proceeding
+        if (onClose) {
+          onClose();
+        } else {
+          console.warn("onClose function not provided");
+        }
+
+        // Handle free subscription and show confirmation modal
+        await onFreeSubscription(formDataToSend);
+        // setModalMessage(
+        //   "Thank you for your message. We have received your request and sent a confirmation email."
+        // );
+        // setIsModalOpen(true);
       } else {
-        // Otherwise, proceed to payment workflow
+        // For paid subscriptions, send a JSON payload to the consultation endpoint
+        const response = await fetch(`${apiUrl}/api/consultation`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        const result = await response.json();
+        console.log("Saved consultation (paid subscription):", result);
+
+        // Proceed to the payment workflow
         onProceedToPayment(formData);
       }
     } catch (error) {
@@ -168,7 +196,9 @@ const SubscriptionForm = ({
 
         {/* phone */}
         <div>
-          <label className="block text-sm font-medium">Phone <span className="text-gray-600">(optional)</span></label>
+          <label className="block text-sm font-medium">
+            Phone <span className="text-gray-600">(optional)</span>
+          </label>
           <input
             placeholder="+234 "
             type="tel"
@@ -238,7 +268,7 @@ const SubscriptionForm = ({
                   <p className="text-gray-500">
                     Drag &amp; drop or{" "}
                     <span className="text-blue-600 underline">click</span> to
-                    choose files
+                    choose file
                   </p>
                   <p className="text-sm text-gray-400 mt-1">
                     Max file size: 10 MB
