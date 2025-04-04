@@ -21,7 +21,7 @@ const QuestionDetail = () => {
     initialQuestion ? initialQuestion.comments : []
   );
   const [submitting, setSubmitting] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialQuestion);
 
   // Compute validity: comment must be non-empty
   const isFormValid = comment.trim() !== "";
@@ -31,9 +31,10 @@ const QuestionDetail = () => {
     if (!questionDetail && id) {
       const fetchQuestion = async () => {
         try {
-          const res = await axios.get(`https://doctorkays-backend-1.onrender.com/api/questions/${id}` || `http://localhost:5000/api/questions/${id}`);
+          const res = await axios.get(`http://localhost:5000/api/questions/${id}` || `https://doctorkays-backend-1.onrender.com/api/questions/${id}` );
           setQuestionDetail(res.data);
-          setComments(res.data.comments);
+          
+          setComments(res.data.comments || []);
           setLoading(false);
         } catch (err) {
           console.error("Error fetching question:", err);
@@ -100,6 +101,9 @@ const QuestionDetail = () => {
       }
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error || !questionDetail) return <p>{error || "Question not found."}</p>;
 
   return (
     <div>
