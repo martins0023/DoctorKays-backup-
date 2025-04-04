@@ -31,7 +31,7 @@ const QuestionDetail = () => {
     if (!questionDetail && id) {
       const fetchQuestion = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/questions/${id}` || `https://doctorkays-backend-1.onrender.com/api/questions/${id}` );
+          const res = await axios.get(`https://doctorkays-backend-1.onrender.com/api/questions/${id}` || `http://localhost:5000/api/questions/${id}`);
           setQuestionDetail(res.data);
           
           setComments(res.data.comments || []);
