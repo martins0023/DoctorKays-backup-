@@ -156,16 +156,17 @@ const Community = () => {
                   className="border bg-white p-4 mb-4 rounded-lg cursor-pointer hover:shadow-lg transition"
                 >
                   <div className="flex justify-between items-center">
-                    <h2 className="text-lg text-black font-semibold">
+                    <h2 className="text-base text-black font-semibold">
                       {q.user}
                     </h2>
                     <span className="text-sm text-gray-400">
                       {new Date(q.date).toLocaleDateString("en-CA")}
                     </span>
                   </div>
+                  <p className="font-semibold text-black mt-2">{q.title}</p>
                   <div
                     onClick={() => goToQuestionDetail(q)}
-                    className="text-black mt-2 cursor-pointer"
+                    className="text-black mt- cursor-pointer"
                   >
                     {q.question}
                   </div>
@@ -211,7 +212,7 @@ const Community = () => {
                       className="flex items-center gap-1 cursor-pointer"
                       onClick={() => goToQuestionDetail(q)}
                       whileHover={{ scale: 1.2 }}
-                      animate={{ rotate: [0, 5, -5, 0] }}
+                      animate={{ scale: [1, 1.1, 1] }}
                       transition={{
                         duration: 2,
                         repeat: Infinity,
@@ -276,12 +277,13 @@ export default Community;
 
 /** AskQuestionModal Component */
 const AskQuestionModal = ({ onClose, onSubmit }) => {
-  const [name, setName] = useState("");
-  const [question, setQuestion] = useState("");
+  const [name, setName] = useState(""); //name
+  const [title, setTitle] = useState(""); //title
+  const [question, setQuestion] = useState(""); //question
   const [submitting, setSubmitting] = useState(false);
 
   // Compute validity: both name and question must be non-empty
-  const isFormValid = name.trim() !== "" && question.trim() !== "";
+  const isFormValid = name.trim() !== "" && title.trim() !== "" && question.trim() !== "";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -289,7 +291,7 @@ const AskQuestionModal = ({ onClose, onSubmit }) => {
     setSubmitting(true);
     try {
       // Await onSubmit in case it returns a Promise
-      await onSubmit({ user: name, question });
+      await onSubmit({ user: name, title, question });
     } catch (error) {
       console.error("Error during submission:", error);
     } finally {
@@ -308,11 +310,13 @@ const AskQuestionModal = ({ onClose, onSubmit }) => {
         </button>
         <h2 className="text-2xl text-black font-bold mb-4">Ask a Question</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <div>
             <label className="block text-black text-sm font-medium">
               Your Name
             </label>
             <input
+              placeholder="John Doe"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -320,11 +324,29 @@ const AskQuestionModal = ({ onClose, onSubmit }) => {
               required
             />
           </div>
+
+          {/* title */}
+          <div>
+            <label className="block text-black text-sm font-medium">
+              Title
+            </label>
+            <input
+              placeholder="A nice title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full border p-2 rounded text-black"
+              required
+            />
+          </div>
+
+          {/* Question */}
           <div>
             <label className="block text-black text-sm font-medium">
               Question
             </label>
             <textarea
+              placeholder="Ask a question that is bothering you"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               className="w-full border p-2 rounded text-black"

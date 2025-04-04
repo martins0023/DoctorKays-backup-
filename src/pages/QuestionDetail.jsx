@@ -117,14 +117,15 @@ const QuestionDetail = () => {
         {/* Question Header */}
         <div className="bg-white p-4 rounded shadow mb-4">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-xl font-bold text-gray-800">
               {questionDetail.user}
             </h2>
             <span className="text-sm text-gray-500">
               {new Date(questionDetail.date).toLocaleDateString("en-CA")}
             </span>
           </div>
-          <p className="text-lg text-gray-700 mb-3">
+          <p className="font-semibold text-black text-base mt-2">{questionDetail.title}</p>
+          <p className="text-md text-gray-700 mb-3">
             {questionDetail.question}
           </p>
 

@@ -299,7 +299,7 @@ export const checklistItems = [
   {
     title: "We Operate Across the Globe",
     description:
-      "No matter where you are, Doctor Kay's services are available.",
+      "No matter where you are, Doctor Kays services are available.",
   },
   {
     title: "CAC Registered",
