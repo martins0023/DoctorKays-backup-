@@ -297,9 +297,9 @@ export const checklistItems = [
       "At Doctor Kays, your health is in expert hands. Our licensed professional doctor provide top-quality medical care tailored to your needs.",
   },
   {
-    title: "We Operate Across the Globe",
+    title: "How We Operate",
     description:
-      "No matter where you are, Doctor Kays services are available.",
+      "Services may be restricted based on location due to licensing regulations.",
   },
   {
     title: "CAC Registered",
@@ -307,7 +307,7 @@ export const checklistItems = [
       "Doctor Kays is proud to be a CAC registered entity, ensuring our operations meet the highest legal and professional standards.",
   },
   {
-    title: "Clients are Satisfied with our service",
+    title: "Clients Are Satisfied With Our Service",
     description:
       <SatisfiedClients />,
   },
