@@ -229,16 +229,23 @@ const Community = () => {
                     </motion.div>
 
                     {/* Doctor Replied Status (static) */}
-                    {q.hasDoctorReplied ? (
-                      <span className="bg-green-100 text-green-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
-                        Doctor Kays has replied
-                      </span>
-                    ) : (
-                      <span className="bg-red-100 text-red-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
-                        Doctor Kays hasn't replied
-                      </span>
-                    )}
+                    <div className="flex items-center justify-center p-2">
+                      {q.hasDoctorReplied ? (
+                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold shadow-sm">
+                          Doctor Kays has replied
+                        </span>
+                      ) : (
+                        <span className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold shadow-sm">
+                          Doctor Kays hasn't replied
+                        </span>
+                      )}
+                    </div>
                   </div>
+                  {q.hasDoctorReplied && q.answer && (
+                    <div className="pl-4 border-l-4 border-green-600 bg-gray-50 rounded-md p-1">
+                      <p className="mt-1 text-sm text-gray-600">{q.answer}</p>
+                    </div>
+                  )}
                 </div>
               ))
             )}

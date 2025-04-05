@@ -117,14 +117,16 @@ const QuestionDetail = () => {
         {/* Question Header */}
         <div className="bg-white p-4 rounded shadow mb-4">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-bold text-gray-800">
+            <h2 className="text-base font-bold text-gray-800">
               {questionDetail.user}
             </h2>
             <span className="text-sm text-gray-500">
               {new Date(questionDetail.date).toLocaleDateString("en-CA")}
             </span>
           </div>
-          <p className="font-semibold text-black text-base mt-2">{questionDetail.title}</p>
+          <p className="font-semibold text-black text-base mt-2">
+            {questionDetail.title}
+          </p>
           <p className="text-md text-gray-700 mb-3">
             {questionDetail.question}
           </p>
@@ -167,15 +169,24 @@ const QuestionDetail = () => {
           </motion.div>
 
           {/* Doctor Replied Status */}
-          <div className="mt-3">
-            {questionDetail.hasDoctorReplied ? (
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold">
-                Doctor Kays has replied
-              </span>
-            ) : (
-              <span className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold">
-                Doctor Kays hasn't replied
-              </span>
+          <div className="mt-4 p-4 border rounded-lg bg-gray-50">
+            <div className="flex items-center gap-3 mb-2">
+              {questionDetail.hasDoctorReplied ? (
+                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold">
+                  Doctor Kays has replied
+                </span>
+              ) : (
+                <span className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold">
+                  Doctor Kays hasn't replied
+                </span>
+              )}
+            </div>
+            {questionDetail.answer && (
+              <div className="pl-4 border-l-4 border-green-600">
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {questionDetail.answer}
+                </p>
+              </div>
             )}
           </div>
         </div>
