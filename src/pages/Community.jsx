@@ -163,7 +163,8 @@ const Community = () => {
                       {new Date(q.date).toLocaleDateString("en-CA")}
                     </span>
                   </div>
-                  <p className="font-semibold text-black mt-2">{q.title}</p>
+                  
+                  <p className="font-semibold text-black mt-1">{q.title}</p>
                   <div
                     onClick={() => goToQuestionDetail(q)}
                     className="text-black mt- cursor-pointer"
@@ -229,20 +230,18 @@ const Community = () => {
                     </motion.div>
 
                     {/* Doctor Replied Status (static) */}
-                    <div className="flex items-center justify-center p-2">
-                      {q.hasDoctorReplied ? (
-                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold shadow-sm">
-                          Doctor Kays has replied
-                        </span>
-                      ) : (
-                        <span className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-xs sm:text-sm font-semibold shadow-sm">
-                          Doctor Kays hasn't replied
-                        </span>
-                      )}
-                    </div>
+                    {q.hasDoctorReplied ? (
+                      <span className="bg-green-100 text-green-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
+                        Doctor Kays has replied 
+                      </span>
+                    ) : (
+                      <span className="bg-red-100 text-red-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
+                        Doctor Kays hasn't replied
+                      </span>
+                    )}
                   </div>
                   {q.hasDoctorReplied && q.answer && (
-                    <div className="pl-4 border-l-4 border-green-600 bg-gray-50 rounded-md p-1">
+                    <div className="pl-4 border-l-4 mt-2 border-green-600 bg-gray-50 rounded-md p-1">
                       <p className="mt-1 text-sm text-gray-600">{q.answer}</p>
                     </div>
                   )}
