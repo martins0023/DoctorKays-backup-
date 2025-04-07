@@ -80,7 +80,7 @@ const ContactPage = () => {
                   href="https://wa.link/vedmgv"
                   className="text-gray-400 hover:underline"
                 >
-                  Start a live chat
+                  Start a chat
                 </a>
               </li>
               <li className="mb-2">
