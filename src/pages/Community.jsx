@@ -1,25 +1,50 @@
 // src/pages/Community.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { staggerContainer } from "../constants/animations";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import Stayintouch from "../components/Stayintouch";
+// import Navbar from "../components/Navbar";
+// import Footer from "../components/Footer";
+// import Stayintouch from "../components/Stayintouch";
 import {
   Bell,
+  BotMessageSquare,
+  FileQuestion,
   FileQuestionIcon,
   HomeIcon,
   LucideBarChartBig,
   MessageCircle,
+  MessageCircleQuestion,
+  MessagesSquare,
   ThumbsDown,
   ThumbsUp,
 } from "lucide-react";
-import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
+
+// Lazy‑load these components (with preload/prefetch hints)
+const Navbar = lazy(() =>
+  import(/* webpackPreload: true */ "../components/Navbar")
+);
+const Footer = lazy(() =>
+  import(/* webpackPreload: true */ "../components/Footer")
+);
+const Stayintouch = lazy(() =>
+  import(/* webpackPrefetch: true */ "../components/Stayintouch")
+);
+const AskQuestionModal = lazy(() =>
+  import(/* webpackPrefetch: true */ "../components/AskQuestionModal")
+);
 
 const Community = () => {
   const [questions, setQuestions] = useState([]);
+  // track which questions this browser has liked
+  const [likedIds, setLikedIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("likedQuestions") || "[]");
+    } catch {
+      return [];
+    }
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -29,7 +54,7 @@ const Community = () => {
     const fetchQuestions = async () => {
       try {
         const res = await axios.get(
-          "https://doctorkays-backend-1.onrender.com/api/questions" ||
+          "https://doctorkays-backend-1.onrender.com/api/questions" ??
             "http://localhost:5000/api/questions"
         );
         setQuestions(res.data);
@@ -45,7 +70,7 @@ const Community = () => {
   const handleQuestionSubmit = async (formData) => {
     try {
       const res = await axios.post(
-        "https://doctorkays-backend-1.onrender.com/api/questions" ||
+        "https://doctorkays-backend-1.onrender.com/api/questions" ??
           "http://localhost:5000/api/questions",
         formData
       );
@@ -57,45 +82,104 @@ const Community = () => {
     }
   };
 
-  const handleReaction = async (questionId, type) => {
-    try {
-      // Call the backend endpoint to update the reaction count
-      const res = await axios.patch(
-        `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions` ||
-          `http://localhost:5000/api/questions/${questionId}/reactions`,
-        { type }
-      );
-      // Update local state (assuming you have setQuestions in your component)
-      setQuestions((prevQuestions) =>
-        prevQuestions.map((q) => (q._id === questionId ? res.data : q))
-      );
-    } catch (err) {
-      console.error(`Error updating ${type}:`, err);
-    }
+  // const handleReaction = async (questionId, type) => {
+  //   try {
+  //     // Call the backend endpoint to update the reaction count
+  //     const res = await axios.patch(
+  //       `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions` ||
+  //         `http://localhost:5000/api/questions/${questionId}/reactions`,
+  //       { type }
+  //     );
+  //     // Update local state (assuming you have setQuestions in your component)
+  //     setQuestions((prevQuestions) =>
+  //       prevQuestions.map((q) => (q._id === questionId ? res.data : q))
+  //     );
+  //   } catch (err) {
+  //     console.error(`Error updating ${type}:`, err);
+  //   }
+  // };
+
+  // Like once per browser
+  const handleLike = (questionId) => {
+    if (likedIds.includes(questionId)) return;
+
+    // 1) Optimistically update UI
+    setQuestions((prev) =>
+      prev.map((q) => (q._id === questionId ? { ...q, likes: q.likes + 1 } : q))
+    );
+    const nextLiked = [...likedIds, questionId];
+    setLikedIds(nextLiked);
+    localStorage.setItem("likedQuestions", JSON.stringify(nextLiked));
+
+    // 2) Fire the request (no await)
+    axios
+      .patch(
+        `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions`,
+        { type: "like" }
+      )
+      .then((res) => {
+        // Optionally reconcile with server response
+        setQuestions((prev) =>
+          prev.map((q) => (q._id === questionId ? res.data : q))
+        );
+      })
+      .catch((err) => {
+        console.error("Like failed:", err);
+        // Roll back on error
+        setQuestions((prev) =>
+          prev.map((q) =>
+            q._id === questionId ? { ...q, likes: q.likes - 1 } : q
+          )
+        );
+        const rolledBack = likedIds.filter((id) => id !== questionId);
+        setLikedIds(rolledBack);
+        localStorage.setItem("likedQuestions", JSON.stringify(rolledBack));
+      });
   };
 
   // Navigate to question detail page when a question is clicked
   const goToQuestionDetail = (question) => {
     navigate(`/community/${question._id}`, { state: { question } });
-    window. scrollTo({ top: 0, left: 0})
+    window.scrollTo({ top: 0, left: 0 });
   };
 
   return (
     <div>
-      <Navbar />
+      <Suspense fallback={null}>
+        <Navbar />
+      </Suspense>
       <motion.div
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
         className="max-w-7xl mx-auto md:pt-20 pt-10 px-6"
       >
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="sm:text-3xl text-xl font-bold">Community Forum</h1>
+        <div className="flex justify-between items-left mb-6">
+          <h1 className="sm:text-2xl text-lg font-bold border-b-2 border-primary">
+            Community Forum
+          </h1>
+        </div>
+
+        <div className="flex items-center justify-center mb-2">
+          <BotMessageSquare className="bg-gradient-to-r from-purple-500 to-purple-950 text-transparent rounded-full p-2 text-white w-14 h-14" />
+        </div>
+
+        <div className="flex flex-col justify-items-center justify-center mb-5">
+          <p className="leading-snug text-center sm:text-3xl text-2xl mb-2 font-normal">
+            Welcome to the{" "}
+            <span className="bg-gradient-to-r from-purple-500 to-purple-950 text-transparent bg-clip-text">
+              Doctor Kays Community
+            </span>{" "}
+            Central Help Forum
+          </p>
+        </div>
+        <div className="flex items-center justify-center mb-6">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition"
+            className="flex justify-center items-center gap-1 bg-gradient-to-l from-purple-500 to-purple-950 text-transparent text-white py-3 px-4 rounded hover:opacity-90 transition"
           >
             Ask a Question
+            <MessageCircleQuestion />
           </button>
         </div>
 
@@ -153,67 +237,47 @@ const Community = () => {
               questions.map((q) => (
                 <div
                   key={q._id}
-                  className="border bg-white p-4 mb-4 rounded-lg cursor-pointer hover:shadow-lg transition"
+                  className=" p-4 mb-4 border-t cursor-pointer hover:shadow-lg transition"
                 >
                   <div className="flex justify-between items-center">
-                    <h2 className="text-base text-black font-semibold">
-                      {q.user}
-                    </h2>
+                    <h2 className="text-base font-semibold">{q.user}</h2>
                     <span className="text-sm text-gray-400">
                       {new Date(q.date).toLocaleDateString("en-CA")}
                     </span>
                   </div>
-                  
-                  <p className="font-semibold text-black mt-1">{q.title}</p>
+
+                  <p className="font-semibold mt-1">{q.title}</p>
                   <div
                     onClick={() => goToQuestionDetail(q)}
-                    className="text-black mt- cursor-pointer"
+                    className="mt- cursor-pointer leading-normal"
                   >
                     {q.question}
                   </div>
-                  <div className="mt-2 flex flex-wrap md:flex-nowrap items-center justify-between md:gap-5 text-sm text-gray-500">
+                  <div className="mt-2 flex flex-wrap md:flex-nowrap items-center justify-between md:gap-5 text-sm text-gray-700">
                     {/* Like Button with continuous pulse */}
                     <motion.div
-                      className="flex items-center gap-1 cursor-pointer"
-                      onClick={() => handleReaction(q._id, "like")}
-                      whileHover={{ scale: 1.2 }}
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
+                      className={`flex items-center px-3 py-1 rounded-full gap-1 cursor-pointer transition-colors ${
+                        likedIds.includes(q._id)
+                          ? "bg-green-100 text-green-950 pointer-events-none"
+                          : "bg-gray-100 text-gray-700 hover:bg-green-200"
+                      }`}
+                      onClick={() => handleLike(q._id)}
+                      whileHover={{
+                        scale: likedIds.includes(q._id) ? 1 : 1.05,
                       }}
+                      transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <ThumbsUp className="w-4 h-4 text-green-600" />
+                      <ThumbsUp className="w-4 h-4" />
                       <span className="hidden sm:inline">Likes: {q.likes}</span>
                       <span className="inline sm:hidden">{q.likes}</span>
                     </motion.div>
 
-                    {/* Dislike Button with continuous pulse */}
-                    <motion.div
-                      className="flex items-center gap-1 cursor-pointer"
-                      onClick={() => handleReaction(q._id, "dislike")}
-                      whileHover={{ scale: 1.2 }}
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <ThumbsDown className="w-4 h-4 text-red-600" />
-                      <span className="hidden sm:inline">
-                        Dislikes: {q.dislikes}
-                      </span>
-                      <span className="inline sm:hidden">{q.dislikes}</span>
-                    </motion.div>
-
                     {/* Comment Button with a slight rotation effect */}
                     <motion.div
-                      className="flex items-center gap-1 cursor-pointer"
+                      className="flex items-center bg-gray-100 px-3 py-1 rounded-full gap-1 cursor-pointer"
                       onClick={() => goToQuestionDetail(q)}
                       whileHover={{ scale: 1.2 }}
-                      animate={{ scale: [1, 1.1, 1] }}
+                      // animate={{ scale: [1, 1.1, 1] }}
                       transition={{
                         duration: 2,
                         repeat: Infinity,
@@ -232,7 +296,7 @@ const Community = () => {
                     {/* Doctor Replied Status (static) */}
                     {q.hasDoctorReplied ? (
                       <span className="bg-green-100 text-green-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
-                        Doctor Kays has replied 
+                        Doctor Kays has replied
                       </span>
                     ) : (
                       <span className="bg-red-100 text-red-700 px-2 py-1 rounded-xl text-xs sm:text-sm">
@@ -261,8 +325,12 @@ const Community = () => {
           </aside>
         </div>
 
-        <Stayintouch />
-        <Footer />
+        <Suspense fallback={null}>
+          <Stayintouch />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
       </motion.div>
       <footer className="bg-primary text-white p-4 text-center">
         <div>© 2025 Doctor Kays</div>
@@ -270,110 +338,21 @@ const Community = () => {
 
       {/* Ask Question Modal */}
       {isModalOpen && (
-        <AskQuestionModal
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={handleQuestionSubmit}
-        />
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="loader">Loading…</div>
+            </div>
+          }
+        >
+          <AskQuestionModal
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={handleQuestionSubmit}
+          />
+        </Suspense>
       )}
     </div>
   );
 };
 
 export default Community;
-
-/** AskQuestionModal Component */
-const AskQuestionModal = ({ onClose, onSubmit }) => {
-  const [name, setName] = useState(""); //name
-  const [title, setTitle] = useState(""); //title
-  const [question, setQuestion] = useState(""); //question
-  const [submitting, setSubmitting] = useState(false);
-
-  // Compute validity: both name and question must be non-empty
-  const isFormValid = name.trim() !== "" && title.trim() !== "" && question.trim() !== "";
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!isFormValid) return;
-    setSubmitting(true);
-    try {
-      // Await onSubmit in case it returns a Promise
-      await onSubmit({ user: name, title, question });
-    } catch (error) {
-      console.error("Error during submission:", error);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded shadow w-full max-w-md relative">
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
-        >
-          &times;
-        </button>
-        <h2 className="text-2xl text-black font-bold mb-4">Ask a Question</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block text-black text-sm font-medium">
-              Your Name
-            </label>
-            <input
-              placeholder="John Doe"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full border p-2 rounded text-black"
-              required
-            />
-          </div>
-
-          {/* title */}
-          <div>
-            <label className="block text-black text-sm font-medium">
-              Title
-            </label>
-            <input
-              placeholder="A nice title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full border p-2 rounded text-black"
-              required
-            />
-          </div>
-
-          {/* Question */}
-          <div>
-            <label className="block text-black text-sm font-medium">
-              Question
-            </label>
-            <textarea
-              placeholder="Ask a question that is bothering you"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              className="w-full border p-2 rounded text-black"
-              rows="4"
-              required
-            />
-          </div>
-          {/* <div>
-            <p className="text-gray-700">Terms and policy</p>
-          </div> */}
-          <button
-            type="submit"
-            disabled={!isFormValid || submitting}
-            className={`bg-primary text-white py-2 px-4 rounded hover:opacity-90 transition ${
-              !isFormValid || submitting ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            {submitting ? "Submitting..." : "Submit"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-};

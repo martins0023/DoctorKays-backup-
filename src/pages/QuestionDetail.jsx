@@ -1,16 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { ThumbsUp, ThumbsDown, MessageCircle, Share2 } from "lucide-react";
+import { ThumbsUp, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
+
+// Lazy‑load these components (with preload/prefetch hints)
+const Navbar = lazy(() =>
+  import(/* webpackPreload: true */ "../components/Navbar")
+);
+const Footer = lazy(() =>
+  import(/* webpackPreload: true */ "../components/Footer")
+);
 
 const QuestionDetail = () => {
   const location = useLocation();
-  const { id } = useParams(); // assuming your route is something like /community/:id
+  const { id } = useParams(); // 
   const initialQuestion = location.state?.question;
+  // track which questions this browser has liked
+  const [likedIds, setLikedIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("likedQuestions") || "[]");
+    } catch {
+      return [];
+    }
+  });
 
   // Use a local state so we can update the question details when reactions change.
   const [questionDetail, setQuestionDetail] = useState(initialQuestion);
@@ -31,9 +45,12 @@ const QuestionDetail = () => {
     if (!questionDetail && id) {
       const fetchQuestion = async () => {
         try {
-          const res = await axios.get(`https://doctorkays-backend-1.onrender.com/api/questions/${id}` || `http://localhost:5000/api/questions/${id}`);
+          const res = await axios.get(
+            `https://doctorkays-backend-1.onrender.com/api/questions/${id}` ||
+              `http://localhost:5000/api/questions/${id}`
+          );
           setQuestionDetail(res.data);
-          
+
           setComments(res.data.comments || []);
           setLoading(false);
         } catch (err) {
@@ -47,17 +64,41 @@ const QuestionDetail = () => {
   }, [id, questionDetail]);
 
   // Function to update likes/dislikes
-  const handleReaction = async (type) => {
-    try {
-      const res = await axios.patch(
-        `https://doctorkays-backend-1.onrender.com/api/questions/${questionDetail._id}/reactions`,
-        { type }
-      );
-      // Update the local question state with the updated question data
-      setQuestionDetail(res.data);
-    } catch (err) {
-      console.error(`Error updating ${type}:`, err);
-    }
+  const handleLike = (questionId) => {
+    if (likedIds.includes(questionId)) return;
+
+    // 1) Optimistically update UI
+    setQuestions((prev) =>
+      prev.map((q) => (q._id === questionId ? { ...q, likes: q.likes + 1 } : q))
+    );
+    const nextLiked = [...likedIds, questionId];
+    setLikedIds(nextLiked);
+    localStorage.setItem("likedQuestions", JSON.stringify(nextLiked));
+
+    // 2) Fire the request (no await)
+    axios
+      .patch(
+        `https://doctorkays-backend-1.onrender.com/api/questions/${questionId}/reactions`,
+        { type: "like" }
+      )
+      .then((res) => {
+        // Optionally reconcile with server response
+        setQuestions((prev) =>
+          prev.map((q) => (q._id === questionId ? res.data : q))
+        );
+      })
+      .catch((err) => {
+        console.error("Like failed:", err);
+        // Roll back on error
+        setQuestions((prev) =>
+          prev.map((q) =>
+            q._id === questionId ? { ...q, likes: q.likes - 1 } : q
+          )
+        );
+        const rolledBack = likedIds.filter((id) => id !== questionId);
+        setLikedIds(rolledBack);
+        localStorage.setItem("likedQuestions", JSON.stringify(rolledBack));
+      });
   };
 
   const handleCommentSubmit = async (e) => {
@@ -85,7 +126,8 @@ const QuestionDetail = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Check out this question on Doctor Kays",
+          title: questionDetail.title,
+          text: questionDetail.question,
           url: shareUrl,
         });
         console.log("Shared successfully");
@@ -112,7 +154,9 @@ const QuestionDetail = () => {
         <title>{questionDetail.question}</title>
         <meta name="description" content={questionDetail.question} />
       </Helmet>
-      <Navbar />
+      <Suspense fallback={null}>
+        <Navbar />
+      </Suspense>
       <div className="max-w-3xl mx-auto p-6">
         {/* Question Header */}
         <div className="bg-white p-4 rounded shadow mb-4">
@@ -140,8 +184,12 @@ const QuestionDetail = () => {
           >
             {/* Enhanced Like Button */}
             <div
-              className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:scale-110 transition-transform"
-              onClick={() => handleReaction("like")}
+              className={`flex items-center px-3 py-1 rounded-full gap-1 cursor-pointer transition-colors ${
+                likedIds.includes(questionDetail._id)
+                  ? "bg-green-100 text-green-950 pointer-events-none"
+                  : "bg-gray-100 text-gray-700 hover:bg-green-200"
+              }`}
+              onClick={() => handleLike(questionDetail._id)}
             >
               <ThumbsUp className="w-4 h-4 text-green-600" />
               <span className="font-medium text-gray-600">
@@ -149,15 +197,7 @@ const QuestionDetail = () => {
               </span>
             </div>
             {/* Enhanced Dislike Button */}
-            <div
-              className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:scale-110 transition-transform"
-              onClick={() => handleReaction("dislike")}
-            >
-              <ThumbsDown className="w-4 h-4 text-red-600" />
-              <span className="font-medium text-gray-600">
-                {questionDetail.dislikes}
-              </span>
-            </div>
+
             {/* Share Button */}
             <div
               className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:scale-110 transition-transform"
@@ -241,7 +281,9 @@ const QuestionDetail = () => {
       </div>
 
       <div className="max-w-7xl mx-auto md:pt-20 pt-10 px-6">
-        <Footer />
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
       </div>
       <footer className="bg-primary text-white p-4 text-center">
         <div>© 2025 Doctor Kays</div>
