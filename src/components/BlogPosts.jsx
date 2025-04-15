@@ -52,6 +52,7 @@ const BlogPosts = () => {
 
   const handleNavigate = (post) => {
     navigate(`/blog/${post.slug.current}`);
+    window.scrollTo({ top: 0});
   };
 
   const truncateText = (text, maxWords) => {
@@ -87,7 +88,7 @@ const BlogPosts = () => {
               <div
                 key={post._id}
                 onClick={() => handleNavigate(post)}
-                className="bg-gradient-to-l from-gray-800 to-gray-950 p-4 rounded-lg cursor-pointer"
+                className="p-2 cursor-pointer"
               >
                 <img
                   src={post.imageUrl}
@@ -99,18 +100,18 @@ const BlogPosts = () => {
                     #{post.category}
                   </p>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{post.title}</h3>
-                <p className="text-sm text-gray-400 mb-4">
+                <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
+                <p className="text-sm  leading-relaxed mb-4">
                   {truncateText(post.descriptionText, 20)}
                   <span className="text-white"> read more</span>
                 </p>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-3">
                   <div className="flex items-center">
-                    <span className="text-sm text-gray-400">
+                    <span className="text-sm text-gray-500">
                       by {post.author}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-400">{post.date}</span>
+                  <span className="text-sm text-gray-500">{post.date}</span>
                 </div>
               </div>
             ))}

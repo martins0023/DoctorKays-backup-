@@ -15,6 +15,7 @@ import BlogNotFound from "../components/BlogNotFound";
 import Testimonials from "../components/Testimonials";
 import { client } from "../../lib/client";
 import { PortableText } from "@portabletext/react";
+import SocialShare from "../components/SocialShare/SocialShare";
 
 const portableTextComponents = {
   block: {
@@ -165,7 +166,7 @@ const BlogDetail = () => {
       setIsSpeaking(false);
     } else {
       // Split text into smaller chunks
-      const CHUNK_SIZE = 150; // Adjust based on performance and limits
+      const CHUNK_SIZE = 1000; // Adjust based on performance and limits
       const textChunks = plainText.match(
         new RegExp(`.{1,${CHUNK_SIZE}}(\\s|$)`, "g")
       );
@@ -239,6 +240,8 @@ const BlogDetail = () => {
             </div>
             <p className="text-sm font-medium ">By {post.author}</p>
           </div>
+          {/* social sharing */}
+          <SocialShare post={post} />
           <img
             src={post.imageUrl}
             alt={post.title}
@@ -288,12 +291,13 @@ const BlogDetail = () => {
               {recommendedArticles.map((article) => (
                 <div
                   key={article._id}
-                  onClick={() =>
+                  onClick={() => {
+                    window.scrollTo({ top: 0, left: 0 });
                     navigate(`/blog/${article.slug.current}`, {
                       state: article,
-                    })
-                  }
-                  className="min-w-[250px] sm:min-w-[300px] md:min-w-[350px] bg-gradient-to-l from-gray-800 to-gray-950 md:p-4 p-3 rounded-lg cursor-pointer"
+                    });
+                  }}
+                  className="min-w-[250px] sm:min-w-[300px] md:min-w-[350px]  md:p-4 p-2 rounded-lg cursor-pointer"
                 >
                   <img
                     src={article.imageUrl}
@@ -305,12 +309,12 @@ const BlogDetail = () => {
                       #{article.category}
                     </p>
                   </div>
-                  <h3 className="text-xl text-white font-semibold mb-2">
+                  <h3 className="text-xl  font-semibold mb-2">
                     {article.title}
                   </h3>
                   <p className="text-sm text-gray-400 mb-4">
                     {truncateText(article.descriptionText, 20)}...
-                    <span className="text-white"> read more</span>
+                    <span className=""> read more</span>
                   </p>
                 </div>
               ))}

@@ -237,7 +237,7 @@ const Community = () => {
               questions.map((q) => (
                 <div
                   key={q._id}
-                  className=" p-4 mb-4 border-t cursor-pointer hover:shadow-lg transition"
+                  className="border-b p-4 mb-4 cursor-pointer hover:shadow-lg transition"
                 >
                   <div className="flex justify-between items-center">
                     <h2 className="text-base font-semibold">{q.user}</h2>
@@ -305,8 +305,8 @@ const Community = () => {
                     )}
                   </div>
                   {q.hasDoctorReplied && q.answer && (
-                    <div className="pl-4 border-l-4 mt-2 border-green-600 bg-gray-50 rounded-md p-1">
-                      <p className="mt-1 text-sm text-gray-600">{q.answer}</p>
+                    <div className="pl-4 border-l-4 mt-2 border-green-600 rounded-md p-1" onClick={() => goToQuestionDetail(q)}>
+                      <p className="mt-1 text-sm ">{q.answer}</p>
                     </div>
                   )}
                 </div>
