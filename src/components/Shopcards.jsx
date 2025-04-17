@@ -8,6 +8,7 @@ import {
   Truck,
   Star,
   Heart,
+  Search,
 } from "lucide-react";
 import { client } from "../../lib/client";
 import Footer from "./Footer";
@@ -148,13 +149,14 @@ const Shopcards = ({ isDarkMode }) => {
       <div className="flex flex-wrap items-center justify-between mt-10 mb-6 gap-4">
         <input
           type="text"
-          placeholder="Search everything at doctor kays online medical store..."
+          placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full sm:w-auto flex-1 border border-gray-700 bg-inherit rounded-lg px-4 py-2 text-white placeholder-gray-400"
+          className="w-full sm:w-auto flex-1 border border-gray-700 bg-inherit rounded-3xl px-4 py-2 placeholder-gray-400"
         />
 
-        <select
+        {/* search filter */}
+        {/* <select
           className="border border-gray-700 rounded-lg px-4 py-2 bg-inherit"
           onChange={(e) => setFilter(e.target.value)}
         >
@@ -163,11 +165,11 @@ const Shopcards = ({ isDarkMode }) => {
               {category}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
 
       {/* Filter Tags */}
-      <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+      {/* <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
         {categories.map((category) => (
           <button
             key={category}
@@ -181,55 +183,39 @@ const Shopcards = ({ isDarkMode }) => {
             {category}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <h1 className="text-2xl font-bold mb-4">Available Items</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredItems.map((product) => (
-          // <div key={product._id} className="bg-white rounded-md shadow-md p-4">
-          //   <img
-          //     src={product.imageUrl}
-          //     alt={product.title}
-          //     className="w-full h-48 object-contain"
-          //   />
-          //   <h3 className="text-lg font-semibold">{product.title}</h3>
-          //   <p>{product.price}</p>
-          //   <div className="flex items-center gap-1">
-          //     {renderStars(product.rating)}
-          //     <span>({product.reviews} reviews)</span>
-          //   </div>
-          //   <button onClick={() => toggleFavorite(product._id)}>
-          //     <Heart
-          //       className={`w-5 h-5 ${
-          //         favorites.includes(product._id)
-          //           ? "text-red-500"
-          //           : "text-gray-400"
-          //       }`}
-          //     />
-          //   </button>
-          // </div>
-
           <div
             key={product._id}
-            className="bg-white p-4 shadow-md rounded-md overflow-hidden cursor-pointer transition-transform transform hover:scale-105"
+            className="p-2 rounded-md overflow-hidden cursor-pointer
+                 transition-transform transform hover:scale-105"
           >
             <img
               src={product.imageUrl}
               alt={product.title}
-              className="w-full h-48 object-contain"
+              className="w-full h-40 sm:h-48 object-contain rounded-md"
               onClick={() => handleProductClick(product)}
             />
-            <div className="">
-              <h3 className="text-lg font-semibold text-gray-900">
+
+            <div className="mt-3">
+              <h3
+                className="sm:text-lg font-semibold "
+                onClick={() => handleProductClick(product)}
+              >
                 {product.title}
               </h3>
-              <p className="text-sm text-gray-600">${product.price}</p>
+              <p className="text-sm mt-1">${product.price}</p>
+
               <div className="flex items-center gap-1 mt-2">
                 {renderStars(product.rating)}
-                <span className="text-sm text-gray-600">
+                {/* <span className="text-xs ">
                   ({product.reviews} reviews)
-                </span>
+                </span> */}
               </div>
+
               <button
                 onClick={() => toggleFavorite(product._id)}
                 className="mt-2"
@@ -244,6 +230,7 @@ const Shopcards = ({ isDarkMode }) => {
                 )}
               </button>
             </div>
+
             <div className="p-2 flex justify-end">
               <span className="bg-gray-200 text-gray-600 px-2 py-1 text-xs rounded-full">
                 +{product.imageCount || 0}
