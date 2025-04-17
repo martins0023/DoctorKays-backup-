@@ -93,7 +93,12 @@ const Shopcards = ({ isDarkMode }) => {
 
   // const isLightMode = mode === 'light';
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-purple-500"></div>
+      </div>
+    );
   if (error)
     return <p>Error loading shop items it is from our side, please reload.</p>;
 

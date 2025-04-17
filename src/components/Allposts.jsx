@@ -78,19 +78,19 @@ const Allposts = () => {
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full sm:w-auto flex-1 border border-gray-700 rounded-lg px-4 py-2 bg-gray-900 text-white placeholder-gray-400"
+          className="w-full sm:w-auto flex-1 border border-gray-700 rounded-3xl px-4 py-2 placeholder-gray-400"
         />
 
         {/* Sort Dropdown */}
-        <select
-          className="border border-gray-700 rounded-lg px-4 py-2 bg-gray-900 text-white"
+        {/* <select
+          className="border border-gray-700 rounded-lg px-4 py-2"
           onChange={(e) => setFilter(e.target.value)}
         >
           <option value="All">Sort by: All</option>
           <option value="Health Nuggets">Sleeping</option>
           <option value="Medicine on the Street">Cancer</option>
           <option value="Clinic Series">Sex Education</option>
-        </select>
+        </select> */}
       </div>
 
       {/* Filter Tags */}
@@ -102,7 +102,7 @@ const Allposts = () => {
             className={`px-4 py-2 rounded-full whitespace-nowrap ${
               filter === category
                 ? "bg-gradient-to-l from-purple-700 to-purple-400 text-white"
-                : "bg-gray-800 text-gray-400"
+                : "border "
             }`}
           >
             {category}
@@ -115,7 +115,7 @@ const Allposts = () => {
           <div
             key={post.id}
             onClick={() => handleNavigate(post)}
-            className="bg-gradient-to-l from-gray-800 to-gray-950 p-4 rounded-lg cursor-pointer"
+            className="bg-gradient-to-l  p-2 rounded-lg cursor-pointer"
           >
             <img
               src={post.imageUrl} // Use the first image
