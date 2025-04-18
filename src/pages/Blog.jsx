@@ -11,9 +11,17 @@ const Blog = () => {
   return (
     <div>
       <Navbar />
-      <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-7xl mx-auto md:pt-20 px-6">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+        className="max-w-7xl mx-auto md:pt-20 px-6"
+      >
         <div className="text-center mt-10">
-          <motion.span variants={slideInFromLeft} className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
+          <motion.span
+            variants={slideInFromLeft}
+            className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase"
+          >
             Blog
           </motion.span>
           {/* <motion.h2

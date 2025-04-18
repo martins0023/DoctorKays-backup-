@@ -40,12 +40,7 @@ const Allposts = () => {
   const [filter, setFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const categories = [
-    "All",
-    "Sleeping",
-    "Cancer",
-    "Sex Education",
-  ];
+  const categories = ["All", "Sleeping", "Cancer", "Sex Education"];
 
   // Combine all series and filter based on the selected tag and search query
   const allItems = [];
@@ -128,7 +123,10 @@ const Allposts = () => {
               </p>
             </div>
             <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-            <p className="text-sm text-gray-400 mb-4">{truncateText(post.descriptionText, 20)}<span className="text-white">{" "}read more</span> </p>
+            <p className="text-sm text-gray-400 mb-4">
+              {truncateText(post.descriptionText, 20)}
+              <span className="text-white"> read more</span>{" "}
+            </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <span className="text-sm text-gray-400">by {post.author}</span>

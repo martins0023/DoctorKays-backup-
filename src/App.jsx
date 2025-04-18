@@ -5,7 +5,7 @@ import FAQs from "./pages/FAQs";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
 import NotFound from "./components/NotFound";
-import ProductDetails from "./components/ProductDetails";
+import ProductDetails from "./components/Ecommerce/ProductDetails";
 import Contact from "./pages/Contact";
 import Consultation from "./pages/Consultation";
 import Projects from "./pages/Projects";

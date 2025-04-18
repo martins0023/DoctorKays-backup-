@@ -1,23 +1,35 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { staggerContainer } from "../constants/animations";
+import { staggerContainer } from "../../constants/animations";
 import { motion } from "framer-motion";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
+import EnquiryModal from "./EnguiryModal";
 import {
   BaggageClaim,
   BatteryMedium,
   ChevronLeft,
+  MessageCircleQuestionIcon,
   ShoppingBag,
   ShoppingCart,
   Star,
   Store,
   TruckIcon,
 } from "lucide-react";
-import Button from "./Button";
-import Footer from "./Footer";
+import Button from "../Button";
+import Footer from "../Footer";
+import axios from "axios";
+import Modal from "../Modal";
 
 const ProductDetails = () => {
   const location = useLocation();
+
+  const [isFormOpen, setFormOpen] = useState(false);
+  const [isSuccessOpen, setSuccessOpen] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [enquiry, setEnquiry] = useState(""); //question
   const product = location.state?.product;
   const [index, setIndex] = useState(0);
 
@@ -37,10 +49,35 @@ const ProductDetails = () => {
 
   const navigate = useNavigate();
 
+  const handleQuestionSubmit = async (formData) => {
+    try {
+      const res = await axios.post(
+        "https://doctorkays-backend-1.onrender.com/api/enquiry/post" ??
+          "http://localhost:5000/api/enquiry/post",
+        formData
+      );
+      // Prepend new question to the list
+      setEnquiry((prev) => [res.data, ...prev]);
+      setIsModalOpen(false);
+      // alert("message delivered")
+      setModalMessage(
+        "Thank you for your message. We've received your enquiry."
+      );
+      setSuccessOpen(true);
+      // setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error submitting question:", error);
+    }
+  };
+
   const handleBack = () => {
     navigate(-1);
     // window.scrollTo(0, 0);
-  }
+  };
+
+  const closeModal = () => {
+    setSuccessOpen(false);
+  };
 
   if (!product) return <p>Product not found!</p>;
 
@@ -98,7 +135,7 @@ const ProductDetails = () => {
 
             <div className="flex items-center gap-4 mt-4">
               <Button
-                className="bg-black text-white px-6 py-2 rounded-lg"
+                className="bg-black text-white px-6 py-2 rounded-lg border"
                 text="Buy Now"
                 img={<ShoppingBag className="w-5 h-5" />}
               />
@@ -125,6 +162,17 @@ const ProductDetails = () => {
               </ul>
             </div>
 
+            <div className="mt-6" onClick={() => setIsModalOpen(true)}>
+              <label className="text-lg font-semibold ">
+                Ask a question about this product
+              </label>
+              <Button
+                className="bg-black text-white border px-6 py-2 rounded-lg mt-2"
+                text="Make Enquiries"
+                img={<MessageCircleQuestionIcon className="w-5 h-5" />}
+              />
+            </div>
+
             <div className="mt-6">
               <form>
                 <div className="mb-4">
@@ -137,7 +185,7 @@ const ProductDetails = () => {
                     placeholder="AXKO90LP34"
                     value=""
                     onChange=""
-                    className="w-full p-3 mt-2 h-[40px] border-gray-300 border focus:outline-none focus:border-primary"
+                    className="w-full p-3 mt-2 h-[40px] rounded-lg border-gray-300 border focus:outline-none focus:border-primary"
                     required
                   />
                 </div>
@@ -156,6 +204,27 @@ const ProductDetails = () => {
         </div>
         <Footer />
       </div>
+      {/* Ask Question Modal */}
+      {isModalOpen && (
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="loader">Loading…</div>
+            </div>
+          }
+        >
+          <EnquiryModal
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={handleQuestionSubmit}
+          />
+        </Suspense>
+      )}
+
+      <Modal
+        isOpen={isSuccessOpen}
+        onClose={closeModal}
+        message={modalMessage}
+      />
     </div>
   );
 };

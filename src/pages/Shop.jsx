@@ -6,7 +6,7 @@ import {
   slideInFromRight,
   staggerContainer,
 } from "../constants/animations";
-import Shopcards from "../components/Shopcards";
+import Shopcards from "../components/Ecommerce/Shopcards";
 import Navbar from "../components/Navbar";
 import { ArrowRight } from "lucide-react";
 import Button from "../components/Button";

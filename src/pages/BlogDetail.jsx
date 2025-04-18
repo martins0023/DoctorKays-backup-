@@ -214,7 +214,12 @@ const BlogDetail = () => {
     return words.slice(0, maxWords).join(" ") + "...";
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-purple-500"></div>
+      </div>
+    );
   if (!post) {
     return (
       <div className="">

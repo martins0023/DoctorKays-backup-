@@ -10,8 +10,8 @@ import {
   Heart,
   Search,
 } from "lucide-react";
-import { client } from "../../lib/client";
-import Footer from "./Footer";
+import { client } from "../../../lib/client";
+import Footer from "../Footer";
 
 const Shopcards = ({ isDarkMode }) => {
   const [filter, setFilter] = useState("All");
