@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { slideInFromRight, staggerContainer, textVariants } from "../constants/animations";
 import { checklistItems } from "../constants";
@@ -48,9 +48,10 @@ const Booking = () => {
 
               <div className="flex justify-center">
                 <Button
+                  img={<ArrowRight />}
                   onClick={handleBooking}
                   text="Book an Appointment"
-                  className="mt-5 hover:bg-white  rounded-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
+                  className="mt-5 hover:bg-white  rounded-full px-6 py-3 bg-gradient-to-r from-purple-500 text-white to-purple-950"
                 />
               </div>
             </div>

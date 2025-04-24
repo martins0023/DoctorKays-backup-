@@ -1,4 +1,4 @@
-import { ActivityIcon, BotMessageSquare, Briefcase, Edit3, HeartPulse, HelpCircle, Home, Info, Locate, LocateFixedIcon, MessageCircleQuestion, Notebook, NotebookPen, Phone, Pill, Podcast, Ribbon, ShieldPlus, ShoppingCart, Syringe, TableIcon, Users, Waypoints } from "lucide-react";
+import { ActivityIcon, BotMessageSquare, Briefcase, Edit3, HeartPulse, HelpCircle, Home, Info, Locate, LocateFixedIcon, MessageCircleQuestion, Notebook, NotebookPen, Phone, Pill, Podcast, Ribbon, ShieldPlus, ShoppingCart, Syringe, TableIcon, Target, Telescope, Users, Waypoints } from "lucide-react";
 
 
 import user1 from "../assets/profile-pictures/user1.jpg";
@@ -223,7 +223,13 @@ export const mission = [
     icon: <TableIcon />,
     text: "Mission Statement",
     description:
-      "To turn medicine from a head- scratcher into your friendly companion.",
+      "To turn medicine from a head-scratcher into your friendly companion - Relatable, understandable and yes, even a bit fun.",
+  },
+  {
+    icon: <Telescope />,
+    text: "Vision",
+    description:
+      "To spread health knowledge and close the gap in access to affordable healthcare across Africa through innovative telehealth and AI solutions.",
   },
   {
     icon: <Notebook />,
@@ -235,7 +241,7 @@ export const mission = [
     icon: <Waypoints />,
     text: "Connect Users With Healthcare Services",
     description:
-      "Creating a system to connect users with pharmacies, specialists, and laboratory based on reviews and refferals.",
+      "Creating a system to connect users with the nearest pharmacies, specialists, and laboratory based on reviews and referrals.",
   },
   {
     icon: <Podcast />,

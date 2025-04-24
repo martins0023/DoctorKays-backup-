@@ -3,49 +3,15 @@ import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
-import { faqsCard } from "../constants";
-import { client, urlFor } from "../../lib/client";
 import { motion } from "framer-motion";
-import { PortableText } from "@portabletext/react";
 import {
   slideInFromLeft,
   staggerContainer,
   textVariants,
 } from "../constants/animations";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import FaqCards from "../components/Faq/FaqCards";
 
 const FAQs = () => {
-  const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
-  const [error, setError] = useState(null);
-  const [openIndex, setOpenIndex] = useState(null);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const query = `
-          *[_type == "faq"] {
-            _id,
-            question,
-            answer,
-          }
-        `;
-        const data = await client.fetch(query);
-        setPosts(data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching posts:", err);
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  const handleToggle = (index) => {
-    setOpenIndex(openIndex === index ? null : index); // Toggle between open and closed
-  };
 
   return (
     <div>
@@ -74,47 +40,7 @@ const FAQs = () => {
             </motion.h2>
           </div>
           <div className="flex flex-col mt-10 lg:mt-20">
-            {posts.map((post, index) => (
-              <div key={post._id} className="flex flex-col mt-5 mb-5">
-                <div className="bg-gradient-to-r from-purple-800 to-purple-950 flex items-center justify-center justify-items-center w-[56px] h-[36px] rounded-md">
-                  <p className="text-white font-semibold text-[20px]">
-                    {index + 1} {/* Display the index incremented by 1 */}
-                  </p>
-                </div>
-
-                <div className="flex flex-col mt-3">
-                  <div
-                    className="flex justify-between items-center cursor-pointer"
-                    onClick={() => handleToggle(index)}
-                  >
-                    <motion.p
-                      initial="hidden"
-                      animate="visible"
-                      variants={textVariants}
-                      className="text-2xl"
-                    >
-                      {post.question}
-                    </motion.p>
-                    {openIndex === index ? (
-                      <ChevronUp className="text-neutral-300 w-6 h-6" />
-                    ) : (
-                      <ChevronDown className="text-neutral-300 w-6 h-6" />
-                    )}
-                  </div>
-                  {openIndex === index && (
-                    <motion.p
-                      initial="hidden"
-                      animate="visible"
-                      variants={slideInFromLeft}
-                      className=" tracking-wide text-[16px] mt-3"
-                    >
-                      <PortableText value={post.answer} />
-                    </motion.p>
-                  )}
-                  <hr className="border-neutral-800 w-full h-[1px] mt-3" />
-                </div>
-              </div>
-            ))}
+            <FaqCards />
           </div>
         </div>
         <Testimonials />

@@ -78,12 +78,12 @@ const About = () => {
                     segment Medicine on the Street with Dr. Kays— We explore
                     lifestyle, disease prevention, general health and wellness.
                   </p>
-                  <p className="mt-2">
+                  {/* <p className="mt-2">
                     <strong>Our mission</strong> <br />
                     To turn medicine from a head-scratcher into your friendly
                     companion - relatable, understandable, and yes, even a bit
                     fun!
-                  </p>
+                  </p> */}
                   <p className="mt-2"></p>
                   We align our works with the World Health Organization calendar
                   and delve into trending medical topics to ensure our audience

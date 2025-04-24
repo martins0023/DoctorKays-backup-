@@ -85,7 +85,7 @@ const ContactPage = () => {
               </li>
               <li className="mb-2">
                 <a
-                  href="mailto:drkaysofficial@gmail.com"
+                  href="mailto:support@doctorkays.com"
                   className="text-gray-400 hover:underline"
                 >
                   Shoot us an email
@@ -110,7 +110,7 @@ const ContactPage = () => {
             </a>
             <h2 className="text-xl font-bold mb-4">Visit us</h2>
             <a href="#" className="block text-gray-400 hover:underline">
-              Challenge, Ibadan, Nigeria
+              36 behind omidiran gardens Osogbo, Osun State.
             </a>
           </div>
         </div>

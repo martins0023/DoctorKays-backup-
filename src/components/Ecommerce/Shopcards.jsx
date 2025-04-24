@@ -8,10 +8,10 @@ import {
   Truck,
   Star,
   Heart,
-  Search,
 } from "lucide-react";
 import { client } from "../../../lib/client";
 import Footer from "../Footer";
+import ShopItems from "./ShopItems";
 
 const Shopcards = ({ isDarkMode }) => {
   const [filter, setFilter] = useState("All");
@@ -191,59 +191,9 @@ const Shopcards = ({ isDarkMode }) => {
       </div> */}
 
       <h1 className="text-2xl font-bold mb-4">Available Items</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredItems.map((product) => (
-          <div
-            key={product._id}
-            className="p-2 rounded-md overflow-hidden cursor-pointer
-                 transition-transform transform hover:scale-105"
-          >
-            <img
-              src={product.imageUrl}
-              alt={product.title}
-              className="w-full h-40 sm:h-48 object-contain rounded-md"
-              onClick={() => handleProductClick(product)}
-            />
-
-            <div className="mt-3">
-              <h3
-                className="sm:text-lg font-semibold "
-                onClick={() => handleProductClick(product)}
-              >
-                {product.title}
-              </h3>
-              <p className="text-sm mt-1">${product.price}</p>
-
-              <div className="flex items-center gap-1 mt-2">
-                {renderStars(product.rating)}
-                {/* <span className="text-xs ">
-                  ({product.reviews} reviews)
-                </span> */}
-              </div>
-
-              <button
-                onClick={() => toggleFavorite(product._id)}
-                className="mt-2"
-              >
-                {favorites.includes(product._id) ? (
-                  <Heart
-                    fill="currentColor"
-                    className="w-5 h-5 text-purple-800"
-                  />
-                ) : (
-                  <Heart className="w-5 h-5 text-gray-400" />
-                )}
-              </button>
-            </div>
-
-            <div className="p-2 flex justify-end">
-              <span className="bg-gray-200 text-gray-600 px-2 py-1 text-xs rounded-full">
-                +{product.imageCount || 0}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> */}
+      <ShopItems />
+      {/* </div> */}
       <Footer />
     </div>
   );

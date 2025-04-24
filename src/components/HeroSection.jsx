@@ -67,7 +67,8 @@ const HeroSection = () => {
           className="mt-6 text-lg text-white"
         >
           From wellness tips to health advice, the mission is to spread health
-          education across Africa and beyond.
+          knowledge and close the gap in access to affordable healthcare across
+          Africa through innovative telehealth solutions.
         </motion.p>
         <div className="flex justify-center mt-8 space-x-4">
           <a

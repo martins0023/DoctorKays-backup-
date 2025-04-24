@@ -121,7 +121,8 @@ const ProductDetails = () => {
 
           <div>
             <h1 className="text-3xl font-bold">{product.title}</h1>
-            <p className="text-gray-600 mt-2">{product.descriptionText}</p>
+            <h2 className="text-lg font-semibold mt-3">Product Description</h2>
+            <p className="text-gray-600 mt-1">{product.descriptionText}</p>
 
             <div className="flex items-center gap-1 mt-2">
               {renderStars(product.rating)}
@@ -192,14 +193,14 @@ const ProductDetails = () => {
               </form>
             </div>
 
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <h2 className="text-lg font-semibold">Product Description</h2>
               <ul className="text-sm text-gray-600 mt-2">
                 <li>• Ultra-Portable Soft Toy</li>
                 <li>• Perfect Companion For Your Child</li>
                 <li>• Develop Your Child's Sense Of Touch</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
         <Footer />
