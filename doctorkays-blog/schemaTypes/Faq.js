@@ -22,6 +22,11 @@ export default {
             title: 'Answer',
             type: 'array',
             of: [{type: 'block'}],
-        }
+        },
+        {
+            name: 'date',
+            title: 'Date',
+            type: 'date',
+          },
     ]
 }
