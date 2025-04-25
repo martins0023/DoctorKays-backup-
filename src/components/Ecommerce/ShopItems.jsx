@@ -115,7 +115,7 @@ const ShopItems = ({ limit, horizontal }) => {
       {displayed.map((product) => (
         <div
           key={product._id}
-          className={`${cardWrapperClasses} p-2 rounded-md bg-white
+          className={`${cardWrapperClasses} p-2 rounded-md
                      cursor-pointer transition-transform transform hover:scale-105`}
         >
           <img

@@ -18,6 +18,7 @@ import FaqCards from "../components/Faq/FaqCards";
 import { textVariants } from "../constants/animations";
 import Button from "../components/Button";
 import ShopItems from "../components/Ecommerce/ShopItems";
+import FeedbackCard from "../components/Feedback/FeedbackCard";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -34,13 +35,13 @@ const Home = () => {
     <>
       <Navbar />
       <HeroSection />
-      <div className="max-w-7xl mx-auto pt-20 px-6">
+      <div className="max-w-7xl mx-auto pt-10 px-6">
         <BriefAbout />
         <FeatureSection />
         <Workflow />
 
         {/* Shop Section */}
-        <div className="mt-5">
+        {/* <div className="mt-5">
           <motion.h2
             initial="hidden"
             animate="visible"
@@ -68,7 +69,7 @@ const Home = () => {
               }}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* booking section */}
         <Booking />
@@ -98,6 +99,7 @@ const Home = () => {
         </div>
         <Testimonials />
         <Stayintouch />
+        <FeedbackCard />
         <Footer />
       </div>
 

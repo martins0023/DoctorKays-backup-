@@ -76,9 +76,11 @@ import storebg2 from "./store-bg1.jpg";
 import sorebg3 from "./sore-bg1.jpg";
 import storebg4 from "./store-bg4.jpg";
 import storebg5 from "./store-bg5.jpg";
-import storebg6 from "./sore-bg11.jpg"
+import storebg6 from "./sore-bg11.jpg";
+import gradient from "./gradients/gradient.jpg";
 
 export {
+    gradient,
     storebg4,
     storebg6,
     storebg5,
