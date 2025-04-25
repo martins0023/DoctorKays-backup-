@@ -16,11 +16,14 @@ export default function FeedbackCard() {
     setStep("form");
   };
 
+  const apiUrl =
+        "https://doctorkays-backend-1.onrender.com" || "http://localhost:5000";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await axios.post("/api/feedback", { name, feedbackType, comments });
+      await axios.post(`${apiUrl}/api/feedback/post`, { name, comments });
       setStep("thanks");
     } catch (err) {
       console.error(err);
@@ -35,7 +38,7 @@ export default function FeedbackCard() {
       {/* Gradient background: height expands if form is open */}
       <div className={`w-full ${step === "form" ? "min-h-[80vh]" : "h-96"}`}>
         <img src={gradient} alt="gradient" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-indigo-900 bg-opacity-50" />
       </div>
 
       {/* Centered overlay; allow vertical scroll when form is tall */}
@@ -92,7 +95,7 @@ export default function FeedbackCard() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 h-10"
+                  className="mt-1 block w-full p-1 rounded-md border-gray-300 h-10"
                 />
               </label>
               <label className="block mb-4">
@@ -103,7 +106,7 @@ export default function FeedbackCard() {
                   rows={4}
                   value={comments}
                   onChange={(e) => setComments(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300"
+                  className="mt-1 block w-full rounded-md border-gray-300 p-1"
                 />
               </label>
               <button

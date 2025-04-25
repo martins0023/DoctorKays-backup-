@@ -17,10 +17,11 @@ export default function FaqCards({ limit }) {
     async function fetchPosts() {
       try {
         const query = `
-          *[_type == "faq"] {
+          *[_type == "faq"] 
+          | order(_id desc) {
             _id,
             question,
-            answer,
+            answer
           }
         `;
         const data = await client.fetch(query);
