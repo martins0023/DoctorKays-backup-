@@ -11,6 +11,9 @@
   <!-- Page Title -->
   <title>Doctor Kays | Your number one mobile doctor</title>
 
+  <!-- Author (brand reinforcement) -->
+  <meta name="author" content="Doctor Kays" />
+
   <!-- Meta Description -->
   <meta name="description"
     content="Doctor Kays provides top-notch healthcare solutions. Experience personalized healthcare services, book appointments, consult specialists, and get expert advice on health and wellness." />
@@ -43,6 +46,12 @@
   <meta property="twitter:image:height" content="630" />
   <meta name="twitter:image:alt" content="Doctor Kays – Your number one mobile doctor" />
 
+  <!-- Resource hints: speeds up critical connections (fonts, APIs) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -62,6 +71,20 @@
         }
       }
     </script>
+
+  <!-- BreadcrumbList JSON-LD -->
+  <script type="application/ld+json">
+   {
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [{
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Home",
+       "item": "https://www.doctorkays.com"
+     }]
+   }
+   </script>
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://www.doctorkays.com" />
