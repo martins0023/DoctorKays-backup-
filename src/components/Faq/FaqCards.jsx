@@ -18,7 +18,7 @@ export default function FaqCards({ limit }) {
       try {
         const query = `
           *[_type == "faq"] 
-          | order(question desc) {
+          | order(date desc) {
             _id,
             question,
             answer
