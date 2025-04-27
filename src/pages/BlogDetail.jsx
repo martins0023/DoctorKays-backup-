@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";  // ← add this
 import Navbar from "../components/Navbar";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Stayintouch from "../components/Stayintouch";
@@ -228,6 +229,27 @@ const BlogDetail = () => {
     ); // Fallback in case state is missing
   }
   return (
+    <>
+      <Helmet>
+        {/* Standard title tag */}
+        <title>{post.title} | Doctor Kays</title>
+
+        {/* Open Graph tags for rich link preview */}
+        <meta property="og:type"        content="article" />
+        <meta property="og:title"       content={post.title} />
+        <meta property="og:description" content={post.description[0]?.children[0]?.text || ""} />
+        <meta property="og:image"       content={post.imageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+
+        {/* Twitter Card tags */}
+        <meta name="twitter:card"        content="summary_large_image" />
+        <meta name="twitter:title"       content={post.title} />
+        <meta name="twitter:description" content={post.description[0]?.children[0]?.text || ""} />
+        <meta name="twitter:image"       content={post.imageUrl} />
+        <meta name="twitter:image:alt"   content={post.title} />
+      </Helmet>
+    
     <div className="">
       <Navbar />
       <div className="max-w-7xl mx-auto pt-8 px-6 md:px-12">
@@ -341,6 +363,7 @@ const BlogDetail = () => {
         <div>© 2025 Doctor kays</div>
       </footer>
     </div>
+  </>
   );
 };
 
