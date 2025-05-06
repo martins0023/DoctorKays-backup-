@@ -7,6 +7,7 @@ import {
   TestTube,
   Phone,
   Search,
+  MapPin,
 } from "lucide-react";
 
 const FILTER_OPTIONS = [
@@ -42,62 +43,77 @@ const NearbySuggestions = () => {
   const [address, setAddress] = useState(null);
   const [places, setPlaces] = useState([]);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [selectedType, setSelectedType] = useState("hospital");
   const [counts, setCounts] = useState({});
   const [customQuery, setCustomQuery] = useState("");
   const countsQueue = useRef([]);
 
-  // Get user coords
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setError("Geolocation not supported.");
-      setLoading(false);
-      return;
+  // Find Nearby handler (user gesture)
+  const findNearby = () => {
+    setError("");
+    setLoading(true);
+    let resolved = false;
+
+    // Browser geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          if (!resolved) {
+            resolved = true;
+            setLocation({ latitude, longitude });
+          }
+        },
+        () => {},
+        { enableHighAccuracy: true, timeout: 7000 }
+      );
     }
-    navigator.geolocation.getCurrentPosition(
-      ({ coords: { latitude, longitude } }) => setLocation({ latitude, longitude }),
-      () => {
-        setError("Unable to retrieve location.");
-        setLoading(false);
-      },
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  }, []);
+
+    // IP-based fallback
+    fetchWithTimeout("https://ipapi.co/json/", {}, 7000)
+      .then(r => r.json())
+      .then(data => {
+        if (!resolved) {
+          resolved = true;
+          setLocation({ latitude: data.latitude, longitude: data.longitude });
+          setAddress({ state: data.region, country: data.country_name });
+        }
+      })
+      .catch(() => {
+        if (!resolved) {
+          setError("Unable to determine location.");
+          setLoading(false);
+        }
+      });
+  };
 
   // Reverse geocode
   useEffect(() => {
-    if (!location) return;
-    const fetchAddress = async () => {
+    if (!location || address) return;
+    (async () => {
       try {
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.latitude}&lon=${location.longitude}`;
         const data = await nominatimFetch(url);
-        const isUK = data.address?.country === "United Kingdom";
-        if (isUK) {
-          const ipData = await fetchWithTimeout("https://ipapi.co/json/", {}, 8000).then(r => r.json());
-          setAddress({ state: ipData.region || "", country: ipData.country_name || "" });
-        } else {
-          setAddress({ state: data.address?.state || data.address?.county || "", country: data.address?.country || "" });
-        }
-      } catch (e) {
-        console.warn("Reverse geocode failed, falling back to IP.", e);
-        try {
-          const ipData = await fetchWithTimeout("https://ipapi.co/json/", {}, 8000).then(r => r.json());
-          setAddress({ state: ipData.region || "", country: ipData.country_name || "" });
-        } catch (ipErr) {
-          setError("Unable to determine address.");
-        }
+        setAddress({
+          state: data.address?.state || data.address?.county || "",
+          country: data.address?.country || "",
+        });
+      } catch {
+        // fallback handled earlier
       }
-    };
-    fetchAddress();
-  }, [location]);
+    })();
+  }, [location, address]);
 
   // Calculate distance (Haversine)
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
-    const a = Math.sin(dLat / 2) ** 2 + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) ** 2;
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   };
 
@@ -106,7 +122,6 @@ const NearbySuggestions = () => {
     if (!(location && address)) return;
     let delay = 0;
     FILTER_OPTIONS.forEach(({ type }) => {
-      countsQueue.current.push(type);
       setTimeout(async () => {
         try {
           const viewbox = `${location.longitude - 0.1},${location.latitude - 0.1},${location.longitude + 0.1},${location.latitude + 0.1}`;
@@ -115,7 +130,9 @@ const NearbySuggestions = () => {
           )}&viewbox=${viewbox}&bounded=1&limit=50`;
           const data = await nominatimFetch(url).catch(() => []);
           setCounts(prev => ({ ...prev, [type]: Array.isArray(data) ? data.length : 0 }));
-        } catch {}
+        } catch {} finally {
+          // no-op
+        }
       }, delay);
       delay += 1100;
     });
@@ -123,13 +140,13 @@ const NearbySuggestions = () => {
 
   // Fetch places (filter or custom)
   useEffect(() => {
-    if (!(location && address)) return;
+    if (!location || !address) return;
     setLoading(true);
     const queryKey = customQuery.trim() || `${selectedType} in ${address.state}, ${address.country}`;
     const viewbox = `${location.longitude - 0.1},${location.latitude - 0.1},${location.longitude + 0.1},${location.latitude + 0.1}`;
     const cacheKey = `${queryKey}|${viewbox}`;
 
-    const fetchPlaces = async () => {
+    (async () => {
       try {
         let data;
         if (cache[cacheKey]) {
@@ -150,7 +167,11 @@ const NearbySuggestions = () => {
                 parseFloat(p.lat),
                 parseFloat(p.lon)
               ),
-              phone: p.extratags?.phone || p.extratags?.["contact:phone"] || p.extratags?.["contact:telephone"] || null,
+              phone:
+                p.extratags?.phone ||
+                p.extratags?.["contact:phone"] ||
+                p.extratags?.["contact:telephone"] ||
+                null,
             }))
           : [];
         enriched.sort((a, b) => a.distance - b.distance);
@@ -160,15 +181,25 @@ const NearbySuggestions = () => {
       } finally {
         setLoading(false);
       }
-    };
-    fetchPlaces();
+    })();
   }, [location, address, selectedType, customQuery]);
 
   return (
     <div className="p-6 mt-5 rounded-lg shadow-sm bg-white">
       <h2 className="text-2xl font-bold mb-4 text-black">Nearby Healthcare Providers</h2>
       <div className="mb-4 p-2 rounded text-white bg-gray-500 font-light text-sm w-fit">
-        {address ? `You are in ${address.state}, ${address.country}` : "Fetching your address..."}
+        {address ? `You are in ${address.state}, ${address.country}` : "Click 'Find Nearby' to locate you"}
+      </div>
+
+      {/* Find Nearby */}
+      <div className="mb-4 flex">
+        <button
+          onClick={findNearby}
+          className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
+        >
+          <MapPin className="w-5 h-5 animate-pulse" />
+          <span>Find Nearby</span>
+        </button>
       </div>
 
       {/* Custom Search */}
@@ -176,7 +207,7 @@ const NearbySuggestions = () => {
         <input
           type="text"
           placeholder="Search custom place..."
-          className="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none"
+          className="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none w-fit"
           value={customQuery}
           onChange={e => setCustomQuery(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && setSelectedType("")}
@@ -196,7 +227,7 @@ const NearbySuggestions = () => {
             key={type}
             onClick={() => { setSelectedType(type); setCustomQuery(""); }}
             className={`flex flex-col items-center p-4 rounded-xl cursor-pointer transition-shadow duration-200 ${
-              selectedType === type && !customQuery ? 'bg-purple-600 text-white shadow-lg' : 'bg-gray-100 text-gray-700 hover:shadow'
+              selectedType === type && !customQuery ? 'bg-purple-600 text-white shadow-lg' : 'bg-gray-100 text-gray-700 hover:shadow-lg'
             }`}
           >
             <Icon className="w-6 h-6 mb-2" />
