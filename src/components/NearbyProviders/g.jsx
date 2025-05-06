@@ -7,7 +7,6 @@ import {
   TestTube,
   Phone,
   Search,
-  MapPin,
 } from "lucide-react";
 
 const FILTER_OPTIONS = [
@@ -16,12 +15,6 @@ const FILTER_OPTIONS = [
   { type: "clinic", label: "Clinics", Icon: Stethoscope },
   { type: "laboratory", label: "Laboratories", Icon: TestTube },
 ];
-
-const MAPBOX_TOKEN = "pk.eyJ1Ijoia21jLWhvc3BpdGFsIiwiYSI6ImNtYWNpdG1jcTAzNDQyanNndnRqMHNjZ3YifQ.dRY5mBdlCvq-VcFakoa1HQ";
-
-// Simple in-memory cache
-const cache = {};
-
 
 export default function NearbySuggestions() {
   const [coords, setCoords] = useState(null);
@@ -135,25 +128,12 @@ export default function NearbySuggestions() {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4 text-black">
-        Nearby Healthcare Providers
-      </h2>
-      <div className="mb-4 p-2 rounded text-white bg-gray-500 font-light text-sm w-fit">
-        {address
-          ? `You are in ${address.state}, ${address.country}`
-          : "Click 'Find Nearby' to locate you"}
-      </div>
-
-      {/* Find Nearby */}
-      <div className="mb-4 flex">
-        <button
-          onClick={locateUser}
-          className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
-        >
-          <MapPin className="w-5 h-5 animate-pulse" />
-          <span>Find Nearby</span>
-        </button>
-      </div>
+      <button
+        onClick={locateUser}
+        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg"
+      >
+        Find Nearby Providers
+      </button>
 
       <div className="mb-4">
         <label className="block mb-1">Or enter city/ZIP:</label>
@@ -172,53 +152,39 @@ export default function NearbySuggestions() {
       <ul className="space-y-4">
         {places.map((place, i) => (
           <motion.li
-          key={i}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: i * 0.1 }}
-          className="p-4 border border-gray-200 rounded-lg shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center"
-        >
-          {/* Image Preview */}
-          <img
-            src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-l+555555(${place.lon},${place.lat})/${place.lon},${place.lat},15,0/200x100?access_token=${MAPBOX_TOKEN}`}
-            alt="Map Preview"
-            className="w-full md:w-48 h-24 object-cover rounded-lg mb-4 md:mb-0 md:mr-4"
-          />
-
-          {/* Text Info */}
-          <div className="flex-grow">
-            <p className="font-medium text-gray-800">
-              {place.display_name}
-            </p>
-            <p className="text-sm text-gray-500">
-              Distance: {place.distance.toFixed(2)} km
-            </p>
-            {place.phone && (
-              <p className="text-sm text-gray-600 mt-1">📞 {place.phone}</p>
-            )}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex mt-3 md:mt-0 md:ml-4 space-x-2">
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lon}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center bg-purple-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-purple-700 transition-transform transform hover:scale-105"
-            >
-              View
-            </a>
-            {place.phone && (
+            key={i}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="border p-4 rounded-lg flex justify-between items-center"
+          >
+            <div>
+              <p className="font-semibold">{place.display_name}</p>
+              <p className="text-sm text-gray-600">
+                {place.distance.toFixed(2)} km away
+              </p>
+              {place.phone && (
+                <p className="text-sm">📞 {place.phone}</p>
+              )}
+            </div>
+            <div className="space-x-2">
               <a
-                href={`tel:${place.phone}`}
-                className="flex items-center bg-green-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-green-700 transition-transform transform hover:scale-105"
+                href={`https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lon}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-purple-600 text-white px-3 py-1 rounded"
               >
-                <Phone className="w-4 h-4 mr-1" />
-                Call
+                View
               </a>
-            )}
-          </div>
-        </motion.li>
+              {place.phone && (
+                <a
+                  href={`tel:${place.phone}`}
+                  className="bg-green-600 text-white px-3 py-1 rounded"
+                >
+                  <Phone className="w-4 h-4 inline-block" /> Call
+                </a>
+              )}
+            </div>
+          </motion.li>
         ))}
       </ul>
     </div>
