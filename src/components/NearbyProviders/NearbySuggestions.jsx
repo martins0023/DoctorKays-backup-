@@ -186,9 +186,13 @@ const NearbySuggestions = () => {
 
   return (
     <div className="p-6 mt-5 rounded-lg shadow-sm bg-white">
-      <h2 className="text-2xl font-bold mb-4 text-black">Nearby Healthcare Providers</h2>
+      <h2 className="text-2xl font-bold mb-4 text-black">
+        Nearby Healthcare Providers
+      </h2>
       <div className="mb-4 p-2 rounded text-white bg-gray-500 font-light text-sm w-fit">
-        {address ? `You are in ${address.state}, ${address.country}` : "Click 'Find Nearby' to locate you"}
+        {address
+          ? `You are in ${address.state}, ${address.country}`
+          : "Click 'Find Nearby' to locate you"}
       </div>
 
       {/* Find Nearby */}
@@ -203,18 +207,18 @@ const NearbySuggestions = () => {
       </div>
 
       {/* Custom Search */}
-      <div className="mb-4 flex">
+      <div className="mb-4 flex flex-col sm:flex-row w-full sm:gap-0 gap-2">
         <input
           type="text"
           placeholder="Search custom place..."
-          className="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none w-fit"
+          className="w-full sm:flex-grow border border-gray-300 rounded-lg sm:rounded-l-lg sm:rounded-r-none px-4 py-2 focus:outline-none"
           value={customQuery}
-          onChange={e => setCustomQuery(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && setSelectedType("")}
+          onChange={(e) => setCustomQuery(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && setSelectedType("")}
         />
         <button
           onClick={() => setSelectedType("")}
-          className="flex items-center justify-center bg-purple-600 text-white px-4 py-2 rounded-r-lg hover:bg-purple-700"
+          className="w-full sm:w-auto flex items-center justify-center bg-purple-600 text-white px-4 py-2 rounded-lg sm:rounded-r-lg sm:rounded-l-none hover:bg-purple-700 transition-colors"
         >
           <Search className="w-5 h-5" />
         </button>
@@ -225,9 +229,14 @@ const NearbySuggestions = () => {
         {FILTER_OPTIONS.map(({ type, label, Icon }) => (
           <div
             key={type}
-            onClick={() => { setSelectedType(type); setCustomQuery(""); }}
+            onClick={() => {
+              setSelectedType(type);
+              setCustomQuery("");
+            }}
             className={`flex flex-col items-center p-4 rounded-xl cursor-pointer transition-shadow duration-200 ${
-              selectedType === type && !customQuery ? 'bg-purple-600 text-white shadow-lg' : 'bg-gray-100 text-gray-700 hover:shadow-lg'
+              selectedType === type && !customQuery
+                ? "bg-purple-600 text-white shadow-lg"
+                : "bg-gray-100 text-gray-700 hover:shadow-lg"
             }`}
           >
             <Icon className="w-6 h-6 mb-2" />
@@ -259,9 +268,15 @@ const NearbySuggestions = () => {
 
               {/* Text Info */}
               <div className="flex-grow">
-                <p className="font-medium text-gray-800">{place.display_name}</p>
-                <p className="text-sm text-gray-500">Distance: {place.distance.toFixed(2)} km</p>
-                {place.phone && <p className="text-sm text-gray-600 mt-1">📞 {place.phone}</p>}
+                <p className="font-medium text-gray-800">
+                  {place.display_name}
+                </p>
+                <p className="text-sm text-gray-500">
+                  Distance: {place.distance.toFixed(2)} km
+                </p>
+                {place.phone && (
+                  <p className="text-sm text-gray-600 mt-1">📞 {place.phone}</p>
+                )}
               </div>
 
               {/* Action Buttons */}
@@ -271,13 +286,16 @@ const NearbySuggestions = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center bg-purple-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-purple-700 transition-transform transform hover:scale-105"
-                >View</a>
+                >
+                  View
+                </a>
                 {place.phone && (
                   <a
                     href={`tel:${place.phone}`}
                     className="flex items-center bg-green-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-green-700 transition-transform transform hover:scale-105"
                   >
-                    <Phone className="w-4 h-4 mr-1" />Call
+                    <Phone className="w-4 h-4 mr-1" />
+                    Call
                   </a>
                 )}
               </div>
