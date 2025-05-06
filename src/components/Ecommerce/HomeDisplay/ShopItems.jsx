@@ -116,7 +116,7 @@ const ShopItems = ({ limit, horizontal }) => {
         <div
           key={product._id}
           onClick={() => handleProductClick(product)}
-          className="group relative bg-white rounded-2xl p-6 shadow-lg transition-all duration-300 ease-in-out cursor-pointer hover:shadow-2xl \
+          className="group relative bg-white rounded-2xl p-6 shadow-sm transition-all duration-300 ease-in-out cursor-pointer hover:shadow-2xl \
                 hover:scale-105 lg:hover:z-10 lg:hover:shadow-2xl"
         >
           <div className="overflow-hidden rounded-xl bg-gray-100">

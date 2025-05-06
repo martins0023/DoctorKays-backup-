@@ -156,11 +156,11 @@ export default function NearbySuggestions() {
       </div>
 
       <div className="mb-4">
-        <label className="block mb-1">Or enter city/ZIP:</label>
         <input
           value={manualLoc}
           onChange={e => setManualLoc(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-3 py-2 rounded-full"
+          placeholder="Or enter a city, ZIP code... "
         />
       </div>
 
