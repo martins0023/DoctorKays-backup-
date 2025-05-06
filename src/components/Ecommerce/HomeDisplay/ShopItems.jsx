@@ -111,55 +111,53 @@ const ShopItems = ({ limit, horizontal }) => {
   const cardWrapperClasses = horizontal ? "flex-shrink-0 w-60" : "";
 
   return (
-    <div className="flex space-x-4 gap-3 overflow-x-auto pb-4">
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {displayed.map((product) => (
         <div
           key={product._id}
-          className={`${cardWrapperClasses} p-2 rounded-md
-                     cursor-pointer transition-transform transform hover:scale-105`}
+          onClick={() => handleProductClick(product)}
+          className="group relative bg-white rounded-2xl p-6 shadow-lg transition-all duration-300 ease-in-out cursor-pointer hover:shadow-2xl \
+                hover:scale-105 lg:hover:z-10 lg:hover:shadow-2xl"
         >
-          <img
-            src={product.imageUrl}
-            alt={product.title}
-            className="w-full h-40 sm:h-48 object-contain rounded-md"
-            onClick={() => handleProductClick(product)}
-          />
+          <div className="overflow-hidden rounded-xl bg-gray-100">
+            <img
+              src={product.imageUrl}
+              alt={product.title}
+              className="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleFavorite(product._id);
+            }}
+            className="absolute top-4 right-4 bg-white p-2 rounded-full shadow hover:bg-purple-50 transition-colors"
+          >
+            <Heart
+              className={`${
+                favorites.includes(product._id)
+                  ? "text-purple-600 fill-current"
+                  : "text-gray-300"
+              }`}
+            />
+          </button>
 
-          <div className="mt-3">
-            <h3
-              className="sm:text-lg font-semibold "
-              onClick={() => handleProductClick(product)}
-            >
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">
               {product.title}
             </h3>
-            <p className="text-sm mt-1">${product.price}</p>
+            <p className="mt-1 text-gray-600 font-medium">${product.price}</p>
 
-            <div className="flex items-center gap-1 mt-2">
+            <div className="flex items-center mt-2">
               {renderStars(product.rating)}
-              {/* <span className="text-xs ">
-                  ({product.reviews} reviews)
-                </span> */}
+              <span className="ml-2 text-sm text-gray-500">
+                {product.reviews}
+              </span>
             </div>
 
-            <button
-              onClick={() => toggleFavorite(product._id)}
-              className="mt-2"
-            >
-              {favorites.includes(product._id) ? (
-                <Heart
-                  fill="currentColor"
-                  className="w-5 h-5 text-purple-800"
-                />
-              ) : (
-                <Heart className="w-5 h-5 text-gray-400" />
-              )}
-            </button>
-          </div>
-
-          <div className="p-2 flex justify-end">
-            <span className="bg-gray-200 text-gray-600 px-2 py-1 text-xs rounded-full">
-              +{product.imageCount || 0}
-            </span>
+            <p className="mt-2 text-sm text-gray-500 line-clamp-2">
+              {product.descriptionText}
+            </p>
           </div>
         </div>
       ))}

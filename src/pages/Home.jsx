@@ -17,7 +17,7 @@ import { motion } from "framer-motion";
 import FaqCards from "../components/Faq/FaqCards";
 import { textVariants } from "../constants/animations";
 import Button from "../components/Button";
-import ShopItems from "../components/Ecommerce/ShopItems";
+import ShopItems from "../components/Ecommerce/HomeDisplay/ShopItems";
 import FeedbackCard from "../components/Feedback/FeedbackCard";
 
 const Home = () => {
@@ -41,16 +41,21 @@ const Home = () => {
         <Workflow />
 
         {/* Shop Section */}
-        {/* <div className="mt-5">
+        <div className="pt-20">
+          <div className="text-center">
+            <span className="bg-neutral-900 text-purple-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
+              shop
+            </span>
+          </div>
           <motion.h2
             initial="hidden"
             animate="visible"
             variants={textVariants}
             className="text-3xl sm:text-5xl text-center lg:text-6xl mt-5 mb-5 lg:mt-10 tracking-wide"
           >
-            Checkout Items In{" "}
+            Our Popular{" "}
             <span className="bg-gradient-to-r from-purple-500 to-purple-800 text-transparent bg-clip-text">
-              Shop
+              Products
             </span>
           </motion.h2>
           <div className="">
@@ -69,7 +74,7 @@ const Home = () => {
               }}
             />
           </div>
-        </div> */}
+        </div>
 
         {/* booking section */}
         <Booking />

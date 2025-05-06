@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import NearbySuggestions from '../components/NearbySuggestions'
+import NearbySuggestions from '../components/NearbyProviders/NearbySuggestions'
 import Footer from '../components/Footer'
 
 const NearestPharmacy = () => {

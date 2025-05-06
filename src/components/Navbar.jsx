@@ -122,7 +122,7 @@ const Navbar = () => {
           >
             <a
               href="/consultation"
-              className="bg-gradient-to-r from-purple-500 to-purple-950 py-2 px-3 rounded-full"
+              className="bg-gradient-to-r text-white from-purple-500 to-purple-950 py-2 px-3 rounded-full"
             >
               Book a Consultation
             </a>
