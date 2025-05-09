@@ -18,6 +18,12 @@ import Partnership from "./pages/Partnership";
 import Community from "./pages/Community";
 import Volunteer from "./pages/Volunteer";
 import QuestionDetail from "./pages/QuestionDetail";
+// import NewConsultation from "./pages/NewConsultation";
+// import ScanReport from "./components/Consultation/ScanReport";
+// import PhotoPage from "./components/Consultation/PhotoPage";
+// import UploadPage from "./components/Consultation/UploadPage";
+// import AIAnalysis from "./components/Consultation/AIAnalysis";
+// import Subscribe from "./components/Consultation/Booking/Subscribe";
 
 const App = () => {
   return (
@@ -41,8 +47,17 @@ const App = () => {
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/all-posts" element={<AllPosts />} />
         <Route path="/community" element={<Community />} />
+
+        {/* <Route path="/ScanReport" element={<ScanReport />} /> */}
+        {/* <Route path="/upgrade-consultation" element={<NewConsultation />} />
+        <Route path="/ai-analysis/:id" element={<AIAnalysis />} />
+        <Route path="/subscribe" element={<Subscribe />} />
+        
+        <Route path="/consultation" element={<ScanReport />} />
+        <Route path="/consultation/upload" element={<UploadPage />} />
+        <Route path="/consultation/photo" element={<PhotoPage />} /> */}
         {/* 
-        <Route path="/dr-ai" element={<DrAi />} />
+        
         <Route path="/services" element={<Services />} />
 
         {/* Catch-all route for 404 */}

@@ -79,7 +79,17 @@ import storebg5 from "./store-bg5.jpg";
 import storebg6 from "./sore-bg11.jpg";
 import gradient from "./gradients/gradient.jpg";
 
+import herodoctor3 from "./hero-doctors/hero-doctor3.webp";
+import herodoctor2 from "./hero-doctors/hero-doctor2.webp";
+import herodoctor1 from "./hero-doctors/hero-doctor1.webp";
+
+import aifile from "./ai-assets/file.jpg"
+
 export {
+    aifile,
+    herodoctor1,
+    herodoctor2,
+    herodoctor3,
     gradient,
     storebg4,
     storebg6,

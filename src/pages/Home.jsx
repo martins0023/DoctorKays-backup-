@@ -4,12 +4,9 @@ import HeroSection from "../components/HeroSection";
 import BriefAbout from "../components/BriefAbout";
 import FeatureSection from "../components/FeatureSection";
 import Workflow from "../components/Workflow";
-import Pricing from "../components/Pricing";
 import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
-import Mos from "../components/Mos";
-import ClinicSeries from "../components/ClinicSeries";
 import Booking from "../components/Booking";
 import { useNavigate } from "react-router-dom";
 import { CalendarHeart, ArrowRight } from "lucide-react";
@@ -19,6 +16,7 @@ import { textVariants } from "../constants/animations";
 import Button from "../components/Button";
 import ShopItems from "../components/Ecommerce/HomeDisplay/ShopItems";
 import FeedbackCard from "../components/Feedback/FeedbackCard";
+import TrustPilot from "../components/Feedback/TrustPilot";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -104,6 +102,7 @@ const Home = () => {
         </div>
         <Testimonials />
         <Stayintouch />
+        <TrustPilot />
         <FeedbackCard />
         <Footer />
       </div>
@@ -111,7 +110,7 @@ const Home = () => {
       {/* Floating Book a Consultation Button */}
       <button
         onClick={handleConsultationClick}
-        className="fixed bottom-2 right-6 flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-950 text-white font-medium px-4 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+        className="fixed bottom-2 right-6 z-50 flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-950 text-white font-medium px-4 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
       >
         {/* <span className="text-lg">+</span> */}
         <CalendarHeart />

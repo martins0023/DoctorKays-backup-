@@ -1,13 +1,12 @@
 import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 import {
-  fadeIn,
-  slideInFromLeft,
   slideInFromRight,
   staggerContainer,
   textVariants,
 } from "../constants/animations";
-import { viddisplay, videoDr, doctor020 } from "../assets";
+import { viddisplay, doctor020 } from "../assets";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -69,7 +68,9 @@ const HeroSection = () => {
           From wellness tips to health advice, the mission is to spread health
           knowledge and close the gap in access to affordable healthcare across
           Africa through innovative telehealth solutions.
+          
         </motion.p>
+        
         <div className="flex justify-center mt-8 space-x-4">
           <a
             href="/consultation"

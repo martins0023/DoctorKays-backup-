@@ -4,6 +4,12 @@ export default {
   darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        grotesk: ['var(--font-grotesk)'],
+        display: ['var(--font-display)'],
+      },
+      
       animation: {
         "scale-up-right":
           "scale-up-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000)   both",

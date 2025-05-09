@@ -3,13 +3,6 @@ import {
   X,
   Sun,
   Moon,
-  Home,
-  Info,
-  Users,
-  Edit3,
-  ShoppingCart,
-  Phone,
-  HelpCircle,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -22,17 +15,6 @@ import {
   slideInFromTop,
   staggerContainer,
 } from "../constants/animations";
-
-// Map nav labels to icons
-// const iconMapping = {
-//   "Home": <Home className="w-5 h-5 inline mr-2" />,
-//   "About Us": <Info className="w-5 h-5 inline mr-2" />,
-//   "Community Forums": <Users className="w-5 h-5 inline mr-2" />,
-//   "Blog": <Edit3 className="w-5 h-5 inline mr-2" />,
-//   "Shop": <ShoppingCart className="w-5 h-5 inline mr-2" />,
-//   "Contact": <Phone className="w-5 h-5 inline mr-2" />,
-//   "FAQs": <HelpCircle className="w-5 h-5 inline mr-2" />,
-// };
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -83,7 +65,7 @@ const Navbar = () => {
             onClick={handleHome}
             className="flex items-center flex-shrink-0 cursor-pointer"
           >
-            <img className="h-10 w-10 mr-2" src={logo} alt="Logo" />
+            <img className="h-8 w-auto mr-2" src={logo} alt="Logo" />
             <span className="text-[16px] tracking-tight">DoctorKays</span>
           </div>
           <ul className="hidden lg:flex ml-14 space-x-12">

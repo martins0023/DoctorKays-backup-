@@ -154,7 +154,7 @@ const NearbySuggestions = () => {
         } else {
           const url = `https://nominatim.openstreetmap.org/search?format=json&extratags=1&q=${encodeURIComponent(
             queryKey
-          )}&viewbox=${viewbox}&bounded=1&limit=1000`;
+          )}&viewbox=${viewbox}&bounded=1&limit=50`;
           data = await nominatimFetch(url).catch(() => []);
           cache[cacheKey] = data;
         }

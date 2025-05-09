@@ -347,6 +347,7 @@ export const checkaboutlists = [
 ];
 export const pricingOptions = [
   {
+    id: "Blood-Tests-and-Scan-Report",
     title: "Blood Tests and Scan Report",
     originalPrice: "$4",
     price: "$0",
@@ -361,6 +362,7 @@ export const pricingOptions = [
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
+    id: "Silver-Package",
     title: "Silver Package",
     originalPrice: "$9",
     price: "$0",
@@ -377,6 +379,7 @@ export const pricingOptions = [
     link: "https://calendly.com/martinsmiracle45/one_time_appointment",
   },
   {
+    id: "Gold-Package",
     title: "Gold Package",
     originalPrice: "$19",
     price: "$9.5",

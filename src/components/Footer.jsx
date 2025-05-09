@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="mt-20 border-t py-10 border-neutral-700">
       <div className="mb-10">
-        <img src={logo} alt="doctorkays" className="w-20 h-20" />
+        <img src={logo} alt="doctorkays" className="h-8 w-auto" />
         <p className=" font-semibold text-[16px]">Doctorkays</p>
         <p className="mt-1 text-[16px] font-montserrat">
           Doctor Kays, a dedicated medical professional passionate about
