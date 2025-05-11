@@ -15,6 +15,7 @@ import Footer from "../components/Footer";
 import Button from "../components/Button";
 import { doctor020, doctor1 } from "../assets";
 import { useNavigate } from "react-router-dom";
+import Trustpilot from "../components/Feedback/TrustPilot";
 
 const Consultation = () => {
   const navigate = useNavigate();
@@ -103,12 +104,14 @@ const Consultation = () => {
           className="relative mt-20 border-neutral-800 min-h-[800px]"
         >
           <Pricing />
-          <div className="mt-20">
-            <ContactPage />
-          </div>
+          
         </div>
 
         <Testimonials />
+        <div className="mt-20">
+
+        </div>
+        <Trustpilot />
         <Stayintouch />
         <Footer />
       </motion.div>
