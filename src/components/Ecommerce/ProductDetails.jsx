@@ -45,37 +45,33 @@ const ProductDetails = () => {
   const [mainImage, setMainImage]   = useState(images[0] || "");
   const [thumbIndex, setThumbIndex] = useState(0);
 
-  // If we didn't get the product in location.state, fetch from Sanity:
   useEffect(() => {
-    if (product || !id) return;
-
+    if (passedProduct || !id) return;
     setLoading(true);
     const query = `*[_type == "shop" && _id == $id][0]{
       _id,
       title,
-      product,
       icon[]{ asset-> { url } },
       price,
       reviews,
       rating,
-      description,
+      description
     }`;
 
-    client
-      .fetch(query, { id })
-      .then((res) => {
+    client.fetch(query, { id })
+      .then(res => {
         if (!res) {
           setError("Product not found.");
         } else {
           setProduct(res);
         }
       })
-      .catch((err) => {
-        console.error(err);
-        setError("Error loading product.");
-      })
+      .catch(() => setError("Error loading product."))
       .finally(() => setLoading(false));
-  }, [id, product]);
+  }, [id, passedProduct]);
+
+  // If we didn't get the product in location.state, fetch from Sanity:
+  
 
   
 
