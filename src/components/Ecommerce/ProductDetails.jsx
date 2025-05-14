@@ -45,7 +45,7 @@ const ProductDetails = () => {
 
   // If we didn't get the product in location.state, fetch from Sanity:
   useEffect(() => {
-    if (passed || !id) return;
+    if (product || !id) return;
 
     setLoading(true);
     const query = `*[_type == "shop" && _id == $id][0]{
@@ -73,7 +73,7 @@ const ProductDetails = () => {
         setError("Error loading product.");
       })
       .finally(() => setLoading(false));
-  }, [id, passed]);
+  }, [id, product]);
 
   
 
