@@ -28,8 +28,6 @@ const ProductDetails = () => {
 
   // In-app passed product (optional)
   const passed = location.state?.product || null;
-  const passedProduct = location.state?.product || null;
-  
 
   const [isFormOpen, setFormOpen] = useState(false);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
@@ -46,33 +44,36 @@ const ProductDetails = () => {
   const [thumbIndex, setThumbIndex] = useState(0);
 
   useEffect(() => {
-    if (passedProduct || !id) return;
+    if (product || !id) return;
+
     setLoading(true);
     const query = `*[_type == "shop" && _id == $id][0]{
       _id,
       title,
+      product,
       icon[]{ asset-> { url } },
       price,
       reviews,
       rating,
-      description
+      description,
     }`;
 
-    client.fetch(query, { id })
-      .then(res => {
+    client
+      .fetch(query, { id })
+      .then((res) => {
         if (!res) {
           setError("Product not found.");
         } else {
           setProduct(res);
         }
       })
-      .catch(() => setError("Error loading product."))
+      .catch((err) => {
+        console.error(err);
+        setError("Error loading product.");
+      })
       .finally(() => setLoading(false));
-  }, [id, passedProduct]);
-
+  }, [id, product]);
   // If we didn't get the product in location.state, fetch from Sanity:
-  
-
   
 
   const handleQuestionSubmit = async (formData) => {
