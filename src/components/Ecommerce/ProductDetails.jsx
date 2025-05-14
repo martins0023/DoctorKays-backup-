@@ -73,7 +73,7 @@ const ProductDetails = () => {
         setError("Error loading product.");
       })
       .finally(() => setLoading(false));
-  }, [id, passed);
+  }, [id, passed]);
 
   // Once we have product, set main image
   useEffect(() => {
