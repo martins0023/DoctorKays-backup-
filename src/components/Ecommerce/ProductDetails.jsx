@@ -118,19 +118,12 @@ const ProductDetails = () => {
   const descriptionSnippet = product.description.slice(0, 160) + "...";
 
   // Once we have product, set main image
-  //useEffect(() => {
-  //  if (product) {
-  //    const urls = (product.icon || []).map((i) => i.asset.url);
- //     setMainImage(urls[0] || product.imageUrl);
- //   }
-  //}, [product]);
-
   useEffect(() => {
-    if (images.length) {
-      setMainImage(images[0]);
-      setThumbIndex(0);
+    if (product) {
+      const urls = (product.icon || []).map((i) => i.asset.url);
+      setMainImage(urls[0] || product.imageUrl);
     }
-  }, [images]);
+  }, [product]);
 
   const closeModal = () => {
     setSuccessOpen(false);
