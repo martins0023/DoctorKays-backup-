@@ -27,7 +27,9 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   // In-app passed product (optional)
-  const passed = location.state?.product;
+  const passed = location.state?.product || null;
+  const passedProduct = location.state?.product || null;
+  
 
   const [isFormOpen, setFormOpen] = useState(false);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
@@ -40,7 +42,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(!passed);
   const [error, setError] = useState("");
   const [index, setIndex] = useState(0);
-  const [mainImage, setMainImage] = useState("");
+  const [mainImage, setMainImage]   = useState(images[0] || "");
   const [thumbIndex, setThumbIndex] = useState(0);
 
   // If we didn't get the product in location.state, fetch from Sanity:
@@ -116,6 +118,13 @@ const ProductDetails = () => {
 
   const images = (product.icon || []).map((i) => i.asset.url);
   const descriptionSnippet = product.description.slice(0, 160) + "...";
+
+  useEffect(() => {
+    if (images.length) {
+      setMainImage(images[0]);
+      setThumbIndex(0);
+    }
+  }, [images]);
 
   // Once we have product, set main image
   useEffect(() => {
