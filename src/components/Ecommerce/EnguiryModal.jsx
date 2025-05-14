@@ -77,7 +77,7 @@ const EnguiryModal = ({ onClose, onSubmit }) => {
               Your Enquiry
             </label>
             <textarea
-              placeholder="Ask a question that is bothering you"
+              placeholder="Make enquiries about this product"
               value={enquiry}
               onChange={(e) => setEnquiry(e.target.value)}
               className="w-full border p-2 rounded text-black"
