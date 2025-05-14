@@ -22,7 +22,7 @@ const ShopItems = ({ limit, horizontal }) => {
 
   const navigate = useNavigate();
   const handleProductClick = (product) => {
-    navigate(`/product/${product.id}`;
+    navigate(`/product/${product._id}`, { state: { product } });
     window.scrollTo(0, 0);
   };
 
