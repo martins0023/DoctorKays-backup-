@@ -1,42 +1,40 @@
-// api/ssr.js
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import { HelmetProvider } from 'react-helmet-async'
-import { StaticRouter } from 'react-router-dom/server'
-import App from '../src/App.jsx'       // adjust if your tree is different
+// /middleware.js
 
-export default async function handler(request, response) {
-  const url = new URL(request.url)
-  const pathname = url.searchParams.get('pathname') || '/'
-
-  // Render the React tree for this URL
-  const helmetContext = {}
-  const appHtml = ReactDOMServer.renderToString(
-    <HelmetProvider context={helmetContext}>
-      <StaticRouter location={pathname}>
-        <App />
-      </StaticRouter>
-    </HelmetProvider>
-  )
-
-  // Extract the <head> tags Helmet generated
-  const { helmet } = helmetContext
-  const headTags = `
-    ${helmet.title.toString()}
-    ${helmet.meta.toString()}
-    ${helmet.link.toString()}
-  `
-
-  // Fetch your SPA shell (the index.html)
-  const htmlRes = await fetch(`${url.origin}`)
-  let html = await htmlRes.text()
-
-  // Inject the Helmet <head> fragments
-  html = html.replace(
-    /<head>([\s\S]*?)<\/head>/,
-    `<head>$1\n${headTags}\n</head>`
-  )
-
-  // Finally stream that out:
-  response.status(200).send(html)
-}
+// A small list of regexes matching common social‑bot UA strings:
+const BOT_USER_AGENTS = [
+    /facebookexternalhit/i,
+    /twitterbot/i,
+    /linkedinbot/i,
+    /slackbot-linkexpanding/i,
+  ]
+  
+  export const config = {
+    // run this middleware on every path
+    matcher: '/:path*',
+  }
+  
+  export async function middleware(request) {
+    const ua = request.headers.get('user-agent') || ''
+    const isBot = BOT_USER_AGENTS.some((rx) => rx.test(ua))
+  
+    if (!isBot) {
+      // not a bot: continue to serve your regular SPA
+      return
+    }
+  
+    // a bot: rewrite to your SSR endpoint
+    // preserve original pathname in a search param
+    const url = new URL(request.url)
+    url.pathname = '/api/ssr'
+    url.searchParams.set('pathname', request.nextUrl.pathname)
+  
+    // Fetch the SSR result and return it
+    const response = await fetch(url.toString(), {
+      // Forward cookies/headers if needed (optional)
+      headers: request.headers,
+      method: request.method,
+      body: request.method === 'GET' ? undefined : request.body,
+    })
+    return response
+  }
+  
