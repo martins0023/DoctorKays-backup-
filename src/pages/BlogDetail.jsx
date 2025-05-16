@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";  // ← add this
+import { Helmet } from "react-helmet-async";  // ← add this
 import Navbar from "../components/Navbar";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Stayintouch from "../components/Stayintouch";

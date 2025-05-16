@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import Navbar from "../Navbar";
 import EnquiryModal from "./EnguiryModal";
 import {
@@ -21,7 +21,7 @@ import RichPortableText from "../PortableComponents/portableTextComponents";
 import { client } from "../../../lib/client";
 
 const ProductDetails = () => {
-  const { id } = useParams();                    // product ID from URL
+  const { id } = useParams(); // product ID from URL
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -123,14 +123,13 @@ const ProductDetails = () => {
   // Flatten Portable Text into a plain string for snippet
   const rawText = Array.isArray(product.description)
     ? product.description
-        .map(block =>
-          (block.children || []).map(child => child.text).join("")
+        .map((block) =>
+          (block.children || []).map((child) => child.text).join("")
         )
         .join(" ")
     : "";
-  const descriptionSnippet = rawText.length > 160
-    ? rawText.slice(0, 160) + "…"
-    : rawText;
+  const descriptionSnippet =
+    rawText.length > 160 ? rawText.slice(0, 160) + "…" : rawText;
 
   const closeModal = () => {
     setSuccessOpen(false);
@@ -158,7 +157,10 @@ const ProductDetails = () => {
         <meta property="og:title" content={product.title} />
         <meta property="og:description" content={descriptionSnippet} />
         <meta property="og:image" content={mainImage} />
-        <meta property="og:url" content={`${window.location.origin}/product/${product._id}`} />
+        <meta
+          property="og:url"
+          content={`${window.location.origin}/product/${product._id}`}
+        />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={product.title} />
@@ -167,7 +169,10 @@ const ProductDetails = () => {
       </Helmet>
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8">
-      <button onClick={goBack} className="flex items-center text-gray-500 bg-inherit rounded-md text-xs p-3 mb-4">
+        <button
+          onClick={goBack}
+          className="flex items-center text-gray-500 bg-inherit rounded-md text-xs p-3 mb-4"
+        >
           <ChevronLeft className="w-5 h-5" />
           <span className="ml-2">Back to products</span>
         </button>

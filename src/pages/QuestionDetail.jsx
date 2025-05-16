@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { ThumbsUp, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 
