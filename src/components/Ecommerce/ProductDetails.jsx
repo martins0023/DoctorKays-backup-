@@ -51,7 +51,6 @@ const ProductDetails = () => {
     const query = `*[_type == "shop" && _id == $id][0]{
       _id,
       title,
-      product,
       icon[]{ asset-> { url } },
       price,
       reviews,
@@ -121,7 +120,17 @@ const ProductDetails = () => {
   const goBack = () => navigate(-1);
 
   const images = (product.icon || []).map((i) => i.asset.url);
-  const descriptionSnippet = product.description.slice(0, 160) + "...";
+  // Flatten Portable Text into a plain string for snippet
+  const rawText = Array.isArray(product.description)
+    ? product.description
+        .map(block =>
+          (block.children || []).map(child => child.text).join("")
+        )
+        .join(" ")
+    : "";
+  const descriptionSnippet = rawText.length > 160
+    ? rawText.slice(0, 160) + "…"
+    : rawText;
 
   const closeModal = () => {
     setSuccessOpen(false);
