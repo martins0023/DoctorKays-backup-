@@ -27,7 +27,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   // In-app passed product (optional)
-  const passed = location.state?.product || null;
+  const passed = location.state?.product;
 
   const [isFormOpen, setFormOpen] = useState(false);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
@@ -40,9 +40,10 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(!passed);
   const [error, setError] = useState("");
   const [index, setIndex] = useState(0);
-  const [mainImage, setMainImage]   = useState(images[0] || "");
+  const [mainImage, setMainImage] = useState("");
   const [thumbIndex, setThumbIndex] = useState(0);
 
+  // If we didn't get the product in location.state, fetch from Sanity:
   useEffect(() => {
     if (product || !id) return;
 
@@ -72,8 +73,14 @@ const ProductDetails = () => {
       })
       .finally(() => setLoading(false));
   }, [id, product]);
-  // If we didn't get the product in location.state, fetch from Sanity:
-  
+
+  // Once we have product, set main image
+  useEffect(() => {
+    if (product) {
+      const urls = (product.icon || []).map((i) => i.asset.url);
+      setMainImage(urls[0] || product.imageUrl);
+    }
+  }, [product]);
 
   const handleQuestionSubmit = async (formData) => {
     try {
@@ -124,14 +131,6 @@ const ProductDetails = () => {
   const descriptionSnippet = rawText.length > 160
     ? rawText.slice(0, 160) + "…"
     : rawText;
-
-  // Once we have product, set main image
-  useEffect(() => {
-    if (product) {
-      const urls = (product.icon || []).map((i) => i.asset.url);
-      setMainImage(urls[0] || product.imageUrl);
-    }
-  }, [product]);
 
   const closeModal = () => {
     setSuccessOpen(false);
