@@ -1,40 +1,42 @@
+// api/ssr.js
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import ReactDOMServer from 'react-dom/server'
 import { HelmetProvider } from 'react-helmet-async'
 import { StaticRouter } from 'react-router-dom/server'
-import App from '../src/App.jsx'  // adjust relative path
+import App from '../src/App.jsx'       // adjust if your tree is different
 
-export default async function handler(req, res) {
-  const url = req.query.pathname || '/'
+export default async function handler(request, response) {
+  const url = new URL(request.url)
+  const pathname = url.searchParams.get('pathname') || '/'
+
+  // Render the React tree for this URL
   const helmetContext = {}
-
-  // Render the app to static markup, capturing Helmet tags
-  renderToStaticMarkup(
+  const appHtml = ReactDOMServer.renderToString(
     <HelmetProvider context={helmetContext}>
-      <StaticRouter location={url}>
+      <StaticRouter location={pathname}>
         <App />
       </StaticRouter>
     </HelmetProvider>
   )
 
+  // Extract the <head> tags Helmet generated
   const { helmet } = helmetContext
-  // Build the head override string
-  const head = `
+  const headTags = `
     ${helmet.title.toString()}
     ${helmet.meta.toString()}
     ${helmet.link.toString()}
   `
 
-  // Fetch your index.html from the static build
-  const htmlRes = await fetch(`https://${req.headers.host}/index.html`)
+  // Fetch your SPA shell (the index.html)
+  const htmlRes = await fetch(`${url.origin}`)
   let html = await htmlRes.text()
 
-  // Replace <head>…</head> with your rendered head
+  // Inject the Helmet <head> fragments
   html = html.replace(
-    /<head>[\s\S]*?<\/head>/,
-    `<head>\n${head}\n</head>`
+    /<head>([\s\S]*?)<\/head>/,
+    `<head>$1\n${headTags}\n</head>`
   )
 
-  res.setHeader('Content-Type', 'text/html')
-  res.status(200).send(html)
+  // Finally stream that out:
+  response.status(200).send(html)
 }
