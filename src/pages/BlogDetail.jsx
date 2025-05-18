@@ -350,7 +350,7 @@ const BlogDetail = () => {
             <div className="text-center text-gray-400 mt-6">
               <p>
                 No related or recommended articles found for this blog post.
-                Check out other blogs <a href="/blog">here.</a>
+                Check out other blogs <a className="text-blue underline" href="/blog">here.</a>
               </p>
             </div>
           )}
