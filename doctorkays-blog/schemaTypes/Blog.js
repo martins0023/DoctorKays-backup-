@@ -61,5 +61,18 @@ export default {
       type: 'array',
       of: [{type: 'block'}],
     },
+    {
+      name: 'comments',
+      title: 'Comments',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'name', type: 'string', title: 'Name' },
+          { name: 'text', type: 'text', title: 'Comment' },
+          { name: 'postedAt', type: 'datetime', title: 'When' },
+        ]
+      }]
+    }
   ],
 }
