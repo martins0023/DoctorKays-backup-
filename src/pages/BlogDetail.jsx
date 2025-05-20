@@ -202,35 +202,34 @@ const BlogDetail = () => {
   };
 
   // Comments submission
-  const handleSubmitComment = async e => {
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
     if (!newName.trim() || !newText.trim()) return;
     setIsPosting(true);
-    setPostError('');
+    setPostError("");
     const commentObj = {
       _key: uuidv4(),
       name: newName.trim(),
       text: newText.trim(),
       postedAt: new Date().toISOString(),
-      likes: 0,
-      dislikes: 0,
-      replies: []
     };
     try {
       const updated = await client
-        .patch(postId)
+        .patch(post._id)
         .setIfMissing({ comments: [] })
-        .append('comments', [commentObj])
+        .append("comments", [commentObj])
         .commit({ autoGenerateArrayKeys: true });
       setComments(updated.comments);
-      setNewName(''); setNewText('');
+      setNewName("");
+      setNewText("");
     } catch (err) {
-      console.error('Comment submit failed', err);
-      setPostError('Failed to post your comment.');
+      console.error("Comment submit failed", err);
+      setPostError("Failed to post your comment. Please try again.");
     } finally {
       setIsPosting(false);
     }
   };
+  
 
   // Helper function to convert rich text to plain text
   const extractPlainText = (richText) => {
