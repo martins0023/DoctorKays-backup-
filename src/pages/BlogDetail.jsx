@@ -130,15 +130,24 @@ const BlogDetail = () => {
     fetchPost();
   }, [id]);
 
-  const updateLikes = async (type) => {
+  const updateReactions = async (type) => {
+    if (!post) return;
+    const field = type === "like" ? "likes" : "dislikes";
+
     try {
-      const updatedField =
-        type === "like" ? { likes: likes + 1 } : { dislikes: dislikes + 1 };
-      await client.patch(post._id).setIfMissing(updatedField).commit();
-      if (type === "like") setLikes((prev) => prev + 1);
-      else setDislikes((prev) => prev + 1);
-    } catch (error) {
-      console.error(`Error updating ${type}:`, error);
+      // Atomically increment on the server
+      await client
+        .patch(post._id)
+        .inc({ [field]: 1 })         // <-- use .inc rather than setIfMissing
+        .commit();
+
+      // Optimistically update UI
+      setPost((prev) => ({
+        ...prev,
+        [field]: (prev[field] || 0) + 1,
+      }));
+    } catch (err) {
+      console.error("Failed to update", type, err);
     }
   };
   // Helper function to convert rich text to plain text
@@ -292,18 +301,16 @@ const BlogDetail = () => {
           </p>
           <div className="mt-4 flex items-center gap-4 justify-center">
             <button
-              onClick={() => updateLikes("like")}
+              onClick={() => updateReactions("like")}
               className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
             >
-              <ThumbsUp />
-              Like ({likes})
+              👍 Like {post.likes}
             </button>
             <button
-              onClick={() => updateLikes("dislike")}
+              onClick={() => updateReactions("dislike")}
               className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition"
             >
-              <ThumbsDown />
-              Dislike ({dislikes})
+              👎 Dislike {post.dislikes}
             </button>
           </div>
         </div>
