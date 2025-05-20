@@ -17,6 +17,8 @@ import Testimonials from "../components/Testimonials";
 import { client } from "../../lib/client";
 import { PortableText } from "@portabletext/react";
 import SocialShare from "../components/SocialShare/SocialShare";
+import { v4 as uuidv4 } from "uuid";
+import { FaComment, FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 const portableTextComponents = {
   block: {
@@ -87,8 +89,19 @@ const BlogDetail = () => {
   const navigate = useNavigate();
 
   const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [isPosting, setIsPosting] = useState(false);
+  const [postError, setPostError] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newText, setNewText] = useState("");
   const [recommendedArticles, setRecommendedArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // track which reply-box is open
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText]   = useState('');
+  const [replyName, setReplyName]   = useState('');
+
   const [isSpeaking, setIsSpeaking] = useState(false); // TTS state
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
@@ -108,28 +121,16 @@ const BlogDetail = () => {
           "imageUrl": image[0].asset->url,
           description,
           likes,
-          dislikes
+          dislikes,
+          comments
+          
         }`;
         const data = await client.fetch(query, { id }); // Pass the id as a parameter
         setPost(data);
+        setComments(data.comments || []);
         setLikes(data.likes || 0);
         setDislikes(data.dislikes || 0);
         setLoading(false);
-
-        // Fetch recommended articles based on the blog's category
-        // const recommendedQuery = `*[_type == "blog" && category == $category && _id != $id]{
-        //   _id,
-        //   title,
-        //   slug,
-        //   category,
-        //   "imageUrl": image[0].asset->url,
-        //   "descriptionText": coalesce(description[2].children[0].text, "") // Get the first block of text safely
-        // }`;
-        // const recommendedData = await client.fetch(recommendedQuery, {
-        //   category: data.category,
-        //   id: data._id,
-        // });
-        // setRecommendedArticles(recommendedData);
 
         const recommendedQuery = `*[_type == "blog" 
                               && category == $category 
@@ -170,6 +171,15 @@ const BlogDetail = () => {
     fetchPost();
   }, [id]);
 
+  const fmtDate = (iso) =>
+    new Date(iso).toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+
   const updateReactions = async (type) => {
     if (!post) return;
     const field = type === "like" ? "likes" : "dislikes";
@@ -190,6 +200,38 @@ const BlogDetail = () => {
       console.error("Failed to update", type, err);
     }
   };
+
+  // Comments submission
+  const handleSubmitComment = async e => {
+    e.preventDefault();
+    if (!newName.trim() || !newText.trim()) return;
+    setIsPosting(true);
+    setPostError('');
+    const commentObj = {
+      _key: uuidv4(),
+      name: newName.trim(),
+      text: newText.trim(),
+      postedAt: new Date().toISOString(),
+      likes: 0,
+      dislikes: 0,
+      replies: []
+    };
+    try {
+      const updated = await client
+        .patch(postId)
+        .setIfMissing({ comments: [] })
+        .append('comments', [commentObj])
+        .commit({ autoGenerateArrayKeys: true });
+      setComments(updated.comments);
+      setNewName(''); setNewText('');
+    } catch (err) {
+      console.error('Comment submit failed', err);
+      setPostError('Failed to post your comment.');
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
   // Helper function to convert rich text to plain text
   const extractPlainText = (richText) => {
     if (!richText || !Array.isArray(richText)) return "";
@@ -360,6 +402,100 @@ const BlogDetail = () => {
               </button>
             </div>
           </div>
+
+          {/* Comments Section */}
+          <section className="mb-16 mt-10">
+            <h2 className="text-2xl font-semibold mb-4">Comments</h2>
+
+            {/* existing comments */}
+            <ul className="space-y-6 mb-8">
+              {comments.map((c) => (
+                <li key={c._key} className="p-4 border rounded-lg">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-medium">{c.name}</span>
+                    <time className="text-xs text-gray-500">
+                      {fmtDate(c.postedAt)}
+                    </time>
+                  </div>
+                  <p className="">{c.text}</p>
+                </li>
+              ))}
+              {!comments.length && (
+                <p className="text-gray-500">No comments yet.</p>
+              )}
+            </ul>
+
+            {/* new comment form */}
+            <form onSubmit={handleSubmitComment} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Name</label>
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  disabled={isPosting}
+                  className="w-full border rounded-lg px-3 py-2 text-black"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Comment
+                </label>
+                <textarea
+                  value={newText}
+                  onChange={(e) => setNewText(e.target.value)}
+                  disabled={isPosting}
+                  className="w-full border rounded-lg px-3 py-2 text-black"
+                  placeholder="Your comment…"
+                  rows={4}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isPosting}
+                className={`flex items-center gap-2 px-6 py-2 rounded-lg text-white
+      ${
+        isPosting
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-gradient-to-r from-fuchsia-700 to-slate-500 hover:opacity-90"
+      }`}
+              >
+                {isPosting ? (
+                  <>
+                    <svg
+                      className="animate-spin h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8H4z"
+                      />
+                    </svg>
+                    Posting…
+                  </>
+                ) : (
+                  <>
+                    Post Comment
+                    <FaComment />
+                  </>
+                )}
+              </button>
+            </form>
+          </section>
 
           {/* Recommended Articles Section */}
           <div className="mt-12 p-4">

@@ -68,9 +68,16 @@ export default {
       of: [{
         type: 'object',
         fields: [
-          { name: 'name', type: 'string', title: 'Name' },
-          { name: 'text', type: 'text', title: 'Comment' },
-          { name: 'postedAt', type: 'datetime', title: 'When' },
+          { name: 'name', type: 'string' },
+          { name: 'text', type: 'text' },
+          { name: 'postedAt', type: 'datetime' },
+          { name: 'likes', type: 'number' },
+          { name: 'dislikes', type: 'number' },
+          {
+            name: 'replies',
+            type: 'array',
+            of: [{ type: 'object', fields: [ /* same fields as parent */ ] }]
+          }
         ]
       }]
     }
