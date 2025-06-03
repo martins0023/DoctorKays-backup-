@@ -159,7 +159,7 @@ const Navbar = () => {
             </div>
             <div className="flex space-x-6 mt-2">
               <a
-                href="/consultation"
+                href="https://consultation.doctorkays.com/"
                 className="rounded-full py-2 px-3 bg-gradient-to-r from-purple-500 to-purple-950"
               >
                 Book a Consultation
