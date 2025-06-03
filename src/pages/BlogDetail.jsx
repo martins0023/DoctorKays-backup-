@@ -112,11 +112,11 @@ const BlogDetail = () => {
           likes,
           dislikes,
           comments[]{
-            ...,
+            _key, name, text, postedAt, likes, dislikes,
             replies[]{
-              ...,
-              replies[]{
-                ...
+              _key, name, text, postedAt, likes, dislikes,
+              replies[]{         // third level, if you want it
+                _key, name, text, postedAt, likes, dislikes
               }
             }
           }
@@ -269,6 +269,7 @@ const BlogDetail = () => {
       const path = `comments[_key=="${commentKey}"].${incField}`;
       await client
         .patch(post._id)
+        .setIfMissing({ [path]: 0 })
         .inc({ [path]: 1 })
         .commit();
 

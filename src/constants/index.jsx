@@ -14,7 +14,7 @@ export const navItems = [
   { label: "Home", href: "/", iconMapping: <Home className="w-5 h-5 inline mr-2" /> },
   { label: "About Us", href: "/about", iconMapping: <Info className="w-5 h-5 inline mr-2" /> },
   { label: "Community Forums", href: "/community", iconMapping: <Users className="w-5 h-5 inline mr-2" /> },
-  { label: "Blog", href: "/blog", iconMapping: <Edit3 className="w-5 h-5 inline mr-2" /> },
+  { label: "Blog", href: "https://blog.doctorkays.com/", iconMapping: <Edit3 className="w-5 h-5 inline mr-2" /> },
   { label: "Shop", href: "/shop", iconMapping: <ShoppingCart className="w-5 h-5 inline mr-2" /> },
   { label: "Contact", href: "/contact", iconMapping: <Phone className="w-5 h-5 inline mr-2" /> },
   { label: "FAQs", href: "/faqs", iconMapping: <HelpCircle className="w-5 h-5 inline mr-2" /> },
@@ -399,7 +399,7 @@ export const pricingOptions = [
 ];
 
 export const resourcesLinks = [
-  { href: "/blog", text: "Blog" },
+  { href: "https://blog.doctorkays.com/", text: "Blog" },
   { href: "/faqs", text: "FAQs" },
   { href: "https://www.youtube.com/@Doctorkays", text: "MOS" },
   { href: "https://www.youtube.com/@Doctorkays", text: "Clinic Series" },
@@ -407,7 +407,7 @@ export const resourcesLinks = [
 ];
 
 export const platformLinks = [
-  { href: "/consultation", text: "Consultation" },
+  { href: "https://consultation.doctorkays.com/", text: "Consultation" },
   { href: "/shops", text: "Shops and Merch" },
   // { href: "#", text: "Clinic Online (coming soon)" },
 ];

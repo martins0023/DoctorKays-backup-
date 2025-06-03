@@ -8,7 +8,7 @@ import Testimonials from "../components/Testimonials";
 import Stayintouch from "../components/Stayintouch";
 import Footer from "../components/Footer";
 import Booking from "../components/Booking";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { CalendarHeart, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import FaqCards from "../components/Faq/FaqCards";
@@ -108,14 +108,14 @@ const Home = () => {
       </div>
 
       {/* Floating Book a Consultation Button */}
-      <button
-        onClick={handleConsultationClick}
+      <Link
+        to="https://consultation.doctorkays.com/"
         className="fixed bottom-2 right-6 z-50 flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-950 text-white font-medium px-4 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
       >
         {/* <span className="text-lg">+</span> */}
         <CalendarHeart />
         <span>Book Now</span>
-      </button>
+      </Link>
 
       <footer className="bg-primary text-white p-4 text-center">
         <div>© 2025 Doctor kays </div>

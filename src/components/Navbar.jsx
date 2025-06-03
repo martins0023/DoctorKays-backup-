@@ -103,7 +103,7 @@ const Navbar = () => {
             className="hidden lg:flex justify-center space-x-12 items-center"
           >
             <a
-              href="/consultation"
+              href="https://consultation.doctorkays.com/"
               className="bg-gradient-to-r text-white from-purple-500 to-purple-950 py-2 px-3 rounded-full"
             >
               Book a Consultation

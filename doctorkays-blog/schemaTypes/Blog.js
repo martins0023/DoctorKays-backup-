@@ -67,10 +67,20 @@ export default {
       type: 'array',
       of: [{
         type: 'object',
+        name: 'comment',       // name it so you can re‑use
+        title: 'Comment',
         fields: [
           { name: 'name', type: 'string', title: 'Name' },
           { name: 'text', type: 'text', title: 'Comment' },
           { name: 'postedAt', type: 'datetime', title: 'When' },
+          { name: 'likes',    type: 'number',   title: 'Likes',    initialValue: 0 },
+          { name: 'dislikes', type: 'number',   title: 'Dislikes', initialValue: 0 },
+          {
+            name: 'replies',
+            title: 'Replies',
+            type: 'array',
+            of: [{ type: 'comment' }]  // refer back to the same inline object
+          }
         ]
       }]
     }
