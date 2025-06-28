@@ -13,9 +13,9 @@ import { clinic1, clinic3, clinicseries1, clinicseries2, clinicseries3, clinicse
 export const navItems = [
   { label: "Home", href: "/", iconMapping: <Home className="w-5 h-5 inline mr-2" /> },
   { label: "About Us", href: "/about", iconMapping: <Info className="w-5 h-5 inline mr-2" /> },
-  { label: "Community Forums", href: "/community", iconMapping: <Users className="w-5 h-5 inline mr-2" /> },
+  //{ label: "Community Forums", href: "/community", iconMapping: <Users className="w-5 h-5 inline mr-2" /> },
   { label: "Blog", href: "https://blog.doctorkays.com/", iconMapping: <Edit3 className="w-5 h-5 inline mr-2" /> },
-  { label: "Shop", href: "/shop", iconMapping: <ShoppingCart className="w-5 h-5 inline mr-2" /> },
+  //{ label: "Shop", href: "/shop", iconMapping: <ShoppingCart className="w-5 h-5 inline mr-2" /> },
   { label: "Contact", href: "/contact", iconMapping: <Phone className="w-5 h-5 inline mr-2" /> },
   { label: "FAQs", href: "/faqs", iconMapping: <HelpCircle className="w-5 h-5 inline mr-2" /> },
 ];
